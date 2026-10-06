@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class 8 Science - Exploring Forces</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(135deg, #eef4ff, #f8fbff);
+        color: #1f2937;
+    }
+
+    .container {
+        max-width: 1000px;
+        margin: auto;
+        padding: 20px;
+    }
+
+    .header {
+        background: linear-gradient(135deg, #173b73, #2563a6);
+        color: white;
+        padding: 28px 20px;
+        border-radius: 18px;
+        text-align: center;
+        margin-bottom: 20px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+
+    .header h1 {
+        margin: 0 0 8px;
+        font-size: 30px;
+    }
+
+    .header p {
+        margin: 0;
+        font-size: 17px;
+    }
+
+    .student-box {
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 13px;
+        border: 2px solid #d1d5db;
+        border-radius: 10px;
+        font-size: 16px;
+    }
+
+    input[type="text"]:focus {
+        outline: none;
+        border-color: #2563a6;
+    }
+
+    .quiz-info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: white;
+        padding: 15px 20px;
+        border-radius: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    .timer {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .progress-text {
+        font-weight: bold;
+    }
+
+    .progress-bar {
+        width: 100%;
+        height: 10px;
+        background: #e5e7eb;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 20px;
+    }
+
+    .progress {
+        height: 100%;
+        width: 0%;
+        background: #2563a6;
+        transition: width 0.3s ease;
+    }
+
+    .question-card {
+        background: white;
+        padding: 22px;
+        border-radius: 15px;
+        margin-bottom: 18px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    }
+
+    .question-number {
+        font-weight: bold;
+        color: #2563a6;
+        margin-bottom: 8px;
+    }
+
+    .question {
+        font-size: 18px;
+        font-weight: bold;
+        line-height: 1.5;
+        margin-bottom: 15px;
+    }
+
+    .option {
+        display: block;
+        padding: 13px;
+        margin: 8px 0;
+        border: 2px solid #e5e7eb;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .option:hover {
+        border-color: #2563a6;
+        background: #f1f6ff;
+    }
+
+    .option input {
+        margin-right: 10px;
+    }
+
+    .submit-btn {
+        display: block;
+        width: 100%;
+        padding: 16px;
+        border: none;
+        border-radius: 12px;
+        background: #173b73;
+        color: white;
+        font-size: 19px;
+        font-weight: bold;
+        cursor: pointer;
+        margin: 25px 0;
+    }
+
+    .submit-btn:hover {
+        background: #0f2d59;
+    }
+
+    .result {
+        display: none;
+        background: white;
+        padding: 30px 20px;
+        border-radius: 18px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        margin-top: 20px;
+    }
+
+    .result h2 {
+        text-align: center;
+        color: #173b73;
+    }
+
+    .score-box {
+        text-align: center;
+        font-size: 26px;
+        font-weight: bold;
+        margin: 20px 0;
+    }
+
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin: 20px 0;
+    }
+
+    .stat {
+        background: #f3f6fb;
+        padding: 15px;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .stat strong {
+        display: block;
+        font-size: 22px;
+        margin-bottom: 5px;
+    }
+
+    .review {
+        margin-top: 25px;
+    }
+
+    .review-item {
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        background: #f8fafc;
+        border-left: 5px solid #9ca3af;
+    }
+
+    .correct-review {
+        border-left-color: #16a34a;
+    }
+
+    .wrong-review {
+        border-left-color: #dc2626;
+    }
+
+    .unanswered-review {
+        border-left-color: #d97706;
+    }
+
+    .review-answer {
+        margin-top: 7px;
+        font-size: 14px;
+    }
+
+    .restart-btn {
+        width: 100%;
+        padding: 14px;
+        background: #2563a6;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 17px;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+
+    @media (max-width: 700px) {
+        .header h1 {
+            font-size: 24px;
+        }
+
+        .quiz-info {
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .stats {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .question {
+            font-size: 17px;
+        }
+    }
+</style>
+
+<script type="module">
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    push
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCfI3zEpaiRA3OjgYiTuvnuA3GGyQGQNpU",
+    authDomain: "sciencequiz2026-ccd77.firebaseapp.com",
+    databaseURL: "https://sciencequiz2026-ccd77-default-rtdb.firebaseio.com",
+    projectId: "sciencequiz2026-ccd77",
+    storageBucket: "sciencequiz2026-ccd77.firebasestorage.app",
+    messagingSenderId: "412753144312",
+    appId: "1:412753144312:web:fe66b332abcadfb0438e0d"
+};
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+window.saveResultToFirebase = async function(result) {
+    try {
+        const resultsRef = ref(database, "quizResults");
+        await push(resultsRef, result);
+        console.log("Class 8 quiz result saved successfully.");
+    } catch (error) {
+        console.error("Firebase error:", error);
+        alert(
+            "Your result was calculated successfully, but it could not be sent to the teacher dashboard."
+        );
+    }
+};
+</script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>Class 8 Science Quiz</h1>
+        <p>Chapter: Exploring Forces</p>
+        <p>60 Questions • 30 Minutes</p>
+    </div>
+
+    <div class="student-box">
+        <label for="studentName">Enter Your Name</label>
+        <input
+            type="text"
+            id="studentName"
+            placeholder="Type your full name"
+            autocomplete="off"
+        >
+    </div>
+
+    <div class="quiz-info">
+        <div class="progress-text">
+            Answered: <span id="answeredCount">0</span> / 60
+        </div>
+
+        <div class="timer">
+            ⏱️ Time Left: <span id="timer">30:00</span>
+        </div>
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+    </div>
+
+    <form id="quizForm">
+
+        <!-- Questions -->
+
+        <div class="question-card">
+            <div class="question-number">Question 1</div>
+            <div class="question">What is a force?</div>
+
+            <label class="option">
+                <input type="radio" name="q1" value="A">
+                A. A type of energy only
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q1" value="B">
+                B. A push or a pull
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q1" value="C">
+                C. The mass of an object
+            </label>
+
+            <label class="option">
+                <input type="radio" name="q1" value="D">
+                D. The temperature of an object
+            </label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 2</div>
+            <div class="question">Which unit is commonly used to measure force?</div>
+
+            <label class="option"><input type="radio" name="q2" value="A"> A. Kilogram</label>
+            <label class="option"><input type="radio" name="q2" value="B"> B. Newton</label>
+            <label class="option"><input type="radio" name="q2" value="C"> C. Joule</label>
+            <label class="option"><input type="radio" name="q2" value="D"> D. Metre</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 3</div>
+            <div class="question">Which instrument can be used to measure force?</div>
+
+            <label class="option"><input type="radio" name="q3" value="A"> A. Thermometer</label>
+            <label class="option"><input type="radio" name="q3" value="B"> B. Newton meter</label>
+            <label class="option"><input type="radio" name="q3" value="C"> C. Measuring cylinder</label>
+            <label class="option"><input type="radio" name="q3" value="D"> D. Stopwatch</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 4</div>
+            <div class="question">A force can change the ______ of an object.</div>
+
+            <label class="option"><input type="radio" name="q4" value="A"> A. Colour only</label>
+            <label class="option"><input type="radio" name="q4" value="B"> B. Motion</label>
+            <label class="option"><input type="radio" name="q4" value="C"> C. Chemical formula only</label>
+            <label class="option"><input type="radio" name="q4" value="D"> D. Material only</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 5</div>
+            <div class="question">Which force pulls objects toward Earth?</div>
+
+            <label class="option"><input type="radio" name="q5" value="A"> A. Friction</label>
+            <label class="option"><input type="radio" name="q5" value="B"> B. Gravity</label>
+            <label class="option"><input type="radio" name="q5" value="C"> C. Air resistance</label>
+            <label class="option"><input type="radio" name="q5" value="D"> D. Magnetic force</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 6</div>
+            <div class="question">Which is an example of a contact force?</div>
+
+            <label class="option"><input type="radio" name="q6" value="A"> A. Gravity</label>
+            <label class="option"><input type="radio" name="q6" value="B"> B. Magnetic force</label>
+            <label class="option"><input type="radio" name="q6" value="C"> C. Friction</label>
+            <label class="option"><input type="radio" name="q6" value="D"> D. Electrostatic force</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 7</div>
+            <div class="question">Which is a non-contact force?</div>
+
+            <label class="option"><input type="radio" name="q7" value="A"> A. Friction</label>
+            <label class="option"><input type="radio" name="q7" value="B"> B. Gravity</label>
+            <label class="option"><input type="radio" name="q7" value="C"> C. Push from a hand</label>
+            <label class="option"><input type="radio" name="q7" value="D"> D. Air resistance</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 8</div>
+            <div class="question">What happens when two forces acting on an object are equal and opposite?</div>
+
+            <label class="option"><input type="radio" name="q8" value="A"> A. They always make the object accelerate</label>
+            <label class="option"><input type="radio" name="q8" value="B"> B. They are balanced</label>
+            <label class="option"><input type="radio" name="q8" value="C"> C. They disappear</label>
+            <label class="option"><input type="radio" name="q8" value="D"> D. They double the mass</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 9</div>
+            <div class="question">What is the resultant force when two opposite forces of 10 N and 6 N act on an object?</div>
+
+            <label class="option"><input type="radio" name="q9" value="A"> A. 4 N</label>
+            <label class="option"><input type="radio" name="q9" value="B"> B. 16 N</label>
+            <label class="option"><input type="radio" name="q9" value="C"> C. 60 N</label>
+            <label class="option"><input type="radio" name="q9" value="D"> D. 2 N</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 10</div>
+            <div class="question">What is the resultant force when two forces of 5 N and 3 N act in the same direction?</div>
+
+            <label class="option"><input type="radio" name="q10" value="A"> A. 2 N</label>
+            <label class="option"><input type="radio" name="q10" value="B"> B. 8 N</label>
+            <label class="option"><input type="radio" name="q10" value="C"> C. 15 N</label>
+            <label class="option"><input type="radio" name="q10" value="D"> D. 0 N</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 11</div>
+            <div class="question">What does friction usually do to a moving object?</div>
+
+            <label class="option"><input type="radio" name="q11" value="A"> A. Speeds it up</label>
+            <label class="option"><input type="radio" name="q11" value="B"> B. Opposes its motion</label>
+            <label class="option"><input type="radio" name="q11" value="C"> C. Removes its mass</label>
+            <label class="option"><input type="radio" name="q11" value="D"> D. Makes gravity disappear</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 12</div>
+            <div class="question">Which surface usually produces more friction?</div>
+
+            <label class="option"><input type="radio" name="q12" value="A"> A. Very smooth surface</label>
+            <label class="option"><input type="radio" name="q12" value="B"> B. Rough surface</label>
+            <label class="option"><input type="radio" name="q12" value="C"> C. Ice only</label>
+            <label class="option"><input type="radio" name="q12" value="D"> D. Air</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 13</div>
+            <div class="question">Why are lubricants used in machines?</div>
+
+            <label class="option"><input type="radio" name="q13" value="A"> A. To increase friction</label>
+            <label class="option"><input type="radio" name="q13" value="B"> B. To reduce friction</label>
+            <label class="option"><input type="radio" name="q13" value="C"> C. To increase mass</label>
+            <label class="option"><input type="radio" name="q13" value="D"> D. To increase gravity</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 14</div>
+            <div class="question">Why do shoes have patterned soles?</div>
+
+            <label class="option"><input type="radio" name="q14" value="A"> A. To reduce grip</label>
+            <label class="option"><input type="radio" name="q14" value="B"> B. To increase friction and grip</label>
+            <label class="option"><input type="radio" name="q14" value="C"> C. To reduce mass</label>
+            <label class="option"><input type="radio" name="q14" value="D"> D. To increase temperature</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 15</div>
+            <div class="question">Air resistance is a force that acts on an object moving through ______.</div>
+
+            <label class="option"><input type="radio" name="q15" value="A"> A. Water only</label>
+            <label class="option"><input type="radio" name="q15" value="B"> B. Air</label>
+            <label class="option"><input type="radio" name="q15" value="C"> C. Soil only</label>
+            <label class="option"><input type="radio" name="q15" value="D"> D. Metal only</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 16</div>
+            <div class="question">A parachute helps a person fall more slowly mainly because it increases ______.</div>
+
+            <label class="option"><input type="radio" name="q16" value="A"> A. Gravity</label>
+            <label class="option"><input type="radio" name="q16" value="B"> B. Air resistance</label>
+            <label class="option"><input type="radio" name="q16" value="C"> C. Mass</label>
+            <label class="option"><input type="radio" name="q16" value="D"> D. Weight</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 17</div>
+            <div class="question">Which force keeps planets in orbit around the Sun?</div>
+
+            <label class="option"><input type="radio" name="q17" value="A"> A. Friction</label>
+            <label class="option"><input type="radio" name="q17" value="B"> B. Gravity</label>
+            <label class="option"><input type="radio" name="q17" value="C"> C. Air resistance</label>
+            <label class="option"><input type="radio" name="q17" value="D"> D. Upthrust</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 18</div>
+            <div class="question">Weight is the force caused by ______ acting on a mass.</div>
+
+            <label class="option"><input type="radio" name="q18" value="A"> A. Friction</label>
+            <label class="option"><input type="radio" name="q18" value="B"> B. Gravity</label>
+            <label class="option"><input type="radio" name="q18" value="C"> C. Magnetism only</label>
+            <label class="option"><input type="radio" name="q18" value="D"> D. Sound</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 19</div>
+            <div class="question">Which statement about mass and weight is correct?</div>
+
+            <label class="option"><input type="radio" name="q19" value="A"> A. Mass and weight are exactly the same</label>
+            <label class="option"><input type="radio" name="q19" value="B"> B. Mass is the amount of matter; weight is a force</label>
+            <label class="option"><input type="radio" name="q19" value="C"> C. Weight is measured in kilograms</label>
+            <label class="option"><input type="radio" name="q19" value="D"> D. Mass is measured in newtons</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 20</div>
+            <div class="question">What happens to an object's weight if gravitational field strength increases?</div>
+
+            <label class="option"><input type="radio" name="q20" value="A"> A. It decreases</label>
+            <label class="option"><input type="radio" name="q20" value="B"> B. It increases</label>
+            <label class="option"><input type="radio" name="q20" value="C"> C. It becomes zero</label>
+            <label class="option"><input type="radio" name="q20" value="D"> D. Its mass disappears</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 21</div>
+            <div class="question">Which force acts upward on an object in a liquid?</div>
+
+            <label class="option"><input type="radio" name="q21" value="A"> A. Weight</label>
+            <label class="option"><input type="radio" name="q21" value="B"> B. Upthrust</label>
+            <label class="option"><input type="radio" name="q21" value="C"> C. Friction only</label>
+            <label class="option"><input type="radio" name="q21" value="D"> D. Magnetic force</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 22</div>
+            <div class="question">Why can a large steel ship float on water?</div>
+
+            <label class="option"><input type="radio" name="q22" value="A"> A. Gravity does not act on ships</label>
+            <label class="option"><input type="radio" name="q22" value="B"> B. The upward upthrust balances its weight</label>
+            <label class="option"><input type="radio" name="q22" value="C"> C. Steel has no mass</label>
+            <label class="option"><input type="radio" name="q22" value="D"> D. Water has no force</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 23</div>
+            <div class="question">Which force is responsible for a magnet attracting an iron nail?</div>
+
+            <label class="option"><input type="radio" name="q23" value="A"> A. Friction</label>
+            <label class="option"><input type="radio" name="q23" value="B"> B. Magnetic force</label>
+            <label class="option"><input type="radio" name="q23" value="C"> C. Upthrust</label>
+            <label class="option"><input type="radio" name="q23" value="D"> D. Air resistance</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 24</div>
+            <div class="question">Which pair of magnetic poles attracts each other?</div>
+
+            <label class="option"><input type="radio" name="q24" value="A"> A. North and North</label>
+            <label class="option"><input type="radio" name="q24" value="B"> B. South and South</label>
+            <label class="option"><input type="radio" name="q24" value="C"> C. North and South</label>
+            <label class="option"><input type="radio" name="q24" value="D"> D. All poles repel</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 25</div>
+            <div class="question">Which pair of magnetic poles repels each other?</div>
+
+            <label class="option"><input type="radio" name="q25" value="A"> A. North and South</label>
+            <label class="option"><input type="radio" name="q25" value="B"> B. Unlike poles</label>
+            <label class="option"><input type="radio" name="q25" value="C"> C. Like poles</label>
+            <label class="option"><input type="radio" name="q25" value="D"> D. Only neutral poles</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 26</div>
+            <div class="question">Which force can act between electrically charged objects without direct contact?</div>
+
+            <label class="option"><input type="radio" name="q26" value="A"> A. Electrostatic force</label>
+            <label class="option"><input type="radio" name="q26" value="B"> B. Friction</label>
+            <label class="option"><input type="radio" name="q26" value="C"> C. Tension</label>
+            <label class="option"><input type="radio" name="q26" value="D"> D. Upthrust</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 27</div>
+            <div class="question">Two positively charged objects will generally ______.</div>
+
+            <label class="option"><input type="radio" name="q27" value="A"> A. Attract</label>
+            <label class="option"><input type="radio" name="q27" value="B"> B. Repel</label>
+            <label class="option"><input type="radio" name="q27" value="C"> C. Become magnets</label>
+            <label class="option"><input type="radio" name="q27" value="D"> D. Have no interaction</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 28</div>
+            <div class="question">What happens to the speed of an object when an unbalanced force acts in the direction of its motion?</div>
+
+            <label class="option"><input type="radio" name="q28" value="A"> A. It must decrease</label>
+            <label class="option"><input type="radio" name="q28" value="B"> B. It can increase</label>
+            <label class="option"><input type="radio" name="q28" value="C"> C. It becomes zero immediately</label>
+            <label class="option"><input type="radio" name="q28" value="D"> D. Its mass doubles</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 29</div>
+            <div class="question">An unbalanced force can cause a change in an object's ______.</div>
+
+            <label class="option"><input type="radio" name="q29" value="A"> A. Motion</label>
+            <label class="option"><input type="radio" name="q29" value="B"> B. Chemical identity only</label>
+            <label class="option"><input type="radio" name="q29" value="C"> C. Mass only</label>
+            <label class="option"><input type="radio" name="q29" value="D"> D. Material type only</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 30</div>
+            <div class="question">A stationary object has a balanced resultant force of 0 N. What will it do if no other force changes?</div>
+
+            <label class="option"><input type="radio" name="q30" value="A"> A. Automatically speed up</label>
+            <label class="option"><input type="radio" name="q30" value="B"> B. Remain stationary</label>
+            <label class="option"><input type="radio" name="q30" value="C"> C. Move backward</label>
+            <label class="option"><input type="radio" name="q30" value="D"> D. Lose mass</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 31</div>
+            <div class="question">A moving object has a resultant force of 0 N. What can happen to its motion?</div>
+
+            <label class="option"><input type="radio" name="q31" value="A"> A. It must stop immediately</label>
+            <label class="option"><input type="radio" name="q31" value="B"> B. It can continue at constant speed in a straight line</label>
+            <label class="option"><input type="radio" name="q31" value="C"> C. It must accelerate</label>
+            <label class="option"><input type="radio" name="q31" value="D"> D. It must change mass</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 32</div>
+            <div class="question">Which force acts between a stretched rope and an object attached to it?</div>
+
+            <label class="option"><input type="radio" name="q32" value="A"> A. Tension</label>
+            <label class="option"><input type="radio" name="q32" value="B"> B. Gravity only</label>
+            <label class="option"><input type="radio" name="q32" value="C"> C. Upthrust</label>
+            <label class="option"><input type="radio" name="q32" value="D"> D. Magnetism</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 33</div>
+            <div class="question">Which force can be produced by a person's muscles?</div>
+
+            <label class="option"><input type="radio" name="q33" value="A"> A. Muscular force</label>
+            <label class="option"><input type="radio" name="q33" value="B"> B. Magnetic force</label>
+            <label class="option"><input type="radio" name="q33" value="C"> C. Gravitational force only</label>
+            <label class="option"><input type="radio" name="q33" value="D"> D. Electrostatic force only</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 34</div>
+            <div class="question">When you push a shopping trolley, the force from your hands is a ______ force.</div>
+
+            <label class="option"><input type="radio" name="q34" value="A"> A. Non-contact</label>
+            <label class="option"><input type="radio" name="q34" value="B"> B. Contact</label>
+            <label class="option"><input type="radio" name="q34" value="C"> C. Magnetic</label>
+            <label class="option"><input type="radio" name="q34" value="D"> D. Gravitational</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 35</div>
+            <div class="question">Which force slows a bicycle when the brakes are applied?</div>
+
+            <label class="option"><input type="radio" name="q35" value="A"> A. Friction</label>
+            <label class="option"><input type="radio" name="q35" value="B"> B. Gravity only</label>
+            <label class="option"><input type="radio" name="q35" value="C"> C. Upthrust</label>
+            <label class="option"><input type="radio" name="q35" value="D"> D. Magnetism</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 36</div>
+            <div class="question">Why is friction useful when walking?</div>
+
+            <label class="option"><input type="radio" name="q36" value="A"> A. It prevents any movement</label>
+            <label class="option"><input type="radio" name="q36" value="B"> B. It provides grip between your feet and the ground</label>
+            <label class="option"><input type="radio" name="q36" value="C"> C. It removes gravity</label>
+            <label class="option"><input type="radio" name="q36" value="D"> D. It makes you weightless</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 37</div>
+            <div class="question">Which change in motion shows that an unbalanced force has acted?</div>
+
+            <label class="option"><input type="radio" name="q37" value="A"> A. Constant speed in a straight line</label>
+            <label class="option"><input type="radio" name="q37" value="B"> B. No change in motion</label>
+            <label class="option"><input type="radio" name="q37" value="C"> C. Speeding up</label>
+            <label class="option"><input type="radio" name="q37" value="D"> D. Remaining stationary</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 38</div>
+            <div class="question">A football is kicked and begins to move. What force initially changes its motion?</div>
+
+            <label class="option"><input type="radio" name="q38" value="A"> A. The force from the foot</label>
+            <label class="option"><input type="radio" name="q38" value="B"> B. Gravity only</label>
+            <label class="option"><input type="radio" name="q38" value="C"> C. Upthrust</label>
+            <label class="option"><input type="radio" name="q38" value="D"> D. Magnetic force</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 39</div>
+            <div class="question">If the resultant force on an object is not zero, the forces are described as ______.</div>
+
+            <label class="option"><input type="radio" name="q39" value="A"> A. Balanced</label>
+            <label class="option"><input type="radio" name="q39" value="B"> B. Unbalanced</label>
+            <label class="option"><input type="radio" name="q39" value="C"> C. Equal only</label>
+            <label class="option"><input type="radio" name="q39" value="D"> D. Neutral</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 40</div>
+            <div class="question">What is the resultant force when 20 N acts right and 20 N acts left?</div>
+
+            <label class="option"><input type="radio" name="q40" value="A"> A. 40 N right</label>
+            <label class="option"><input type="radio" name="q40" value="B"> B. 0 N</label>
+            <label class="option"><input type="radio" name="q40" value="C"> C. 20 N left</label>
+            <label class="option"><input type="radio" name="q40" value="D"> D. 400 N</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 41</div>
+            <div class="question">A force can change the direction of a moving object. Which is an example?</div>
+
+            <label class="option"><input type="radio" name="q41" value="A"> A. A ball being deflected by a bat</label>
+            <label class="option"><input type="radio" name="q41" value="B"> B. A book resting on a table</label>
+            <label class="option"><input type="radio" name="q41" value="C"> C. A stationary wall</label>
+            <label class="option"><input type="radio" name="q41" value="D"> D. A thermometer in a room</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 42</div>
+            <div class="question">Which force opposes the motion of an object moving through water?</div>
+
+            <label class="option"><input type="radio" name="q42" value="A"> A. Water resistance</label>
+            <label class="option"><input type="radio" name="q42" value="B"> B. Gravity only</label>
+            <label class="option"><input type="radio" name="q42" value="C"> C. Magnetism</label>
+            <label class="option"><input type="radio" name="q42" value="D"> D. Electrostatic force</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 43</div>
+            <div class="question">Why are cars designed with smooth, streamlined shapes?</div>
+
+            <label class="option"><input type="radio" name="q43" value="A"> A. To increase air resistance</label>
+            <label class="option"><input type="radio" name="q43" value="B"> B. To reduce air resistance</label>
+            <label class="option"><input type="radio" name="q43" value="C"> C. To increase mass</label>
+            <label class="option"><input type="radio" name="q43" value="D"> D. To remove gravity</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 44</div>
+            <div class="question">What happens to friction when two surfaces are pressed together more strongly, in many everyday situations?</div>
+
+            <label class="option"><input type="radio" name="q44" value="A"> A. It generally increases</label>
+            <label class="option"><input type="radio" name="q44" value="B"> B. It always becomes zero</label>
+            <label class="option"><input type="radio" name="q44" value="C"> C. It becomes magnetic</label>
+            <label class="option"><input type="radio" name="q44" value="D"> D. It turns into gravity</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 45</div>
+            <div class="question">Which force helps a book stay on a table rather than falling through it?</div>
+
+            <label class="option"><input type="radio" name="q45" value="A"> A. The upward support force from the table</label>
+            <label class="option"><input type="radio" name="q45" value="B"> B. Magnetic force</label>
+            <label class="option"><input type="radio" name="q45" value="C"> C. Air resistance</label>
+            <label class="option"><input type="radio" name="q45" value="D"> D. Electrostatic force</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 46</div>
+            <div class="question">If the forces acting on a stationary object are balanced, the resultant force is ______.</div>
+
+            <label class="option"><input type="radio" name="q46" value="A"> A. 0 N</label>
+            <label class="option"><input type="radio" name="q46" value="B"> B. 1 N</label>
+            <label class="option"><input type="radio" name="q46" value="C"> C. 10 N</label>
+            <label class="option"><input type="radio" name="q46" value="D"> D. Always 100 N</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 47</div>
+            <div class="question">Which force is responsible for objects falling toward the ground?</div>
+
+            <label class="option"><input type="radio" name="q47" value="A"> A. Gravity</label>
+            <label class="option"><input type="radio" name="q47" value="B"> B. Friction</label>
+            <label class="option"><input type="radio" name="q47" value="C"> C. Tension</label>
+            <label class="option"><input type="radio" name="q47" value="D"> D. Upthrust</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 48</div>
+            <div class="question">A 12 N force acts to the right and a 5 N force acts to the left. What is the resultant force?</div>
+
+            <label class="option"><input type="radio" name="q48" value="A"> A. 7 N to the right</label>
+            <label class="option"><input type="radio" name="q48" value="B"> B. 17 N to the right</label>
+            <label class="option"><input type="radio" name="q48" value="C"> C. 7 N to the left</label>
+            <label class="option"><input type="radio" name="q48" value="D"> D. 60 N</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 49</div>
+            <div class="question">Two forces of 7 N and 4 N act in the same direction. What is the resultant force?</div>
+
+            <label class="option"><input type="radio" name="q49" value="A"> A. 3 N</label>
+            <label class="option"><input type="radio" name="q49" value="B"> B. 11 N</label>
+            <label class="option"><input type="radio" name="q49" value="C"> C. 28 N</label>
+            <label class="option"><input type="radio" name="q49" value="D"> D. 0 N</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 50</div>
+            <div class="question">A 15 N force acts left and a 10 N force acts right. What is the resultant force?</div>
+
+            <label class="option"><input type="radio" name="q50" value="A"> A. 5 N left</label>
+            <label class="option"><input type="radio" name="q50" value="B"> B. 25 N right</label>
+            <label class="option"><input type="radio" name="q50" value="C"> C. 5 N right</label>
+            <label class="option"><input type="radio" name="q50" value="D"> D. 150 N</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 51</div>
+            <div class="question">Which force is important when a swimmer moves through water?</div>
+
+            <label class="option"><input type="radio" name="q51" value="A"> A. Water resistance</label>
+            <label class="option"><input type="radio" name="q51" value="B"> B. Magnetic force</label>
+            <label class="option"><input type="radio" name="q51" value="C"> C. Electrostatic force</label>
+            <label class="option"><input type="radio" name="q51" value="D"> D. Nuclear force</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 52</div>
+            <div class="question">Which statement about forces is correct?</div>
+
+            <label class="option"><input type="radio" name="q52" value="A"> A. Forces can never change motion</label>
+            <label class="option"><input type="radio" name="q52" value="B"> B. Forces can change speed or direction</label>
+            <label class="option"><input type="radio" name="q52" value="C"> C. Only gravity is a force</label>
+            <label class="option"><input type="radio" name="q52" value="D"> D. Forces have no direction</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 53</div>
+            <div class="question">Which situation involves balanced forces?</div>
+
+            <label class="option"><input type="radio" name="q53" value="A"> A. A book resting on a table</label>
+            <label class="option"><input type="radio" name="q53" value="B"> B. A car accelerating</label>
+            <label class="option"><input type="radio" name="q53" value="C"> C. A football being kicked</label>
+            <label class="option"><input type="radio" name="q53" value="D"> D. A rocket accelerating upward</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 54</div>
+            <div class="question">Which situation involves an unbalanced force?</div>
+
+            <label class="option"><input type="radio" name="q54" value="A"> A. A parked car</label>
+            <label class="option"><input type="radio" name="q54" value="B"> B. A car accelerating</label>
+            <label class="option"><input type="radio" name="q54" value="C"> C. A book resting on a table</label>
+            <label class="option"><input type="radio" name="q54" value="D"> D. An object moving at constant velocity</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 55</div>
+            <div class="question">What is the direction of the resultant force when a 20 N force acts right and a 5 N force acts left?</div>
+
+            <label class="option"><input type="radio" name="q55" value="A"> A. Left</label>
+            <label class="option"><input type="radio" name="q55" value="B"> B. Right</label>
+            <label class="option"><input type="radio" name="q55" value="C"> C. Up</label>
+            <label class="option"><input type="radio" name="q55" value="D"> D. Down</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 56</div>
+            <div class="question">What happens when the resultant force on an object is zero?</div>
+
+            <label class="option"><input type="radio" name="q56" value="A"> A. Its motion does not change</label>
+            <label class="option"><input type="radio" name="q56" value="B"> B. It must accelerate</label>
+            <label class="option"><input type="radio" name="q56" value="C"> C. It must stop</label>
+            <label class="option"><input type="radio" name="q56" value="D"> D. Its mass changes</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 57</div>
+            <div class="question">Which force allows a person to pull an object using a rope?</div>
+
+            <label class="option"><input type="radio" name="q57" value="A"> A. Tension</label>
+            <label class="option"><input type="radio" name="q57" value="B"> B. Upthrust</label>
+            <label class="option"><input type="radio" name="q57" value="C"> C. Magnetic force</label>
+            <label class="option"><input type="radio" name="q57" value="D"> D. Electrostatic force</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 58</div>
+            <div class="question">Which force helps a parachutist reach a slower falling speed?</div>
+
+            <label class="option"><input type="radio" name="q58" value="A"> A. Air resistance</label>
+            <label class="option"><input type="radio" name="q58" value="B"> B. Magnetic force</label>
+            <label class="option"><input type="radio" name="q58" value="C"> C. Electrostatic force</label>
+            <label class="option"><input type="radio" name="q58" value="D"> D. Tension only</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 59</div>
+            <div class="question">Which of the following is a non-contact force?</div>
+
+            <label class="option"><input type="radio" name="q59" value="A"> A. Friction</label>
+            <label class="option"><input type="radio" name="q59" value="B"> B. Gravity</label>
+            <label class="option"><input type="radio" name="q59" value="C"> C. Tension</label>
+            <label class="option"><input type="radio" name="q59" value="D"> D. Push from a hand</label>
+        </div>
+
+        <div class="question-card">
+            <div class="question-number">Question 60</div>
+            <div class="question">Why is understanding forces important?</div>
+
+            <label class="option"><input type="radio" name="q60" value="A"> A. Forces have no effect on everyday life</label>
+            <label class="option"><input type="radio" name="q60" value="B"> B. Forces help explain how objects move and interact</label>
+            <label class="option"><input type="radio" name="q60" value="C"> C. Forces only exist in laboratories</label>
+            <label class="option"><input type="radio" name="q60" value="D"> D. Forces cannot be measured</label>
+        </div>
+
+        <button type="button" class="submit-btn" onclick="finishQuiz(false)">
+            Submit Quiz
+        </button>
+
+    </form>
+
+    <div class="result" id="result">
+
+        <h2>🎉 Quiz Completed!</h2>
+
+        <div class="score-box">
+            <span id="finalScore"></span>
+        </div>
+
+        <div class="stats">
+            <div class="stat">
+                <strong id="correctCount">0</strong>
+                Correct
+            </div>
+
+            <div class="stat">
+                <strong id="wrongCount">0</strong>
+                Wrong
+            </div>
+
+            <div class="stat">
+                <strong id="unansweredCount">0</strong>
+                Unanswered
+            </div>
+
+            <div class="stat">
+                <strong id="percentage">0%</strong>
+                Percentage
+            </div>
+        </div>
+
+        <div class="score-box">
+            Grade: <span id="grade"></span>
+        </div>
+
+        <div class="review">
+            <h3>Answer Review</h3>
+            <div id="reviewContainer"></div>
+        </div>
+
+        <button class="restart-btn" onclick="location.reload()">
+            Take Quiz Again
+        </button>
+
+    </div>
+
+</div>
+
+<script>
+
+const answers = {
+    q1: "B",
+    q2: "B",
+    q3: "B",
+    q4: "B",
+    q5: "B",
+    q6: "C",
+    q7: "B",
+    q8: "B",
+    q9: "A",
+    q10: "B",
+    q11: "B",
+    q12: "B",
+    q13: "B",
+    q14: "B",
+    q15: "B",
+    q16: "B",
+    q17: "B",
+    q18: "B",
+    q19: "B",
+    q20: "B",
+    q21: "B",
+    q22: "B",
+    q23: "B",
+    q24: "C",
+    q25: "C",
+    q26: "A",
+    q27: "B",
+    q28: "B",
+    q29: "A",
+    q30: "B",
+    q31: "B",
+    q32: "A",
+    q33: "A",
+    q34: "B",
+    q35: "A",
+    q36: "B",
+    q37: "C",
+    q38: "A",
+    q39: "B",
+    q40: "B",
+    q41: "A",
+    q42: "A",
+    q43: "B",
+    q44: "A",
+    q45: "A",
+    q46: "A",
+    q47: "A",
+    q48: "A",
+    q49: "B",
+    q50: "A",
+    q51: "A",
+    q52: "B",
+    q53: "A",
+    q54: "B",
+    q55: "B",
+    q56: "A",
+    q57: "A",
+    q58: "A",
+    q59: "B",
+    q60: "B"
+};
+
+const questionTexts = {
+    q1: "What is a force?",
+    q2: "Which unit is commonly used to measure force?",
+    q3: "Which instrument can be used to measure force?",
+    q4: "A force can change the ______ of an object.",
+    q5: "Which force pulls objects toward Earth?",
+    q6: "Which is an example of a contact force?",
+    q7: "Which is a non-contact force?",
+    q8: "What happens when two forces acting on an object are equal and opposite?",
+    q9: "What is the resultant force when two opposite forces of 10 N and 6 N act on an object?",
+    q10: "What is the resultant force when two forces of 5 N and 3 N act in the same direction?",
+    q11: "What does friction usually do to a moving object?",
+    q12: "Which surface usually produces more friction?",
+    q13: "Why are lubricants used in machines?",
+    q14: "Why do shoes have patterned soles?",
+    q15: "Air resistance is a force that acts on an object moving through ______.",
+    q16: "A parachute helps a person fall more slowly mainly because it increases ______.",
+    q17: "Which force keeps planets in orbit around the Sun?",
+    q18: "Weight is the force caused by ______ acting on a mass.",
+    q19: "Which statement about mass and weight is correct?",
+    q20: "What happens to an object's weight if gravitational field strength increases?",
+    q21: "Which force acts upward on an object in a liquid?",
+    q22: "Why can a large steel ship float on water?",
+    q23: "Which force is responsible for a magnet attracting an iron nail?",
+    q24: "Which pair of magnetic poles attracts each other?",
+    q25: "Which pair of magnetic poles repels each other?",
+    q26: "Which force can act between electrically charged objects without direct contact?",
+    q27: "Two positively charged objects will generally ______.",
+    q28: "What happens to the speed of an object when an unbalanced force acts in the direction of its motion?",
+    q29: "An unbalanced force can cause a change in an object's ______.",
+    q30: "A stationary object has a balanced resultant force of 0 N. What will it do if no other force changes?",
+    q31: "A moving object has a resultant force of 0 N. What can happen to its motion?",
+    q32: "Which force acts between a stretched rope and an object attached to it?",
+    q33: "Which force can be produced by a person's muscles?",
+    q34: "When you push a shopping trolley, the force from your hands is a ______ force.",
+    q35: "Which force slows a bicycle when the brakes are applied?",
+    q36: "Why is friction useful when walking?",
+    q37: "Which change in motion shows that an unbalanced force has acted?",
+    q38: "A football is kicked and begins to move. What force initially changes its motion?",
+    q39: "If the resultant force on an object is not zero, the forces are described as ______.",
+    q40: "What is the resultant force when 20 N acts right and 20 N acts left?",
+    q41: "A force can change the direction of a moving object. Which is an example?",
+    q42: "Which force opposes the motion of an object moving through water?",
+    q43: "Why are cars designed with smooth, streamlined shapes?",
+    q44: "What happens to friction when two surfaces are pressed together more strongly, in many everyday situations?",
+    q45: "Which force helps a book stay on a table rather than falling through it?",
+    q46: "If the forces acting on a stationary object are balanced, the resultant force is ______.",
+    q47: "Which force is responsible for objects falling toward the ground?",
+    q48: "A 12 N force acts to the right and a 5 N force acts to the left. What is the resultant force?",
+    q49: "Two forces of 7 N and 4 N act in the same direction. What is the resultant force?",
+    q50: "A 15 N force acts left and a 10 N force acts right. What is the resultant force?",
+    q51: "Which force is important when a swimmer moves through water?",
+    q52: "Which statement about forces is correct?",
+    q53: "Which situation involves balanced forces?",
+    q54: "Which situation involves an unbalanced force?",
+    q55: "What is the direction of the resultant force when a 20 N force acts right and a 5 N force acts left?",
+    q56: "What happens when the resultant force on an object is zero?",
+    q57: "Which force allows a person to pull an object using a rope?",
+    q58: "Which force helps a parachutist reach a slower falling speed?",
+    q59: "Which of the following is a non-contact force?",
+    q60: "Why is understanding forces important?"
+};
+
+let timeLeft = 30 * 60;
+let timerInterval;
+let submitted = false;
+
+function startTimer() {
+
+    timerInterval = setInterval(() => {
+
+        if (submitted) {
+            clearInterval(timerInterval);
+            return;
+        }
+
+        timeLeft--;
+
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+
+        document.getElementById("timer").textContent =
+            String(minutes).padStart(2, "0") +
+            ":" +
+            String(seconds).padStart(2, "0");
+
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            finishQuiz(true);
+        }
+
+    }, 1000);
+}
+
+function updateProgress() {
+
+    let answered = 0;
+
+    for (let i = 1; i <= 60; i++) {
+
+        const selected = document.querySelector(
+            `input[name="q${i}"]:checked`
+        );
+
+        if (selected) {
+            answered++;
+        }
+    }
+
+    document.getElementById("answeredCount").textContent = answered;
+
+    const percentage = (answered / 60) * 100;
+
+    document.getElementById("progress").style.width =
+        percentage + "%";
+}
+
+document.addEventListener("change", function(event) {
+
+    if (event.target.matches('input[type="radio"]')) {
+        updateProgress();
+    }
+
+});
+
+function getGrade(percentage) {
+
+    if (percentage >= 90) return "A+";
+    if (percentage >= 80) return "A";
+    if (percentage >= 70) return "B";
+    if (percentage >= 60) return "C";
+    if (percentage >= 50) return "D";
+    return "F";
+}
+
+async function finishQuiz(autoSubmitted) {
+
+    if (submitted) return;
+
+    const studentName =
+        document.getElementById("studentName").value.trim();
+
+    if (!studentName) {
+
+        if (!autoSubmitted) {
+            alert("Please enter your name before submitting the quiz.");
+            document.getElementById("studentName").focus();
+            return;
+        }
+
+        alert("Please enter your name. The quiz will now be submitted.");
+    }
+
+    submitted = true;
+
+    clearInterval(timerInterval);
+
+    let correct = 0;
+    let wrong = 0;
+    let unanswered = 0;
+
+    const reviewContainer =
+        document.getElementById("reviewContainer");
+
+    reviewContainer.innerHTML = "";
+
+    for (let i = 1; i <= 60; i++) {
+
+        const questionKey = "q" + i;
+
+        const selected =
+            document.querySelector(
+                `input[name="${questionKey}"]:checked`
+            );
+
+        const userAnswer = selected ? selected.value : null;
+        const correctAnswer = answers[questionKey];
+
+        const reviewItem =
+            document.createElement("div");
+
+        reviewItem.className = "review-item";
+
+        if (!userAnswer) {
+
+            unanswered++;
+
+            reviewItem.classList.add("unanswered-review");
+
+            reviewItem.innerHTML =
+                `<strong>Q${i}. ${questionTexts[questionKey]}</strong>
+                <div class="review-answer">
+                Your answer: <strong>Not answered</strong><br>
+                Correct answer: <strong>${correctAnswer}</strong>
+                </div>`;
+
+        } else if (userAnswer === correctAnswer) {
+
+            correct++;
+
+            reviewItem.classList.add("correct-review");
+
+            reviewItem.innerHTML =
+                `<strong>Q${i}. ${questionTexts[questionKey]}</strong>
+                <div class="review-answer">
+                Your answer: <strong>${userAnswer}</strong> ✓
+                </div>`;
+
+        } else {
+
+            wrong++;
+
+            reviewItem.classList.add("wrong-review");
+
+            reviewItem.innerHTML =
+                `<strong>Q${i}. ${questionTexts[questionKey]}</strong>
+                <div class="review-answer">
+                Your answer: <strong>${userAnswer}</strong> ✗<br>
+                Correct answer: <strong>${correctAnswer}</strong>
+                </div>`;
+        }
+
+        reviewContainer.appendChild(reviewItem);
+    }
+
+    const total = 60;
+
+    const percentage =
+        (correct / total) * 100;
+
+    const grade =
+        getGrade(percentage);
+
+    document.getElementById("finalScore").textContent =
+        `${correct} / ${total}`;
+
+    document.getElementById("correctCount").textContent =
+        correct;
+
+    document.getElementById("wrongCount").textContent =
+        wrong;
+
+    document.getElementById("unansweredCount").textContent =
+        unanswered;
+
+    document.getElementById("percentage").textContent =
+        percentage.toFixed(1) + "%";
+
+    document.getElementById("grade").textContent =
+        grade;
+
+    document.getElementById("quizForm").style.display =
+        "none";
+
+    document.getElementById("result").style.display =
+        "block";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+    const result = {
+
+        name: studentName || "Unnamed Student",
+
+        classId: "8",
+
+        quizTitle:
+            "Exploring Forces - Class 8 Science",
+
+        score: correct,
+
+        total: total,
+
+        percentage:
+            Number(percentage.toFixed(1)),
+
+        grade: grade,
+
+        correct: correct,
+
+        wrong: wrong,
+
+        unanswered: unanswered,
+
+        date:
+            new Date().toLocaleString(),
+
+        timestamp:
+            Date.now()
+    };
+
+    if (window.saveResultToFirebase) {
+
+        await window.saveResultToFirebase(result);
+
+    }
+
+}
+
+startTimer();
+
+updateProgress();
+
+</script>
+
+</body>
+</html>
