@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Science Quiz - Teacher Dashboard</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #e0f2fe, #f8fafc);
+    color: #172033;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 25px auto;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 8px 30px rgba(0,0,0,.10);
+}
+
+h1 {
+    text-align: center;
+    color: #155e75;
+}
+
+.subtitle {
+    text-align: center;
+    color: #64748b;
+    margin-bottom: 25px;
+}
+
+.login-box {
+    max-width: 450px;
+    margin: 50px auto;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    margin: 8px 0 15px;
+    border: 2px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+button {
+    border: none;
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.login-btn {
+    width: 100%;
+    background: #0891b2;
+    color: white;
+}
+
+.logout-btn {
+    background: #dc2626;
+    color: white;
+}
+
+.refresh-btn {
+    background: #0891b2;
+    color: white;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.stat {
+    background: #f1f5f9;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 30px;
+    font-weight: bold;
+    color: #0891b2;
+}
+
+.filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+select {
+    padding: 12px;
+    border: 2px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 15px;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 750px;
+}
+
+th {
+    background: #155e75;
+    color: white;
+    padding: 13px;
+    text-align: center;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background: #f8fafc;
+}
+
+.rank {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.message {
+    text-align: center;
+    padding: 20px;
+    color: #64748b;
+}
+
+.error {
+    color: #dc2626;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.success {
+    color: #16a34a;
+    text-align: center;
+    margin: 10px 0;
+}
+
+.hidden {
+    display: none;
+}
+
+@media(max-width:700px) {
+
+    .container {
+        padding: 10px;
+    }
+
+    .card {
+        padding: 18px;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+</style>
+
+<!-- Firebase -->
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getAuth,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+import {
+    getDatabase,
+    ref,
+    onValue
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyCfI3zEpaiRA3OjgYiTuvnuA3GGyQGQNpU",
+
+    authDomain:
+        "sciencequiz2026-ccd77.firebaseapp.com",
+
+    databaseURL:
+        "https://sciencequiz2026-ccd77-default-rtdb.firebaseio.com",
+
+    projectId:
+        "sciencequiz2026-ccd77",
+
+    storageBucket:
+        "sciencequiz2026-ccd77.firebasestorage.app",
+
+    messagingSenderId:
+        "412753144312",
+
+    appId:
+        "1:412753144312:web:fe66b332abcadfb0438e0d"
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const database = getDatabase(app);
+
+
+/* Make Firebase available to the page */
+
+window.firebaseTeacherLogin = async function() {
+
+    const email =
+        document.getElementById("email").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+    const error =
+        document.getElementById("loginError");
+
+    error.textContent = "";
+
+    if (!email || !password) {
+
+        error.textContent =
+            "Please enter your email and password.";
+
+        return;
+    }
+
+    try {
+
+        await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
+
+    } catch (e) {
+
+        console.error(e);
+
+        error.textContent =
+            "Login failed. Please check your email and password.";
+
+    }
+
+};
+
+
+window.firebaseTeacherLogout = async function() {
+
+    await signOut(auth);
+
+};
+
+
+let allResults = [];
+
+
+/* Listen for login */
+
+onAuthStateChanged(auth, function(user) {
+
+    if (user) {
+
+        document
+            .getElementById("loginScreen")
+            .classList.add("hidden");
+
+        document
+            .getElementById("dashboard")
+            .classList.remove("hidden");
+
+        loadResults();
+
+    } else {
+
+        document
+            .getElementById("loginScreen")
+            .classList.remove("hidden");
+
+        document
+            .getElementById("dashboard")
+            .classList.add("hidden");
+
+    }
+
+});
+
+
+function loadResults() {
+
+    const resultsRef =
+        ref(database, "quizResults");
+
+    onValue(resultsRef, function(snapshot) {
+
+        allResults = [];
+
+        snapshot.forEach(function(child) {
+
+            const data = child.val();
+
+            allResults.push({
+
+                id: child.key,
+
+                ...data
+
+            });
+
+        });
+
+        displayResults();
+
+    }, function(error) {
+
+        console.error(error);
+
+        document.getElementById("tableBody").innerHTML = `
+            <tr>
+                <td colspan="7">
+                    Unable to read quiz results.
+                </td>
+            </tr>
+        `;
+
+    });
+
+}
+
+
+window.displayResults = function() {
+
+    const classFilter =
+        document.getElementById("classFilter").value;
+
+    let results =
+        [...allResults];
+
+
+    /* Filter class */
+
+    if (classFilter !== "all") {
+
+        results =
+            results.filter(function(item) {
+
+                return String(item.classId) === classFilter;
+
+            });
+
+    }
+
+
+    /* Sort highest percentage first */
+
+    results.sort(function(a,b) {
+
+        return Number(b.percentage || 0)
+             - Number(a.percentage || 0);
+
+    });
+
+
+    const tableBody =
+        document.getElementById("tableBody");
+
+    tableBody.innerHTML = "";
+
+
+    if (results.length === 0) {
+
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="7">
+                    No quiz results found.
+                </td>
+            </tr>
+        `;
+
+    }
+
+
+    results.forEach(function(item,index) {
+
+        const row =
+            document.createElement("tr");
+
+        let rank = index + 1;
+
+        let rankDisplay = rank;
+
+        if (rank === 1)
+            rankDisplay = "🥇";
+
+        else if (rank === 2)
+            rankDisplay = "🥈";
+
+        else if (rank === 3)
+            rankDisplay = "🥉";
+
+
+        row.innerHTML = `
+
+            <td class="rank">
+                ${rankDisplay}
+            </td>
+
+            <td>
+                <b>${item.name || "-"}</b>
+            </td>
+
+            <td>
+                ${item.classId || "-"}
+            </td>
+
+            <td>
+                <b>
+                ${item.score || 0}/${item.total || 0}
+                </b>
+            </td>
+
+            <td>
+                ${item.percentage || 0}%
+            </td>
+
+            <td>
+                <b>${item.grade || "-"}</b>
+            </td>
+
+            <td>
+                ${item.date || "-"}
+            </td>
+
+        `;
+
+        tableBody.appendChild(row);
+
+    });
+
+
+    /* Statistics */
+
+    document.getElementById("totalStudents")
+        .textContent = results.length;
+
+
+    if (results.length > 0) {
+
+        const average =
+            results.reduce(
+                (sum,item) =>
+                sum + Number(item.percentage || 0),
+                0
+            ) / results.length;
+
+        document.getElementById("average")
+            .textContent =
+            average.toFixed(1) + "%";
+
+
+        document.getElementById("highest")
+            .textContent =
+            Number(results[0].percentage || 0)
+            .toFixed(1) + "%";
+
+    } else {
+
+        document.getElementById("average")
+            .textContent = "0%";
+
+        document.getElementById("highest")
+            .textContent = "0%";
+
+    }
+
+
+    document.getElementById("lastUpdated")
+        .textContent =
+        new Date().toLocaleTimeString();
+
+};
+
+
+window.filterResults = function() {
+
+    displayResults();
+
+};
+
+</script>
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+<!-- LOGIN -->
+
+<div id="loginScreen">
+
+    <div class="card login-box">
+
+        <h1>🔐 Teacher Login</h1>
+
+        <div class="subtitle">
+            Science Quiz Teacher Dashboard
+        </div>
+
+        <label>
+            <b>Email</b>
+        </label>
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Teacher email"
+        >
+
+        <label>
+            <b>Password</b>
+        </label>
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Password"
+        >
+
+        <div
+            id="loginError"
+            class="error">
+        </div>
+
+        <button
+            class="login-btn"
+            onclick="firebaseTeacherLogin()">
+
+            Login to Dashboard
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- DASHBOARD -->
+
+<div
+    id="dashboard"
+    class="hidden">
+
+    <div class="card">
+
+        <div class="topbar">
+
+            <div>
+
+                <h1>
+                    🔬 Science Quiz Dashboard
+                </h1>
+
+                <div class="subtitle">
+                    Live Student Results
+                </div>
+
+            </div>
+
+            <button
+                class="logout-btn"
+                onclick="firebaseTeacherLogout()">
+
+                Logout
+
+            </button>
+
+        </div>
+
+
+        <!-- STATISTICS -->
+
+        <div class="stats">
+
+            <div class="stat">
+
+                <div>
+                    Students
+                </div>
+
+                <div
+                    class="stat-number"
+                    id="totalStudents">
+
+                    0
+
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div>
+                    Average
+                </div>
+
+                <div
+                    class="stat-number"
+                    id="average">
+
+                    0%
+
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div>
+                    Highest
+                </div>
+
+                <div
+                    class="stat-number"
+                    id="highest">
+
+                    0%
+
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div>
+                    Updated
+                </div>
+
+                <div
+                    id="lastUpdated">
+
+                    --
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FILTER -->
+
+        <div class="filters">
+
+            <select
+                id="classFilter"
+                onchange="filterResults()">
+
+                <option value="all">
+                    All Classes
+                </option>
+
+                <option value="7">
+                    Class 7
+                </option>
+
+                <option value="8">
+                    Class 8
+                </option>
+
+            </select>
+
+            <button
+                class="refresh-btn"
+                onclick="displayResults()">
+
+                🔄 Refresh
+
+            </button>
+
+        </div>
+
+
+        <!-- RESULTS TABLE -->
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Rank
+                        </th>
+
+                        <th>
+                            Student
+                        </th>
+
+                        <th>
+                            Class
+                        </th>
+
+                        <th>
+                            Score
+                        </th>
+
+                        <th>
+                            Percentage
+                        </th>
+
+                        <th>
+                            Grade
+                        </th>
+
+                        <th>
+                            Submitted
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="tableBody">
+
+                    <tr>
+
+                        <td colspan="7">
+                            Loading results...
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <p class="message">
+
+            🔄 Results update automatically when students
+            complete the quiz.
+
+        </p>
+
+    </div>
+
+</div>
+
+</div>
+
+</body>
+</html>
