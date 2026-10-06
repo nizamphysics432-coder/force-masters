@@ -1,0 +1,1850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>⚡ Force Masters - Grade 8 Science</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(circle at 20% 10%, #183b63 0%, transparent 35%),
+        radial-gradient(circle at 80% 20%, #30205b 0%, transparent 35%),
+        linear-gradient(135deg, #050b16, #0b1729);
+    color: white;
+    min-height: 100vh;
+}
+
+.container {
+    width: 95%;
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px;
+}
+
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+}
+
+.card {
+    background: rgba(17, 31, 52, 0.96);
+    border: 1px solid #304866;
+    border-radius: 25px;
+    padding: 35px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+
+/* START SCREEN */
+
+.start {
+    text-align: center;
+    margin-top: 5vh;
+}
+
+.logo {
+    font-size: 75px;
+}
+
+h1 {
+    font-size: clamp(35px, 7vw, 65px);
+    margin: 10px 0;
+}
+
+.start h2 {
+    color: #65d6ff;
+    font-size: 30px;
+}
+
+.subtitle {
+    color: #b9c8dc;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin: 30px 0;
+}
+
+.feature {
+    padding: 12px 18px;
+    border-radius: 30px;
+    background: #1b304c;
+    border: 1px solid #345678;
+}
+
+button {
+    border: none;
+    border-radius: 14px;
+    padding: 15px 24px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+.primary {
+    color: #06101d;
+    background: linear-gradient(135deg, #65d6ff, #8a8cff);
+}
+
+.secondary {
+    color: white;
+    background: #263d5b;
+}
+
+.start-button {
+    font-size: 22px;
+    padding: 18px 45px;
+}
+
+/* QUIZ TOP */
+
+.topbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+}
+
+.stat {
+    min-width: 100px;
+    text-align: center;
+    padding: 10px;
+    border-radius: 14px;
+    background: #14263f;
+    border: 1px solid #2d4869;
+}
+
+.stat strong {
+    display: block;
+    font-size: 21px;
+}
+
+.stat small {
+    color: #9eb0c7;
+}
+
+.progress {
+    height: 12px;
+    flex: 1;
+    min-width: 160px;
+    background: #1d3049;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #65d6ff, #8a8cff);
+    transition: width 0.3s;
+}
+
+.timer {
+    min-width: 70px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffd166;
+}
+
+.timer.danger {
+    color: #ff6677;
+    animation: pulse 0.5s infinite alternate;
+}
+
+@keyframes pulse {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.12);
+    }
+}
+
+.time-track {
+    height: 8px;
+    background: #26364d;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.time-bar {
+    height: 100%;
+    width: 100%;
+    background: #ffd166;
+    transition: width 1s linear;
+}
+
+/* QUESTION */
+
+.level {
+    color: #65d6ff;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 14px;
+}
+
+.question {
+    font-size: clamp(24px, 3.4vw, 36px);
+    line-height: 1.35;
+    margin: 18px 0 30px;
+}
+
+.options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.option {
+    min-height: 75px;
+    text-align: left;
+    color: white;
+    background: #182c47;
+    border: 2px solid #2d4869;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.option:hover:not(:disabled) {
+    background: #223b5d;
+    border-color: #65d6ff;
+}
+
+.option-letter {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: #294767;
+}
+
+.option.correct {
+    background: #123d31;
+    border-color: #39d98a;
+}
+
+.option.wrong {
+    background: #48252f;
+    border-color: #ff6577;
+}
+
+.option:disabled {
+    cursor: default;
+}
+
+.feedback {
+    display: none;
+    margin-top: 20px;
+    padding: 18px;
+    border-radius: 15px;
+    background: #0c1829;
+    font-size: 18px;
+}
+
+.feedback.show {
+    display: block;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 22px;
+}
+
+/* RESULT */
+
+.result {
+    text-align: center;
+}
+
+.trophy {
+    font-size: 75px;
+}
+
+.final-score {
+    font-size: 75px;
+    font-weight: bold;
+    color: #ffd166;
+}
+
+.rank {
+    font-size: 30px;
+    margin: 10px 0 25px;
+}
+
+.result-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.result-box {
+    background: #14263f;
+    border-radius: 17px;
+    padding: 20px;
+}
+
+.result-box strong {
+    display: block;
+    font-size: 32px;
+}
+
+.result-box span {
+    color: #9eb0c7;
+}
+
+.review {
+    text-align: left;
+    margin-top: 30px;
+}
+
+.review-item {
+    padding: 15px;
+    border-bottom: 1px solid #2a405d;
+}
+
+.correct-text {
+    color: #39d98a;
+}
+
+.wrong-text {
+    color: #ff6577;
+}
+
+.small {
+    color: #9eb0c7;
+    font-size: 13px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:700px) {
+
+    .container {
+        padding: 12px;
+    }
+
+    .card {
+        padding: 22px;
+    }
+
+    .options {
+        grid-template-columns: 1fr;
+    }
+
+    .result-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .question {
+        font-size: 24px;
+    }
+
+    .logo {
+        font-size: 55px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- ================= START SCREEN ================= -->
+
+<section id="startScreen" class="screen active">
+
+<div class="card start">
+
+<div class="logo">⚡</div>
+
+<h1>FORCE MASTERS</h1>
+
+<h2>Grade 8 Science Challenge</h2>
+
+<p class="subtitle">
+Welcome to the ultimate <strong>Exploring Forces</strong> challenge!
+<br>
+Answer 100 questions, build your streak, earn points and become the Force Master.
+</p>
+
+<div class="features">
+
+<div class="feature">⚡ 100 Questions</div>
+<div class="feature">⏱️ 10 Seconds</div>
+<div class="feature">🔥 Streak Bonus</div>
+<div class="feature">🏆 Final Ranking</div>
+<div class="feature">🎯 Instant Feedback</div>
+<div class="feature">📊 Assessment Review</div>
+
+</div>
+
+<button class="primary start-button" onclick="startGame()">
+START CHALLENGE 🚀
+</button>
+
+<p class="small">
+Designed for classroom projection, interactive boards, laptops and phones.
+</p>
+
+</div>
+
+</section>
+
+
+<!-- ================= QUIZ SCREEN ================= -->
+
+<section id="quizScreen" class="screen">
+
+<div class="topbar">
+
+<div class="stat">
+<strong id="questionNumber">1/100</strong>
+<small>QUESTION</small>
+</div>
+
+<div class="stat">
+<strong id="score">0</strong>
+<small>POINTS</small>
+</div>
+
+<div class="stat">
+<strong id="streak">0</strong>
+<small>STREAK</small>
+</div>
+
+<div class="progress">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+
+<div class="timer" id="timer">
+10
+</div>
+
+</div>
+
+<div class="time-track">
+<div class="time-bar" id="timeBar"></div>
+</div>
+
+<div class="card">
+
+<div class="level" id="level">
+LEVEL 1 · FORCE EXPLORER
+</div>
+
+<div class="question" id="questionText"></div>
+
+<div class="options" id="optionsContainer"></div>
+
+<div class="feedback" id="feedback"></div>
+
+<div class="actions">
+
+<button class="secondary" onclick="skipQuestion()">
+SKIP
+</button>
+
+<button
+class="primary"
+id="nextButton"
+onclick="nextQuestion()"
+style="display:none">
+NEXT →
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= RESULT SCREEN ================= -->
+
+<section id="resultScreen" class="screen">
+
+<div class="card result">
+
+<div class="trophy">🏆</div>
+
+<h1>CHALLENGE COMPLETE!</h1>
+
+<div class="final-score" id="finalScore">
+0
+</div>
+
+<div class="rank" id="rank">
+FORCE MASTER
+</div>
+
+<div class="result-grid">
+
+<div class="result-box">
+<strong id="correctCount">0</strong>
+<span>CORRECT</span>
+</div>
+
+<div class="result-box">
+<strong id="wrongCount">0</strong>
+<span>INCORRECT</span>
+</div>
+
+<div class="result-box">
+<strong id="accuracy">0%</strong>
+<span>ACCURACY</span>
+</div>
+
+</div>
+
+<p id="resultMessage"></p>
+
+<button class="primary start-button" onclick="restartGame()">
+PLAY AGAIN 🔄
+</button>
+
+<div class="review" id="review"></div>
+
+</div>
+
+</section>
+
+</div>
+
+
+<script>
+
+/* ============================================================
+   100 GRADE 8 SCIENCE - EXPLORING FORCES QUESTIONS
+   ============================================================ */
+
+const questions = [
+
+{
+q:"What is generally meant by the term force in science?",
+o:["A push or a pull","A form of energy","The amount of matter in an object","The speed of an object"],
+a:0
+},
+
+{
+q:"Sonali and Ragini have to pedal their bicycle harder while riding against a strong wind. Why?",
+o:["Air resistance opposes their motion","Gravity disappears","Their mass decreases","The bicycle becomes lighter"],
+a:0
+},
+
+{
+q:"Which action is mainly a pulling action?",
+o:["Kicking a football","Pushing a chair","Opening a drawer","Hitting a ball"],
+a:2
+},
+
+{
+q:"A child lifts a school bag from the floor. Which type of force is mainly applied by the child?",
+o:["Magnetic force","Muscular force","Electrostatic force","Gravitational force"],
+a:1
+},
+
+{
+q:"When a bicycle moves down a slope without pedalling, which force pulls it towards the Earth?",
+o:["Magnetic force","Electrostatic force","Gravitational force","Frictional force"],
+a:2
+},
+
+{
+q:"What is the SI unit of force?",
+o:["Kilogram","Joule","Newton","Watt"],
+a:2
+},
+
+{
+q:"Which symbol represents the SI unit of force?",
+o:["N","n","Kg","F"],
+a:0
+},
+
+{
+q:"A force comes into play because of an interaction between:",
+o:["At least two objects","Only one object","Only three objects","Four objects"],
+a:0
+},
+
+{
+q:"When you push a wall with your hand, which statement is correct?",
+o:["Only the wall experiences force","Only your hand experiences force","Both your hand and the wall interact","No force acts because the wall does not move"],
+a:2
+},
+
+{
+q:"When you stop pushing a table, the pushing force exerted by your hand:",
+o:["Doubles","Remains unchanged","No longer acts","Changes into magnetic force"],
+a:2
+},
+
+{
+q:"Which situation is an example of a pulling force?",
+o:["Kicking a ball","Opening a drawer","Pushing a trolley","Hitting a drum"],
+a:1
+},
+
+{
+q:"Which statement about force is correct?",
+o:["Force can exist only when an object moves","Force is always produced by an interaction","Force is the same as mass","Force has no direction"],
+a:1
+},
+
+{
+q:"A person draws water from a well by pulling a rope. The action on the rope is mainly a:",
+o:["Push","Pull","Magnetic action","Gravitational action"],
+a:1
+},
+
+{
+q:"Stretching a rubber band mainly involves:",
+o:["A pulling force","A magnetic force","An electrostatic force","No force"],
+a:0
+},
+
+{
+q:"Turning the steering handle of a vehicle involves the application of:",
+o:["Force","Heat","Light","Sound"],
+a:0
+},
+
+{
+q:"Which of the following is NOT a usual effect of force?",
+o:["Changing the speed of an object","Changing the direction of motion","Changing the shape of an object","Changing the chemical composition of every object"],
+a:3
+},
+
+{
+q:"A stationary football begins to move when a player kicks it. This shows that force can:",
+o:["Make an object move from rest","Change its mass","Change its temperature","Destroy the object"],
+a:0
+},
+
+{
+q:"A goalkeeper catches a moving football. What happens to the ball's motion?",
+o:["Its speed increases","Its speed decreases and may become zero","Its mass decreases","Its colour changes"],
+a:1
+},
+
+{
+q:"A batsman hits a moving cricket ball in a different direction. Which effect of force is demonstrated?",
+o:["Change in mass","Change in direction of motion","Change in temperature","Change in density"],
+a:1
+},
+
+{
+q:"Pressing an inflated balloon with your hands changes its:",
+o:["Mass only","Shape","Chemical composition","Number of atoms"],
+a:1
+},
+
+{
+q:"A cyclist applies brakes while travelling downhill. What is the immediate effect of the braking force?",
+o:["The bicycle speeds up","The bicycle slows down","The bicycle becomes weightless","The bicycle changes its mass"],
+a:1
+},
+
+{
+q:"A ball travelling north is hit by a bat and travels east. The force has changed the ball's:",
+o:["Mass","Direction of motion","Chemical composition","Density"],
+a:1
+},
+
+{
+q:"A lump of clay is pressed and flattened by hand. Which effect of force is observed?",
+o:["Change in shape","Change in mass","Change in colour","Change in chemical composition"],
+a:0
+},
+
+{
+q:"A force can change the speed of a moving object when the force is:",
+o:["Balanced with no resultant effect","Unbalanced","Always zero","Only gravitational"],
+a:1
+},
+
+{
+q:"Two students push a box in opposite directions with equal forces. The box remains at rest. What can be concluded?",
+o:["No forces are acting","The forces are balanced","Gravity has disappeared","The box has no mass"],
+a:1
+},
+
+{
+q:"A force may produce:",
+o:["Only one effect","Only a change in speed","One or more effects","No effect under any condition"],
+a:2
+},
+
+{
+q:"A football is stationary on the ground. A player kicks it and it starts moving. What has changed?",
+o:["Its state of motion","Its chemical composition","Its mass","Its density"],
+a:0
+},
+
+{
+q:"A spring is stretched by pulling both ends. The force mainly causes a change in the spring's:",
+o:["Mass","Shape","Colour","Temperature"],
+a:1
+},
+
+{
+q:"A moving car takes a sharp turn. What must change for the car to change its direction?",
+o:["Its mass","Its state of motion","Its chemical composition","Its number of wheels"],
+a:1
+},
+
+{
+q:"A force acting on an object can change all of the following EXCEPT its:",
+o:["Speed","Direction","Shape","Amount of matter"],
+a:3
+},
+
+{
+q:"Forces that require physical contact between interacting objects are called:",
+o:["Non-contact forces","Contact forces","Magnetic forces","Gravitational forces"],
+a:1
+},
+
+{
+q:"The force produced by the action of muscles is called:",
+o:["Magnetic force","Muscular force","Electrostatic force","Gravitational force"],
+a:1
+},
+
+{
+q:"Which activity mainly involves muscular force?",
+o:["Lifting a school bag","A magnet attracting iron","An apple falling from a tree","A charged comb attracting paper"],
+a:0
+},
+
+{
+q:"A horse pulls a cart using:",
+o:["Magnetic force","Muscular force","Electrostatic force","Gravitational force"],
+a:1
+},
+
+{
+q:"Which force opposes the motion of a book sliding across a table?",
+o:["Magnetic force","Frictional force","Electrostatic force","Buoyant force"],
+a:1
+},
+
+{
+q:"Why does a bicycle generally stop after you stop pedalling on a level road?",
+o:["Gravity pulls it backwards","Friction opposes its motion","Magnetism stops the wheels","The mass of the bicycle disappears"],
+a:1
+},
+
+{
+q:"Friction generally acts in a direction:",
+o:["Opposite to relative motion or its tendency","Always upward","Always downward","Always in the direction of motion"],
+a:0
+},
+
+{
+q:"Why is friction a contact force?",
+o:["It acts between surfaces that are in contact","It acts only between magnets","It acts without contact","It is produced by gravity"],
+a:0
+},
+
+{
+q:"Friction between two surfaces is partly due to:",
+o:["Microscopic irregularities on the surfaces","Gravity disappearing","Electric current","Light waves"],
+a:0
+},
+
+{
+q:"Which surface generally produces greater friction?",
+o:["Rough surface","Very smooth surface","Perfectly frictionless surface","Vacuum"],
+a:0
+},
+
+{
+q:"A swimmer experiences resistance from water while moving through it. This resistance is a form of:",
+o:["Fluid friction","Magnetic force","Electrostatic force","Muscular force"],
+a:0
+},
+
+{
+q:"Why are many aircraft and fast-moving vehicles given streamlined shapes?",
+o:["To increase friction","To reduce resistance from air","To increase their mass","To eliminate gravity"],
+a:1
+},
+
+{
+q:"Which is a contact force?",
+o:["Gravitational force","Magnetic force","Frictional force","Electrostatic force"],
+a:2
+},
+
+{
+q:"A child pushes a lunch box across a table. The box eventually stops mainly because of:",
+o:["Friction","Magnetism","Electrostatic force","Buoyancy"],
+a:0
+},
+
+{
+q:"Which surface would generally offer the least friction to a sliding object?",
+o:["Rough sandpaper","Rough cloth","Smooth glass","Rough concrete"],
+a:2
+},
+
+{
+q:"Muscular force is produced mainly when muscles:",
+o:["Contract","Freeze","Melt","Become magnetic"],
+a:0
+},
+
+{
+q:"Which group uses muscular force for movement?",
+o:["Humans and animals","Rocks only","Magnets only","Machines without moving parts"],
+a:0
+},
+
+{
+q:"A child lifts a bucket from the ground. Which force does the child mainly use?",
+o:["Muscular force","Magnetic force","Electrostatic force","Buoyant force"],
+a:0
+},
+
+{
+q:"A person pulls a box using a rope. How is the force transmitted to the box?",
+o:["Through the rope","Through sunlight","Through magnetism","Through gravity alone"],
+a:0
+},
+
+{
+q:"Why are shoe soles often made with patterns or grooves?",
+o:["To reduce friction completely","To provide better grip by increasing friction","To make shoes magnetic","To reduce the weight of the person"],
+a:1
+},
+
+{
+q:"Why do vehicle tyres have tread patterns?",
+o:["To increase useful friction with the road","To eliminate gravity","To reduce the mass of the vehicle","To produce electricity"],
+a:0
+},
+
+{
+q:"What force helps us walk without slipping on ordinary ground?",
+o:["Friction","Magnetic force","Electrostatic force","Buoyant force"],
+a:0
+},
+
+{
+q:"Why is walking difficult on a wet, soapy floor?",
+o:["Friction is reduced","Gravity becomes zero","Magnetic force increases","Our mass decreases"],
+a:0
+},
+
+{
+q:"Oil is applied between moving machine parts mainly to:",
+o:["Increase friction","Reduce friction","Increase gravity","Increase mass"],
+a:1
+},
+
+{
+q:"Which situation demonstrates that friction can be useful?",
+o:["A person walking without slipping","A machine part wearing out","A bicycle slowing down","Both A and C"],
+a:3
+},
+
+{
+q:"A force that acts without physical contact is called a:",
+o:["Contact force","Non-contact force","Muscular force","Frictional force"],
+a:1
+},
+
+{
+q:"What happens when two north poles of magnets are brought close together?",
+o:["They attract","They repel","They become neutral","They melt"],
+a:1
+},
+
+{
+q:"What happens when the north pole of one magnet is brought near the south pole of another?",
+o:["They attract","They repel","Nothing happens","Both lose magnetism immediately"],
+a:0
+},
+
+{
+q:"The force exerted by a magnet is called:",
+o:["Magnetic force","Frictional force","Muscular force","Gravitational force"],
+a:0
+},
+
+{
+q:"A plastic scale rubbed with a suitable material can attract small pieces of paper. This happens because the scale becomes:",
+o:["Charged","Magnetic","Heavier","Hot"],
+a:0
+},
+
+{
+q:"Charges that remain accumulated on the surface of an object are called:",
+o:["Static charges","Magnetic charges","Gravitational charges","Mechanical charges"],
+a:0
+},
+
+{
+q:"Two balloons rubbed with the same woollen cloth are brought close together. They may:",
+o:["Attract","Repel","Become magnetic","Sink in air"],
+a:1
+},
+
+{
+q:"The two types of electric charge are:",
+o:["North and south","Positive and negative","Up and down","Hot and cold"],
+a:1
+},
+
+{
+q:"Like electric charges:",
+o:["Attract each other","Repel each other","Always disappear","Become magnetic"],
+a:1
+},
+
+{
+q:"Unlike electric charges:",
+o:["Repel each other","Attract each other","Always become neutral immediately","Have no interaction"],
+a:1
+},
+
+{
+q:"The force between charged bodies is called:",
+o:["Electrostatic force","Muscular force","Frictional force","Buoyant force"],
+a:0
+},
+
+{
+q:"What is electric current?",
+o:["Flow of electric charge","Static charge at rest","Flow of gravitational force","Movement of magnets only"],
+a:0
+},
+
+{
+q:"The force with which Earth attracts an object towards itself is called:",
+o:["Magnetic force","Gravitational force","Electrostatic force","Frictional force"],
+a:1
+},
+
+{
+q:"Gravitational force between ordinary masses is:",
+o:["Attractive","Repulsive","Sometimes magnetic","Always zero"],
+a:0
+},
+
+{
+q:"A ball thrown vertically upward slows down as it rises mainly because of:",
+o:["Gravitational force","Magnetic force","Electrostatic force","Buoyant force"],
+a:0
+},
+
+{
+q:"Which is a non-contact force?",
+o:["Friction","Muscular force","Gravitational force","Push by hand"],
+a:2
+},
+
+{
+q:"A compass needle points approximately towards the north-south direction because of:",
+o:["Magnetic interaction","Friction","Electrostatic force","Buoyant force"],
+a:0
+},
+
+{
+q:"A mango falls from a tree to the ground because of:",
+o:["Magnetic force","Gravitational force","Electrostatic force","Muscular force"],
+a:1
+},
+
+{
+q:"Which pair of forces can both attract and repel?",
+o:["Gravitational and frictional","Magnetic and electrostatic","Muscular and gravitational","Frictional and buoyant"],
+a:1
+},
+
+{
+q:"A stone released from a height near Earth's surface initially moves:",
+o:["Upward","Downward","Horizontally only","Randomly"],
+a:1
+},
+
+{
+q:"The gravitational force acting on an object is called its:",
+o:["Mass","Weight","Density","Volume"],
+a:1
+},
+
+{
+q:"What is the SI unit of weight?",
+o:["kg","g","N","L"],
+a:2
+},
+
+{
+q:"Which instrument is commonly used to measure weight or force?",
+o:["Beam balance","Spring balance","Thermometer","Measuring cylinder"],
+a:1
+},
+
+{
+q:"A spring balance has 1 N between two consecutive numbered marks, divided into 5 equal intervals. What is the smallest reading it can measure?",
+o:["1 N","0.5 N","0.2 N","0.1 N"],
+a:2
+},
+
+{
+q:"Mass is best defined as:",
+o:["The gravitational pull on an object","The amount of matter in an object","The force of friction","The pressure exerted by an object"],
+a:1
+},
+
+{
+q:"What happens to the mass of an object when it is taken from Earth to the Moon?",
+o:["It becomes smaller","It becomes larger","It remains the same","It becomes zero"],
+a:2
+},
+
+{
+q:"What happens to the weight of an object when it is taken from Earth to the Moon?",
+o:["It generally decreases","It increases greatly","It remains exactly the same","It becomes infinite"],
+a:0
+},
+
+{
+q:"Taking g ≈ 10 N/kg, what is the approximate weight of a 1 kg object on Earth?",
+o:["1 N","10 N","100 N","0.1 N"],
+a:1
+},
+
+{
+q:"If the weight of a 1 kg object on the Moon is approximately 1.6 N, what does this show?",
+o:["Its mass has become 1.6 kg","Its gravitational force is lower on the Moon","The object has lost matter","The object has become weightless"],
+a:1
+},
+
+{
+q:"According to the given textbook values, where would a 1 kg object have the greatest weight?",
+o:["Moon","Mars","Earth","Jupiter"],
+a:3
+},
+
+{
+q:"What happens to a spring balance when a load is suspended from it?",
+o:["The spring stretches","The spring disappears","The spring becomes magnetic","The spring freezes"],
+a:0
+},
+
+{
+q:"A beam balance is mainly used to compare:",
+o:["Masses","Temperatures","Electric charges","Speeds"],
+a:0
+},
+
+{
+q:"In everyday conversation, people often use the word 'weight' when they actually mean:",
+o:["Mass","Speed","Volume","Density"],
+a:0
+},
+
+{
+q:"According to the given textbook values, what is the approximate weight of a 1 kg object on Mars?",
+o:["1.6 N","3.8 N","10 N","25.4 N"],
+a:1
+},
+
+{
+q:"Why should a load not exceed the maximum capacity of a spring balance?",
+o:["It may damage the spring balance or give an unreliable reading","It will become magnetic","It will lose its mass","It will stop experiencing gravity"],
+a:0
+},
+
+{
+q:"The upward force exerted by a liquid on an immersed object is called:",
+o:["Friction","Buoyant force or upthrust","Gravitational force","Magnetic force"],
+a:1
+},
+
+{
+q:"An object is likely to sink when:",
+o:["Its weight is greater than the upward buoyant force","Buoyant force is greater than its weight","Its weight is zero","Gravity is absent"],
+a:0
+},
+
+{
+q:"An object floating at rest on the surface of a liquid has:",
+o:["Weight greater than buoyant force","Buoyant force equal to its weight","No gravitational force","No buoyant force"],
+a:1
+},
+
+{
+q:"Who is associated with the principle that an immersed object experiences an upward force equal to the weight of the liquid displaced?",
+o:["Newton","Archimedes","Einstein","Galileo"],
+a:1
+},
+
+{
+q:"The principle described in Question 94 is known as:",
+o:["Newton's Law","Archimedes' Principle","Ohm's Law","Law of Reflection"],
+a:1
+},
+
+{
+q:"A mug feels lighter when held under water mainly because:",
+o:["Its mass decreases","An upward buoyant force acts on it","Gravity disappears","The mug becomes magnetic"],
+a:1
+},
+
+{
+q:"Which naturally occurring rock can float on water because of its low average density?",
+o:["Granite","Pumice","Marble","Iron ore"],
+a:1
+},
+
+{
+q:"Why can pumice float on water?",
+o:["It contains many tiny pores or gas-filled spaces, making its average density low","It is made entirely of iron","It has a strong magnetic field","It has no mass"],
+a:0
+},
+
+{
+q:"Which factor affects the buoyant force experienced by an immersed object?",
+o:["Colour of the object","Density of the liquid","Colour of the container","Sound produced by the object"],
+a:1
+},
+
+{
+q:"An object displaces liquid whose weight is less than the weight of the object. What is most likely to happen?",
+o:["It will float","It will sink","It will lose all its mass","It will become magnetic"],
+a:1
+}
+
+];
+
+
+/* ============================================================
+   GAME VARIABLES
+   ============================================================ */
+
+let gameQuestions = [];
+let currentQuestion = 0;
+
+let score = 0;
+let streak = 0;
+
+let correctAnswers = 0;
+let wrongAnswers = 0;
+
+let timeLeft = 10;
+let timerInterval = null;
+
+let answered = false;
+
+let history = [];
+
+
+/* ============================================================
+   LEVELS
+   ============================================================ */
+
+const levels = [
+
+{
+start:1,
+end:20,
+name:"LEVEL 1 · FORCE EXPLORER"
+},
+
+{
+start:21,
+end:40,
+name:"LEVEL 2 · FORCE DETECTIVE"
+},
+
+{
+start:41,
+end:60,
+name:"LEVEL 3 · FRICTION FIGHTER"
+},
+
+{
+start:61,
+end:80,
+name:"LEVEL 4 · FORCE CHAMPION"
+},
+
+{
+start:81,
+end:100,
+name:"FINAL LEVEL · GRAVITY & BUOYANCY BOSS"
+}
+
+];
+
+
+/* ============================================================
+   UTILITY
+   ============================================================ */
+
+function shuffle(array) {
+
+    return array.sort(() => Math.random() - 0.5);
+
+}
+
+
+function showScreen(id) {
+
+    document.querySelectorAll(".screen").forEach(screen => {
+
+        screen.classList.remove("active");
+
+    });
+
+    document.getElementById(id).classList.add("active");
+
+}
+
+
+/* ============================================================
+   START GAME
+   ============================================================ */
+
+function startGame() {
+
+    gameQuestions = shuffle([...questions]);
+
+    currentQuestion = 0;
+
+    score = 0;
+    streak = 0;
+
+    correctAnswers = 0;
+    wrongAnswers = 0;
+
+    history = [];
+
+    showScreen("quizScreen");
+
+    renderQuestion();
+
+}
+
+
+/* ============================================================
+   RENDER QUESTION
+   ============================================================ */
+
+function renderQuestion() {
+
+    answered = false;
+
+    clearInterval(timerInterval);
+
+    timeLeft = 10;
+
+    const item = gameQuestions[currentQuestion];
+
+    document.getElementById("questionNumber").textContent =
+        `${currentQuestion + 1}/100`;
+
+    document.getElementById("score").textContent = score;
+
+    document.getElementById("streak").textContent = streak;
+
+    document.getElementById("progressBar").style.width =
+        `${currentQuestion}%`;
+
+    document.getElementById("questionText").textContent =
+        item.q;
+
+
+    /* LEVEL */
+
+    const level = levels.find(level =>
+        currentQuestion + 1 >= level.start &&
+        currentQuestion + 1 <= level.end
+    );
+
+    document.getElementById("level").textContent =
+        level.name;
+
+
+    /* OPTIONS */
+
+    const container =
+        document.getElementById("optionsContainer");
+
+    container.innerHTML = "";
+
+
+    let options = item.o.map((text,index) => {
+
+        return {
+            text:text,
+            original:index
+        };
+
+    });
+
+
+    shuffle(options);
+
+
+    options.forEach((option,index) => {
+
+        const button = document.createElement("button");
+
+        button.className = "option";
+
+        button.innerHTML = `
+            <span class="option-letter">
+                ${String.fromCharCode(65 + index)}
+            </span>
+            <span>${option.text}</span>
+        `;
+
+        button.onclick = function() {
+
+            answerQuestion(
+                option.original,
+                button
+            );
+
+        };
+
+        container.appendChild(button);
+
+    });
+
+
+    document.getElementById("feedback").className =
+        "feedback";
+
+    document.getElementById("feedback").textContent = "";
+
+    document.getElementById("nextButton").style.display =
+        "none";
+
+
+    updateTimer();
+
+    timerInterval = setInterval(() => {
+
+        timeLeft--;
+
+        updateTimer();
+
+        if(timeLeft <= 0) {
+
+            clearInterval(timerInterval);
+
+            timeExpired();
+
+        }
+
+    },1000);
+
+}
+
+
+/* ============================================================
+   TIMER
+   ============================================================ */
+
+function updateTimer() {
+
+    const timer =
+        document.getElementById("timer");
+
+    timer.textContent = timeLeft;
+
+    if(timeLeft <= 3) {
+
+        timer.classList.add("danger");
+
+    } else {
+
+        timer.classList.remove("danger");
+
+    }
+
+
+    document.getElementById("timeBar").style.width =
+        `${timeLeft * 10}%`;
+
+}
+
+
+/* ============================================================
+   ANSWER QUESTION
+   ============================================================ */
+
+function answerQuestion(originalIndex, selectedButton) {
+
+    if(answered) return;
+
+    answered = true;
+
+    clearInterval(timerInterval);
+
+
+    const item = gameQuestions[currentQuestion];
+
+    const buttons =
+        [...document.querySelectorAll(".option")];
+
+    buttons.forEach(button => {
+
+        button.disabled = true;
+
+    });
+
+
+    const isCorrect =
+        originalIndex === item.a;
+
+
+    if(isCorrect) {
+
+        correctAnswers++;
+
+        streak++;
+
+
+        /*
+        Base = 100
+        Streak bonus = up to 100
+        Speed bonus = up to 50
+        */
+
+        const streakBonus =
+            Math.min(streak - 1,10) * 10;
+
+        const speedBonus =
+            timeLeft * 5;
+
+        const points =
+            100 + streakBonus + speedBonus;
+
+        score += points;
+
+
+        selectedButton.classList.add("correct");
+
+
+        showFeedback(
+            `✅ CORRECT! +${points} points<br>
+             🔥 Streak: ${streak}`,
+            "correct"
+        );
+
+    }
+
+    else {
+
+        wrongAnswers++;
+
+        streak = 0;
+
+        selectedButton.classList.add("wrong");
+
+
+        /*
+        Highlight correct answer.
+        */
+
+        buttons.forEach(button => {
+
+            const text =
+                button.querySelector("span:nth-child(2)").textContent;
+
+            if(text === item.o[item.a]) {
+
+                button.classList.add("correct");
+
+            }
+
+        });
+
+
+        showFeedback(
+            `❌ NOT QUITE!<br>
+             Correct answer: <strong>${item.o[item.a]}</strong>`,
+            "wrong"
+        );
+
+    }
+
+
+    history.push({
+
+        question:item.q,
+
+        selected:item.o[originalIndex],
+
+        correct:item.o[item.a],
+
+        isCorrect:isCorrect
+
+    });
+
+
+    document.getElementById("score").textContent =
+        score;
+
+    document.getElementById("streak").textContent =
+        streak;
+
+    document.getElementById("nextButton").style.display =
+        "inline-block";
+
+}
+
+
+/* ============================================================
+   TIME EXPIRED
+   ============================================================ */
+
+function timeExpired() {
+
+    if(answered) return;
+
+    answered = true;
+
+    wrongAnswers++;
+
+    streak = 0;
+
+
+    const item = gameQuestions[currentQuestion];
+
+    const buttons =
+        [...document.querySelectorAll(".option")];
+
+    buttons.forEach(button => {
+
+        button.disabled = true;
+
+        const text =
+            button.querySelector("span:nth-child(2)").textContent;
+
+        if(text === item.o[item.a]) {
+
+            button.classList.add("correct");
+
+        }
+
+    });
+
+
+    history.push({
+
+        question:item.q,
+
+        selected:"Time expired",
+
+        correct:item.o[item.a],
+
+        isCorrect:false
+
+    });
+
+
+    showFeedback(
+        `⏰ TIME'S UP!<br>
+         Correct answer: <strong>${item.o[item.a]}</strong>`,
+        "wrong"
+    );
+
+
+    document.getElementById("nextButton").style.display =
+        "inline-block";
+
+}
+
+
+/* ============================================================
+   SKIP
+   ============================================================ */
+
+function skipQuestion() {
+
+    if(answered) return;
+
+    clearInterval(timerInterval);
+
+    answered = true;
+
+    wrongAnswers++;
+
+    streak = 0;
+
+
+    const item = gameQuestions[currentQuestion];
+
+
+    const buttons =
+        [...document.querySelectorAll(".option")];
+
+    buttons.forEach(button => {
+
+        button.disabled = true;
+
+    });
+
+
+    history.push({
+
+        question:item.q,
+
+        selected:"Skipped",
+
+        correct:item.o[item.a],
+
+        isCorrect:false
+
+    });
+
+
+    showFeedback(
+        `⏭️ SKIPPED<br>
+         Correct answer: <strong>${item.o[item.a]}</strong>`,
+        "wrong"
+    );
+
+
+    document.getElementById("nextButton").style.display =
+        "inline-block";
+
+}
+
+
+/* ============================================================
+   FEEDBACK
+   ============================================================ */
+
+function showFeedback(message,type) {
+
+    const feedback =
+        document.getElementById("feedback");
+
+    feedback.innerHTML = message;
+
+    feedback.className =
+        "feedback show";
+
+}
+
+
+/* ============================================================
+   NEXT QUESTION
+   ============================================================ */
+
+function nextQuestion() {
+
+    if(currentQuestion < 99) {
+
+        currentQuestion++;
+
+        renderQuestion();
+
+    }
+
+    else {
+
+        finishGame();
+
+    }
+
+}
+
+
+/* ============================================================
+   FINISH GAME
+   ============================================================ */
+
+function finishGame() {
+
+    clearInterval(timerInterval);
+
+    showScreen("resultScreen");
+
+
+    const percentage =
+        Math.round(correctAnswers / 100 * 100);
+
+
+    document.getElementById("finalScore").textContent =
+        `${score} pts`;
+
+
+    document.getElementById("correctCount").textContent =
+        correctAnswers;
+
+
+    document.getElementById("wrongCount").textContent =
+        wrongAnswers;
+
+
+    document.getElementById("accuracy").textContent =
+        `${percentage}%`;
+
+
+    let rank;
+    let message;
+
+
+    if(percentage >= 90) {
+
+        rank = "⚡ FORCE MASTER";
+
+        message =
+            "Outstanding! You have mastered the Exploring Forces chapter.";
+
+    }
+
+    else if(percentage >= 75) {
+
+        rank = "🌟 FORCE CHAMPION";
+
+        message =
+            "Excellent work! Your understanding of forces is strong.";
+
+    }
+
+    else if(percentage >= 60) {
+
+        rank = "🚀 FORCE EXPLORER";
+
+        message =
+            "Good job! Keep practising and you can become a Force Champion.";
+
+    }
+
+    else {
+
+        rank = "🔧 FORCE TRAINEE";
+
+        message =
+            "Keep practising! Every question is helping you build your science power.";
+
+    }
+
+
+    document.getElementById("rank").textContent =
+        rank;
+
+
+    document.getElementById("resultMessage").textContent =
+        message;
+
+
+    createReview();
+
+}
+
+
+/* ============================================================
+   REVIEW
+   ============================================================ */
+
+function createReview() {
+
+    const review =
+        document.getElementById("review");
+
+
+    let html =
+        "<h2>📋 Assessment Review</h2>";
+
+
+    history.forEach((item,index) => {
+
+        html += `
+
+        <div class="review-item">
+
+            <strong>
+                ${index + 1}. ${item.question}
+            </strong>
+
+            <div class="${
+                item.isCorrect
+                ? "correct-text"
+                : "wrong-text"
+            }">
+
+                ${
+                    item.isCorrect
+                    ? "✓ Correct"
+                    : "✗ Your answer: " + item.selected
+                }
+
+            </div>
+
+            <div class="small">
+
+                Correct answer:
+                ${item.correct}
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+
+    review.innerHTML = html;
+
+}
+
+
+/* ============================================================
+   RESTART
+   ============================================================ */
+
+function restartGame() {
+
+    clearInterval(timerInterval);
+
+    showScreen("startScreen");
+
+}
+
+</script>
+
+</body>
+</html>
