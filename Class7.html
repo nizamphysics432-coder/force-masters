@@ -1,0 +1,1829 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#111827">
+<title>Changes Around Us - Class 7 Science Quiz</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #111827, #1e3a8a, #312e81);
+    min-height: 100vh;
+    color: #fff;
+}
+
+.container {
+    width: 94%;
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 25px 0 40px;
+}
+
+.card {
+    background: rgba(255,255,255,0.97);
+    color: #111827;
+    border-radius: 22px;
+    padding: 28px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+}
+
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+}
+
+.logo {
+    text-align: center;
+    font-size: 60px;
+    margin-bottom: 5px;
+}
+
+h1 {
+    text-align: center;
+    margin: 5px 0;
+    font-size: 34px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #4b5563;
+    font-size: 17px;
+    margin-bottom: 25px;
+}
+
+.name-box {
+    margin: 25px auto;
+    max-width: 500px;
+}
+
+.name-box label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 16px;
+    border: 2px solid #d1d5db;
+    border-radius: 12px;
+    font-size: 18px;
+    outline: none;
+}
+
+input[type="text"]:focus {
+    border-color: #2563eb;
+}
+
+.btn {
+    display: inline-block;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 24px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.primary {
+    background: #2563eb;
+    color: white;
+}
+
+.green {
+    background: #16a34a;
+    color: white;
+}
+
+.red {
+    background: #dc2626;
+    color: white;
+}
+
+.gray {
+    background: #6b7280;
+    color: white;
+}
+
+.start-btn {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto 0;
+    font-size: 20px;
+    padding: 16px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.info {
+    background: #f3f4f6;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+}
+
+.info strong {
+    display: block;
+    font-size: 22px;
+    color: #1d4ed8;
+}
+
+.quiz-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.student-name {
+    font-weight: bold;
+    color: #1d4ed8;
+}
+
+.timer {
+    background: #111827;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-weight: bold;
+    min-width: 90px;
+    text-align: center;
+}
+
+.timer.warning {
+    background: #dc2626;
+}
+
+.progress-container {
+    height: 10px;
+    background: #e5e7eb;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 10px 0 25px;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: #2563eb;
+    transition: width 0.3s;
+}
+
+.question-number {
+    color: #6b7280;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.question {
+    font-size: 23px;
+    font-weight: bold;
+    line-height: 1.45;
+    margin-bottom: 22px;
+}
+
+.options {
+    display: grid;
+    gap: 12px;
+}
+
+.option {
+    border: 2px solid #d1d5db;
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    font-size: 17px;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.option:hover {
+    border-color: #2563eb;
+    background: #eff6ff;
+}
+
+.option.selected {
+    border-color: #2563eb;
+    background: #dbeafe;
+}
+
+.option.correct {
+    border-color: #16a34a;
+    background: #dcfce7;
+}
+
+.option.wrong {
+    border-color: #dc2626;
+    background: #fee2e2;
+}
+
+.option.disabled {
+    cursor: default;
+}
+
+.feedback {
+    margin-top: 18px;
+    padding: 14px;
+    border-radius: 10px;
+    font-weight: bold;
+    display: none;
+}
+
+.feedback.correct {
+    display: block;
+    background: #dcfce7;
+    color: #166534;
+}
+
+.feedback.wrong {
+    display: block;
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.quiz-controls {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.result-icon {
+    text-align: center;
+    font-size: 65px;
+}
+
+.result-title {
+    text-align: center;
+    font-size: 32px;
+    margin: 5px 0;
+}
+
+.result-name {
+    text-align: center;
+    font-size: 20px;
+    color: #4b5563;
+}
+
+.score-box {
+    text-align: center;
+    margin: 25px auto;
+    padding: 25px;
+    background: #eff6ff;
+    border-radius: 18px;
+}
+
+.big-score {
+    font-size: 50px;
+    font-weight: bold;
+    color: #1d4ed8;
+}
+
+.percentage {
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.grade {
+    display: inline-block;
+    font-size: 30px;
+    font-weight: bold;
+    background: #111827;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 12px;
+    margin-top: 15px;
+}
+
+.result-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+}
+
+.result-stat {
+    background: #f3f4f6;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.result-stat strong {
+    display: block;
+    font-size: 25px;
+}
+
+.review {
+    margin-top: 25px;
+}
+
+.review-item {
+    background: #f9fafb;
+    border-left: 5px solid #9ca3af;
+    padding: 15px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+}
+
+.review-item.correct-answer {
+    border-left-color: #16a34a;
+}
+
+.review-item.wrong-answer {
+    border-left-color: #dc2626;
+}
+
+.review-q {
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.review-answer {
+    color: #374151;
+    font-size: 14px;
+}
+
+.final-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 25px;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 20px;
+    color: rgba(255,255,255,0.75);
+    font-size: 13px;
+}
+
+.instructions {
+    background: #f3f4f6;
+    border-radius: 12px;
+    padding: 15px;
+    margin: 20px 0;
+}
+
+.instructions ul {
+    margin-bottom: 0;
+}
+
+@media (max-width: 600px) {
+    .container {
+        width: 96%;
+        padding-top: 12px;
+    }
+
+    .card {
+        padding: 20px 15px;
+        border-radius: 16px;
+    }
+
+    .logo {
+        font-size: 45px;
+    }
+
+    h1 {
+        font-size: 27px;
+    }
+
+    .question {
+        font-size: 19px;
+    }
+
+    .option {
+        padding: 16px 13px;
+        font-size: 16px;
+    }
+
+    .info-grid,
+    .result-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .quiz-top {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .timer {
+        width: 100%;
+    }
+
+    .quiz-controls {
+        flex-direction: column;
+    }
+
+    .quiz-controls .btn {
+        width: 100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- START SCREEN -->
+<div id="startScreen" class="card screen active">
+
+    <div class="logo">🧪</div>
+
+    <h1>CHANGES AROUND US</h1>
+
+    <div class="subtitle">
+        Class 7 Science • Chapter 5 Quiz
+    </div>
+
+    <div class="info-grid">
+        <div class="info">
+            <strong>60</strong>
+            Questions
+        </div>
+
+        <div class="info">
+            <strong>30</strong>
+            Minutes
+        </div>
+
+        <div class="info">
+            <strong>100%</strong>
+            Science
+        </div>
+    </div>
+
+    <div class="instructions">
+        <strong>📋 Instructions</strong>
+        <ul>
+            <li>Enter your name before starting.</li>
+            <li>Choose one answer for each question.</li>
+            <li>Each correct answer carries 1 mark.</li>
+            <li>There are 60 questions.</li>
+            <li>You have 30 minutes.</li>
+            <li>Your final score, percentage and grade will be displayed.</li>
+        </ul>
+    </div>
+
+    <div class="name-box">
+        <label for="studentName">👤 Enter your full name</label>
+        <input
+            type="text"
+            id="studentName"
+            placeholder="Enter your name"
+            autocomplete="name"
+        >
+    </div>
+
+    <button class="btn primary start-btn" onclick="startQuiz()">
+        🚀 START QUIZ
+    </button>
+
+</div>
+
+
+<!-- QUIZ SCREEN -->
+<div id="quizScreen" class="card screen">
+
+    <div class="quiz-top">
+        <div class="student-name" id="displayStudentName"></div>
+        <div class="timer" id="timer">30:00</div>
+    </div>
+
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="question-number" id="questionNumber">
+        Question 1 of 60
+    </div>
+
+    <div class="question" id="questionText"></div>
+
+    <div class="options" id="optionsContainer"></div>
+
+    <div id="feedback" class="feedback"></div>
+
+    <div class="quiz-controls">
+
+        <button
+            class="btn gray"
+            id="prevBtn"
+            onclick="previousQuestion()"
+        >
+            ← Previous
+        </button>
+
+        <button
+            class="btn primary"
+            id="nextBtn"
+            onclick="nextQuestion()"
+        >
+            Next →
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- RESULT SCREEN -->
+<div id="resultScreen" class="card screen">
+
+    <div class="result-icon" id="resultIcon">🎉</div>
+
+    <div class="result-title">
+        QUIZ COMPLETED!
+    </div>
+
+    <div class="result-name" id="resultStudentName"></div>
+
+    <div class="score-box">
+
+        <div>Your Score</div>
+
+        <div class="big-score" id="finalScore">
+            0 / 60
+        </div>
+
+        <div class="percentage" id="finalPercentage">
+            0%
+        </div>
+
+        <div class="grade" id="finalGrade">
+            F
+        </div>
+
+    </div>
+
+    <div class="result-grid">
+
+        <div class="result-stat">
+            <strong id="correctCount">0</strong>
+            Correct
+        </div>
+
+        <div class="result-stat">
+            <strong id="wrongCount">0</strong>
+            Wrong
+        </div>
+
+        <div class="result-stat">
+            <strong id="unansweredCount">0</strong>
+            Unanswered
+        </div>
+
+    </div>
+
+    <div
+        id="performanceMessage"
+        style="text-align:center;font-size:19px;font-weight:bold;margin:20px 0;"
+    ></div>
+
+    <div class="final-buttons">
+
+        <button
+            class="btn primary"
+            onclick="showReview()"
+        >
+            📖 Review Answers
+        </button>
+
+        <button
+            class="btn green"
+            onclick="restartQuiz()"
+        >
+            🔄 Try Again
+        </button>
+
+    </div>
+
+    <div id="reviewSection" class="review" style="display:none;"></div>
+
+</div>
+
+<div class="footer">
+    Class 7 Science • Changes Around Us
+</div>
+
+</div>
+
+
+<script>
+
+const questions = [
+
+{
+q: "Which of the following is a characteristic feature of a physical change?",
+options: [
+"A new substance is formed",
+"No new substance is formed",
+"The chemical composition changes",
+"The substance always becomes irreversible"
+],
+answer: 1
+},
+
+{
+q: "Which of the following properties may change during a physical change?",
+options: [
+"Chemical composition",
+"Shape, size, or state",
+"Identity of the substance",
+"Type of atoms present"
+],
+answer: 1
+},
+
+{
+q: "Melting of ice cubes is an example of:",
+options: [
+"Chemical change",
+"Physical change",
+"Combustion",
+"Chemical reaction"
+],
+answer: 1
+},
+
+{
+q: "Chopping vegetables mainly causes a change in their:",
+options: [
+"Chemical composition",
+"Size and shape",
+"Type of substance",
+"Chemical identity"
+],
+answer: 1
+},
+
+{
+q: "Crushing a piece of chalk into powder is an example of a:",
+options: [
+"Chemical change",
+"Physical change",
+"Combustion reaction",
+"Chemical reaction"
+],
+answer: 1
+},
+
+{
+q: "Which of the following is a physical change?",
+options: [
+"Boiling water",
+"Burning wood",
+"Rusting of iron",
+"Curdling of milk"
+],
+answer: 0
+},
+
+{
+q: "Folding a piece of paper to create a new shape is a:",
+options: [
+"Chemical change",
+"Physical change",
+"Combustion process",
+"Decomposition reaction"
+],
+answer: 1
+},
+
+{
+q: "Inflating a balloon and then releasing the air is an example of a:",
+options: [
+"Chemical change",
+"Physical change",
+"Chemical reaction",
+"Formation of a new substance"
+],
+answer: 1
+},
+
+{
+q: "Cutting a piece of paper with scissors is an example of a:",
+options: [
+"Physical change",
+"Chemical change",
+"Combustion",
+"Rusting"
+],
+answer: 0
+},
+
+{
+q: "Changing water from solid to liquid or liquid to gas is a:",
+options: [
+"Chemical change",
+"Physical change",
+"Combustion reaction",
+"Chemical reaction"
+],
+answer: 1
+},
+
+{
+q: "A change in which one or more new substances are formed is called a:",
+options: [
+"Physical change",
+"Chemical change",
+"Reversible change",
+"Change of state"
+],
+answer: 1
+},
+
+{
+q: "The process in which new substances are formed is called a:",
+options: [
+"Physical transformation",
+"Chemical reaction",
+"Change of state",
+"Physical separation"
+],
+answer: 1
+},
+
+{
+q: "When carbon dioxide gas is passed into lime water, the lime water turns milky due to the formation of:",
+options: [
+"Carbon dioxide",
+"Calcium carbonate",
+"Calcium oxide",
+"Sodium hydrogen carbonate"
+],
+answer: 1
+},
+
+{
+q: "The insoluble white substance formed when carbon dioxide reacts with lime water is:",
+options: [
+"Calcium oxide",
+"Calcium carbonate",
+"Carbon monoxide",
+"Sodium carbonate"
+],
+answer: 1
+},
+
+{
+q: "Lime water is a solution of:",
+options: [
+"Calcium carbonate",
+"Calcium hydroxide",
+"Sodium hydroxide",
+"Calcium oxide"
+],
+answer: 1
+},
+
+{
+q: "Turning lime water milky is commonly used as a test for:",
+options: [
+"Oxygen",
+"Nitrogen",
+"Carbon dioxide",
+"Hydrogen"
+],
+answer: 2
+},
+
+{
+q: "When vinegar reacts with baking soda, the gas evolved is:",
+options: [
+"Oxygen",
+"Carbon dioxide",
+"Hydrogen",
+"Nitrogen"
+],
+answer: 1
+},
+
+{
+q: "The reaction between vinegar and baking soda is a:",
+options: [
+"Physical change",
+"Chemical change",
+"Change of state",
+"Reversible physical change"
+],
+answer: 1
+},
+
+{
+q: "Rusting of iron results in the formation of:",
+options: [
+"Iron oxide",
+"Iron sulfide",
+"Iron carbonate",
+"Sodium oxide"
+],
+answer: 0
+},
+
+{
+q: "Rusting of iron is a chemical change because:",
+options: [
+"The iron changes its shape",
+"A new substance is formed",
+"The iron becomes smaller",
+"No reaction takes place"
+],
+answer: 1
+},
+
+{
+q: "When a magnesium ribbon is burnt in air, the white powder formed is:",
+options: [
+"Magnesium carbonate",
+"Magnesium oxide",
+"Magnesium hydroxide",
+"Magnesium nitrate"
+],
+answer: 1
+},
+
+{
+q: "A chemical reaction in which a substance reacts with oxygen and produces heat and/or light is called:",
+options: [
+"Melting",
+"Combustion",
+"Condensation",
+"Sublimation"
+],
+answer: 1
+},
+
+{
+q: "Substances that undergo combustion are called:",
+options: [
+"Non-combustible substances",
+"Combustible substances",
+"Catalysts",
+"Products"
+],
+answer: 1
+},
+
+{
+q: "Which of the following is a combustible substance?",
+options: [
+"Glass",
+"Stone",
+"Wood",
+"Sand"
+],
+answer: 2
+},
+
+{
+q: "Which component of air supports combustion?",
+options: [
+"Nitrogen",
+"Carbon dioxide",
+"Oxygen",
+"Argon"
+],
+answer: 2
+},
+
+{
+q: "Why does a candle covered with a glass tumbler stop burning after some time?",
+options: [
+"The supply of oxygen becomes insufficient",
+"The wax freezes immediately",
+"The glass absorbs all the light",
+"The wick becomes too long"
+],
+answer: 0
+},
+
+{
+q: "What is a suitable way to extinguish clothing that has caught fire?",
+options: [
+"Pour petrol on it",
+"Fan the flames",
+"Cover the flames with a thick woollen or cotton cloth/blanket",
+"Run around to cool the clothes"
+],
+answer: 2
+},
+
+{
+q: "Why should synthetic blankets or clothes generally not be used to put out a fire on a person?",
+options: [
+"They are too heavy",
+"They may melt and stick to the skin",
+"They increase the oxygen supply",
+"They become cold immediately"
+],
+answer: 1
+},
+
+{
+q: "The minimum temperature at which a substance catches fire is called its:",
+options: [
+"Melting point",
+"Boiling point",
+"Ignition temperature",
+"Freezing point"
+],
+answer: 2
+},
+
+{
+q: "Which three conditions are necessary for combustion?",
+options: [
+"Fuel, water and nitrogen",
+"Fuel, oxygen and sufficient heat",
+"Carbon dioxide, light and soil",
+"Fuel, carbon monoxide and cold temperature"
+],
+answer: 1
+},
+
+{
+q: "The burning of a candle involves:",
+options: [
+"Only a physical change",
+"Only a chemical change",
+"Both physical and chemical changes",
+"Neither physical nor chemical changes"
+],
+answer: 2
+},
+
+{
+q: "When a candle burns, which process is a physical change?",
+options: [
+"Melting and evaporation of wax",
+"Burning of wax vapour",
+"Formation of carbon dioxide",
+"Production of heat and light"
+],
+answer: 0
+},
+
+{
+q: "When a candle burns, which process is a chemical change?",
+options: [
+"Melting of solid wax",
+"Flow of liquid wax",
+"Burning of wax vapour",
+"Solidification of wax"
+],
+answer: 2
+},
+
+{
+q: "Who gave the famous lecture series The Chemical History of a Candle?",
+options: [
+"Isaac Newton",
+"Michael Faraday",
+"Albert Einstein",
+"Robert Boyle"
+],
+answer: 1
+},
+
+{
+q: "The production of light by living organisms, such as fireflies, is called:",
+options: [
+"Photosynthesis",
+"Bioluminescence",
+"Thermoluminescence",
+"Evaporation"
+],
+answer: 1
+},
+
+{
+q: "A change that can be reversed to obtain the original substance or state is called a:",
+options: [
+"Chemical change",
+"Reversible change",
+"Permanent change",
+"Irreversible change"
+],
+answer: 1
+},
+
+{
+q: "Which of the following is a reversible change?",
+options: [
+"Chopping vegetables",
+"Ripening of fruits",
+"Melting ice cubes",
+"Making popcorn from corn"
+],
+answer: 2
+},
+
+{
+q: "Which of the following is an irreversible change?",
+options: [
+"Melting ice cubes",
+"Boiling water",
+"Dissolving sugar in water",
+"Making popcorn from corn"
+],
+answer: 3
+},
+
+{
+q: "Ripening of fruits is generally considered a:",
+options: [
+"Reversible physical change",
+"Irreversible change",
+"Reversible change of state",
+"Temporary physical change"
+],
+answer: 1
+},
+
+{
+q: "Changing milk into curd is an example of a:",
+options: [
+"Physical change only",
+"Chemical change",
+"Reversible change",
+"Change of state only"
+],
+answer: 1
+},
+
+{
+q: "Which of the following is generally considered an undesirable change?",
+options: [
+"Cooking food",
+"Ripening of fruits",
+"Rusting of iron",
+"Germination of seeds"
+],
+answer: 2
+},
+
+{
+q: "The conversion of food waste into compost through decomposition is an example of:",
+options: [
+"A useless change",
+"A useful/desirable process",
+"A physical change only",
+"A completely reversible process"
+],
+answer: 1
+},
+
+{
+q: "Burning fuels in cars and aeroplanes increases the amount of which gas in the atmosphere?",
+options: [
+"Oxygen",
+"Carbon dioxide",
+"Nitrogen",
+"Hydrogen"
+],
+answer: 1
+},
+
+{
+q: "Some paints can contribute to air pollution during drying because they may release:",
+options: [
+"Oxygen",
+"Volatile substances into the air",
+"Solid metals into the air",
+"Pure nitrogen"
+],
+answer: 1
+},
+
+{
+q: "Which of the following can have a long-term environmental impact when it increases due to human activities?",
+options: [
+"Folding a piece of paper",
+"Burning fuels and increasing greenhouse gas emissions",
+"Melting an ice cube",
+"Chopping vegetables"
+],
+answer: 1
+},
+
+{
+q: "The materials such as sand, soil and rock fragments deposited at the base of a mountain may be called:",
+options: [
+"Sediments",
+"Magma",
+"Lava",
+"Minerals only"
+],
+answer: 0
+},
+
+{
+q: "The physical and chemical breakdown of rocks into smaller pieces is called:",
+options: [
+"Weathering",
+"Combustion",
+"Condensation",
+"Sublimation"
+],
+answer: 0
+},
+
+{
+q: "Basalt can undergo weathering and form a reddish layer mainly due to the formation of:",
+options: [
+"Iron oxide",
+"Copper sulfate",
+"Calcium carbonate",
+"Sodium chloride"
+],
+answer: 0
+},
+
+{
+q: "The process in which weathered rock particles and soil are carried from one place to another by wind or flowing water is called:",
+options: [
+"Weathering",
+"Erosion",
+"Condensation",
+"Combustion"
+],
+answer: 1
+},
+
+{
+q: "The breaking down and movement of rocks and soil during natural processes such as a landslide is mainly a:",
+options: [
+"Chemical reaction",
+"Physical process",
+"Combustion process",
+"Rusting process"
+],
+answer: 1
+},
+
+{
+q: "River rocks and pebbles often become smoother because of continuous:",
+options: [
+"Chemical rusting",
+"Erosion and abrasion by flowing water",
+"Artificial polishing",
+"Heating by magma"
+],
+answer: 1
+},
+
+{
+q: "What happens to materials carried by water when the speed of the water decreases?",
+options: [
+"They evaporate completely",
+"They settle at the bottom",
+"They immediately become gases",
+"They catch fire"
+],
+answer: 1
+},
+
+{
+q: "Sediments that settle and become compacted and cemented over a long period can form:",
+options: [
+"New rocks",
+"Plastic waste",
+"Compost",
+"Pure crystals"
+],
+answer: 0
+},
+
+{
+q: "Which of the following natural processes takes place over a very long period and can result in the formation of new rocks?",
+options: [
+"Melting an ice cube",
+"Formation of rocks from hardened sediments",
+"Inflating a balloon",
+"Boiling water"
+],
+answer: 1
+},
+
+{
+q: "Lemon juice used as invisible ink turns brown when heated. This indicates:",
+options: [
+"Only a reversible physical change",
+"A chemical change caused by heating",
+"Sublimation of paper",
+"Complete destruction of the paper"
+],
+answer: 1
+},
+
+{
+q: "Yeast is added while making bread because fermentation by yeast produces:",
+options: [
+"Oxygen gas",
+"Carbon dioxide gas",
+"Nitrogen gas",
+"Hydrogen gas"
+],
+answer: 1
+},
+
+{
+q: "A chameleon can change its skin colour and later change it again. This is an example of a:",
+options: [
+"Permanent chemical change",
+"Reversible biological change",
+"Combustion reaction",
+"Change that always forms a new substance"
+],
+answer: 1
+},
+
+{
+q: "Which of the following processes involves a chemical change?",
+options: [
+"Dissolving sugar in water",
+"Tearing paper",
+"Burning magnesium ribbon",
+"Folding a handkerchief"
+],
+answer: 2
+},
+
+{
+q: "Brown deposits appearing on an iron bicycle handle over time are evidence of:",
+options: [
+"A physical change only",
+"A chemical change called rusting",
+"Evaporation of water",
+"Sublimation of iron"
+],
+answer: 1
+},
+
+{
+q: "Which statement about changes is correct?",
+options: [
+"All changes are desirable and reversible",
+"Some changes are reversible while others are irreversible; changes may also be desirable or undesirable",
+"Chemical changes never involve energy changes",
+"Physical changes always form new substances"
+],
+answer: 1
+}
+
+];
+
+
+// ===============================
+// QUIZ VARIABLES
+// ===============================
+
+let studentName = "";
+let currentQuestion = 0;
+let answers = new Array(questions.length).fill(null);
+let timeLeft = 30 * 60;
+let timerInterval = null;
+let quizFinished = false;
+
+
+// ===============================
+// START QUIZ
+// ===============================
+
+function startQuiz() {
+
+    const nameInput = document.getElementById("studentName");
+
+    studentName = nameInput.value.trim();
+
+    if (!studentName) {
+        alert("Please enter your name before starting the quiz.");
+        nameInput.focus();
+        return;
+    }
+
+    currentQuestion = 0;
+    answers = new Array(questions.length).fill(null);
+    timeLeft = 30 * 60;
+    quizFinished = false;
+
+    document.getElementById("displayStudentName").textContent =
+        "👤 " + studentName;
+
+    showScreen("quizScreen");
+
+    startTimer();
+    showQuestion();
+}
+
+
+// ===============================
+// SCREEN SWITCH
+// ===============================
+
+function showScreen(screenId) {
+
+    document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.remove("active");
+    });
+
+    document.getElementById(screenId).classList.add("active");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+// ===============================
+// SHOW QUESTION
+// ===============================
+
+function showQuestion() {
+
+    const question = questions[currentQuestion];
+
+    document.getElementById("questionNumber").textContent =
+        `Question ${currentQuestion + 1} of ${questions.length}`;
+
+    document.getElementById("questionText").textContent =
+        question.q;
+
+    const progress =
+        ((currentQuestion + 1) / questions.length) * 100;
+
+    document.getElementById("progressBar").style.width =
+        progress + "%";
+
+    const container =
+        document.getElementById("optionsContainer");
+
+    container.innerHTML = "";
+
+    question.options.forEach((option, index) => {
+
+        const button = document.createElement("button");
+
+        button.className = "option";
+
+        button.textContent =
+            String.fromCharCode(65 + index) + ") " + option;
+
+        button.onclick = function() {
+            selectAnswer(index);
+        };
+
+        if (answers[currentQuestion] === index) {
+            button.classList.add("selected");
+        }
+
+        container.appendChild(button);
+    });
+
+    document.getElementById("feedback").className = "feedback";
+    document.getElementById("feedback").textContent = "";
+
+    document.getElementById("prevBtn").disabled =
+        currentQuestion === 0;
+
+    const nextBtn =
+        document.getElementById("nextBtn");
+
+    if (currentQuestion === questions.length - 1) {
+        nextBtn.textContent = "🏁 Finish Quiz";
+        nextBtn.className = "btn green";
+    } else {
+        nextBtn.textContent = "Next →";
+        nextBtn.className = "btn primary";
+    }
+}
+
+
+// ===============================
+// SELECT ANSWER
+// ===============================
+
+function selectAnswer(index) {
+
+    if (quizFinished) return;
+
+    answers[currentQuestion] = index;
+
+    const buttons =
+        document.querySelectorAll(".option");
+
+    buttons.forEach((button, i) => {
+
+        button.classList.remove(
+            "selected",
+            "correct",
+            "wrong"
+        );
+
+        if (i === index) {
+            button.classList.add("selected");
+        }
+    });
+
+    const feedback =
+        document.getElementById("feedback");
+
+    if (index === questions[currentQuestion].answer) {
+
+        feedback.textContent = "✅ Correct answer!";
+        feedback.className = "feedback correct";
+
+    } else {
+
+        feedback.textContent =
+            "❌ Not correct. You can change your answer before moving on.";
+
+        feedback.className = "feedback wrong";
+    }
+}
+
+
+// ===============================
+// NEXT QUESTION
+// ===============================
+
+function nextQuestion() {
+
+    if (currentQuestion === questions.length - 1) {
+
+        finishQuiz();
+        return;
+    }
+
+    currentQuestion++;
+    showQuestion();
+}
+
+
+// ===============================
+// PREVIOUS QUESTION
+// ===============================
+
+function previousQuestion() {
+
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        showQuestion();
+    }
+}
+
+
+// ===============================
+// TIMER
+// ===============================
+
+function startTimer() {
+
+    clearInterval(timerInterval);
+
+    updateTimer();
+
+    timerInterval = setInterval(() => {
+
+        timeLeft--;
+
+        updateTimer();
+
+        if (timeLeft <= 0) {
+
+            clearInterval(timerInterval);
+
+            alert("⏰ Time is up! Your quiz will be submitted automatically.");
+
+            finishQuiz();
+        }
+
+    }, 1000);
+}
+
+
+function updateTimer() {
+
+    const minutes =
+        Math.floor(timeLeft / 60);
+
+    const seconds =
+        timeLeft % 60;
+
+    const timer =
+        document.getElementById("timer");
+
+    timer.textContent =
+        `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+
+    if (timeLeft <= 60) {
+        timer.classList.add("warning");
+    } else {
+        timer.classList.remove("warning");
+    }
+}
+
+
+// ===============================
+// FINISH QUIZ
+// ===============================
+
+function finishQuiz() {
+
+    if (quizFinished) return;
+
+    quizFinished = true;
+
+    clearInterval(timerInterval);
+
+    let score = 0;
+
+    answers.forEach((answer, index) => {
+
+        if (
+            answer !== null &&
+            answer === questions[index].answer
+        ) {
+            score++;
+        }
+    });
+
+    const total = questions.length;
+
+    const percentage =
+        (score / total) * 100;
+
+    const correct = score;
+
+    const wrong =
+        answers.filter((answer, index) =>
+            answer !== null &&
+            answer !== questions[index].answer
+        ).length;
+
+    const unanswered =
+        answers.filter(answer => answer === null).length;
+
+    const grade =
+        calculateGrade(percentage);
+
+    document.getElementById("resultStudentName").textContent =
+        "Student: " + studentName;
+
+    document.getElementById("finalScore").textContent =
+        `${score} / ${total}`;
+
+    document.getElementById("finalPercentage").textContent =
+        percentage.toFixed(1) + "%";
+
+    document.getElementById("finalGrade").textContent =
+        "Grade " + grade;
+
+    document.getElementById("correctCount").textContent =
+        correct;
+
+    document.getElementById("wrongCount").textContent =
+        wrong;
+
+    document.getElementById("unansweredCount").textContent =
+        unanswered;
+
+    document.getElementById("performanceMessage").textContent =
+        getPerformanceMessage(percentage);
+
+    document.getElementById("resultIcon").textContent =
+        getResultIcon(percentage);
+
+    showScreen("resultScreen");
+
+    // Save result locally.
+    saveResultLocally({
+        name: studentName,
+        score: score,
+        total: total,
+        percentage: percentage,
+        grade: grade,
+        correct: correct,
+        wrong: wrong,
+        unanswered: unanswered,
+        date: new Date().toLocaleString()
+    });
+}
+
+
+// ===============================
+// GRADE
+// ===============================
+
+function calculateGrade(percentage) {
+
+    if (percentage >= 90) {
+        return "A+";
+    }
+
+    if (percentage >= 80) {
+        return "A";
+    }
+
+    if (percentage >= 70) {
+        return "B";
+    }
+
+    if (percentage >= 60) {
+        return "C";
+    }
+
+    if (percentage >= 50) {
+        return "D";
+    }
+
+    return "F";
+}
+
+
+// ===============================
+// PERFORMANCE MESSAGE
+// ===============================
+
+function getPerformanceMessage(percentage) {
+
+    if (percentage >= 90) {
+        return "🌟 Outstanding! You are a Science Champion!";
+    }
+
+    if (percentage >= 80) {
+        return "🎉 Excellent work! Keep it up!";
+    }
+
+    if (percentage >= 70) {
+        return "👏 Very good! You have a strong understanding.";
+    }
+
+    if (percentage >= 60) {
+        return "👍 Good effort! Keep practising.";
+    }
+
+    if (percentage >= 50) {
+        return "📚 Keep studying and you will improve!";
+    }
+
+    return "💪 Don't give up! Review the chapter and try again.";
+}
+
+
+// ===============================
+// RESULT ICON
+// ===============================
+
+function getResultIcon(percentage) {
+
+    if (percentage >= 90) return "🏆";
+    if (percentage >= 80) return "🎉";
+    if (percentage >= 70) return "👏";
+    if (percentage >= 60) return "👍";
+    if (percentage >= 50) return "📚";
+
+    return "💪";
+}
+
+
+// ===============================
+// REVIEW ANSWERS
+// ===============================
+
+function showReview() {
+
+    const section =
+        document.getElementById("reviewSection");
+
+    section.style.display = "block";
+
+    section.innerHTML =
+        "<h2>📖 Answer Review</h2>";
+
+    questions.forEach((question, index) => {
+
+        const userAnswer =
+            answers[index];
+
+        const correctAnswer =
+            question.answer;
+
+        const item =
+            document.createElement("div");
+
+        if (
+            userAnswer !== null &&
+            userAnswer === correctAnswer
+        ) {
+
+            item.className =
+                "review-item correct-answer";
+
+        } else {
+
+            item.className =
+                "review-item wrong-answer";
+        }
+
+        let userText =
+            userAnswer === null
+                ? "Not answered"
+                : question.options[userAnswer];
+
+        let correctText =
+            question.options[correctAnswer];
+
+        item.innerHTML = `
+            <div class="review-q">
+                ${index + 1}. ${question.q}
+            </div>
+
+            <div class="review-answer">
+                <strong>Your answer:</strong> ${userText}
+            </div>
+
+            <div class="review-answer">
+                <strong>Correct answer:</strong> ${correctText}
+            </div>
+        `;
+
+        section.appendChild(item);
+    });
+
+    section.scrollIntoView({
+        behavior: "smooth"
+    });
+}
+
+
+// ===============================
+// RESTART
+// ===============================
+
+function restartQuiz() {
+
+    clearInterval(timerInterval);
+
+    document.getElementById("reviewSection").style.display =
+        "none";
+
+    document.getElementById("studentName").value =
+        studentName;
+
+    showScreen("startScreen");
+}
+
+
+// ===============================
+// SAVE RESULT LOCALLY
+// ===============================
+
+function saveResultLocally(result) {
+
+    let previousResults =
+        JSON.parse(
+            localStorage.getItem("class7QuizResults") || "[]"
+        );
+
+    previousResults.push(result);
+
+    localStorage.setItem(
+        "class7QuizResults",
+        JSON.stringify(previousResults)
+    );
+}
+
+</script>
+
+</body>
+</html>
