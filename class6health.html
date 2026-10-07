@@ -1,0 +1,1758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Health: The Ultimate Treasure - Class 6 Science</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
+    color: #263238;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px;
+}
+
+.header {
+    background: linear-gradient(135deg, #00796b, #26a69a);
+    color: white;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.header h1 {
+    margin: 0 0 8px;
+    font-size: 28px;
+}
+
+.header p {
+    margin: 5px 0;
+}
+
+.card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #b0bec5;
+    border-radius: 10px;
+    font-size: 16px;
+    margin-top: 8px;
+}
+
+button {
+    border: none;
+    border-radius: 10px;
+    padding: 13px 22px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.start-btn {
+    background: #00796b;
+    color: white;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.start-btn:hover {
+    background: #004d40;
+}
+
+.question-card {
+    background: white;
+    border-radius: 15px;
+    padding: 22px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.question-number {
+    color: #00796b;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.question {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.option {
+    display: block;
+    background: #f5f5f5;
+    padding: 12px;
+    margin: 9px 0;
+    border-radius: 9px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: 0.2s;
+}
+
+.option:hover {
+    background: #e0f2f1;
+    border-color: #80cbc4;
+}
+
+.option input {
+    margin-right: 10px;
+}
+
+.timer-box {
+    position: sticky;
+    top: 10px;
+    z-index: 100;
+    background: #263238;
+    color: white;
+    padding: 14px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.timer-warning {
+    background: #c62828;
+}
+
+.progress-container {
+    background: #cfd8dc;
+    border-radius: 20px;
+    height: 14px;
+    margin: 10px 0 20px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: #00796b;
+    transition: width 0.3s;
+}
+
+.section-title {
+    background: #e0f2f1;
+    color: #00695c;
+    padding: 14px;
+    border-radius: 10px;
+    margin: 25px 0 15px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.submit-btn {
+    background: #1565c0;
+    color: white;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.submit-btn:hover {
+    background: #0d47a1;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.result {
+    text-align: center;
+}
+
+.score-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: #00796b;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.result-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.result-box {
+    padding: 18px;
+    border-radius: 12px;
+    background: #eceff1;
+}
+
+.result-box strong {
+    display: block;
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.correct {
+    background: #c8e6c9;
+}
+
+.wrong {
+    background: #ffcdd2;
+}
+
+.unanswered {
+    background: #fff9c4;
+}
+
+.review {
+    text-align: left;
+    margin-top: 25px;
+}
+
+.review-item {
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 10px;
+    background: #f5f5f5;
+}
+
+.review-correct {
+    border-left: 6px solid #2e7d32;
+}
+
+.review-wrong {
+    border-left: 6px solid #c62828;
+}
+
+.review-unanswered {
+    border-left: 6px solid #f9a825;
+}
+
+.lock-message {
+    background: #ffebee;
+    border: 2px solid #ef5350;
+    color: #b71c1c;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.success-message {
+    background: #e8f5e9;
+    border: 2px solid #66bb6a;
+    color: #1b5e20;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+@media(max-width: 700px) {
+    .container {
+        padding: 10px;
+    }
+
+    .header h1 {
+        font-size: 22px;
+    }
+
+    .question {
+        font-size: 16px;
+    }
+
+    .result-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+    <h1>Health: The Ultimate Treasure</h1>
+    <p>Class 6 Science</p>
+    <p>60 MCQs • 30 Minutes</p>
+</div>
+
+<!-- LOGIN / NAME SCREEN -->
+<div id="startScreen" class="card">
+
+    <h2>Student Information</h2>
+
+    <p><strong>Enter your full name:</strong></p>
+
+    <input
+        type="text"
+        id="studentName"
+        placeholder="Enter your name"
+        autocomplete="off"
+    >
+
+    <p style="font-size:14px;color:#607d8b;">
+        You can attend this chapter test only once.
+    </p>
+
+    <button class="start-btn" onclick="startQuiz()">
+        Start Test
+    </button>
+
+    <div id="startMessage" style="margin-top:15px;"></div>
+
+</div>
+
+<!-- QUIZ -->
+<div id="quizScreen" class="hidden">
+
+    <div class="timer-box" id="timer">
+        Time Remaining: 30:00
+    </div>
+
+    <div class="card">
+        <strong>Progress</strong>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <span id="progressText">0 / 60 answered</span>
+    </div>
+
+    <form id="quizForm">
+
+        <div class="section-title">
+            🟢 Easy Level – Questions 1–20
+        </div>
+
+        <div id="easyQuestions"></div>
+
+        <div class="section-title">
+            🟡 Moderate Level – Questions 21–40
+        </div>
+
+        <div id="moderateQuestions"></div>
+
+        <div class="section-title">
+            🔵 Application-Based – Questions 41–60
+        </div>
+
+        <div id="applicationQuestions"></div>
+
+        <div class="card">
+            <button type="button" class="submit-btn" onclick="confirmSubmit()">
+                Submit Test
+            </button>
+        </div>
+
+    </form>
+
+</div>
+
+<!-- RESULT -->
+<div id="resultScreen" class="card hidden result">
+
+    <h2>Test Completed</h2>
+
+    <p id="studentResultName"></p>
+
+    <div class="score-circle" id="scoreCircle">
+        0%
+    </div>
+
+    <h2 id="gradeText"></h2>
+
+    <div class="result-grid">
+
+        <div class="result-box correct">
+            <strong id="correctCount">0</strong>
+            Correct
+        </div>
+
+        <div class="result-box wrong">
+            <strong id="wrongCount">0</strong>
+            Wrong
+        </div>
+
+        <div class="result-box unanswered">
+            <strong id="unansweredCount">0</strong>
+            Unanswered
+        </div>
+
+        <div class="result-box">
+            <strong id="totalScore">0/60</strong>
+            Score
+        </div>
+
+    </div>
+
+    <div id="firebaseMessage" style="margin-top:20px;"></div>
+
+    <div class="review">
+        <h2>Answer Review</h2>
+        <div id="reviewContainer"></div>
+    </div>
+
+</div>
+
+</div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+<script>
+
+/* =========================================================
+   FIREBASE CONFIGURATION
+   ========================================================= */
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCfI3zEpaiRA3OjgYiTuvnuA3GGyQGQNpU",
+    authDomain: "sciencequiz2026-ccd77.firebaseapp.com",
+    databaseURL: "https://sciencequiz2026-ccd77-default-rtdb.firebaseio.com",
+    projectId: "sciencequiz2026-ccd77",
+    storageBucket: "sciencequiz2026-ccd77.firebasestorage.app",
+    messagingSenderId: "412753144312",
+    appId: "1:412753144312:web:fe66b332abcadfb0438e0d",
+    measurementId: "G-YC0DM7M07F"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const database = firebase.database();
+
+/* =========================================================
+   QUIZ INFORMATION
+   ========================================================= */
+
+const CLASS_ID = "6";
+
+const QUIZ_TITLE =
+    "Health: The Ultimate Treasure - Class 6 Science";
+
+const QUIZ_ID =
+    "class6_health_ultimate_treasure";
+
+const TOTAL_TIME = 30 * 60;
+
+let timeRemaining = TOTAL_TIME;
+let timerInterval = null;
+let quizStarted = false;
+let quizSubmitted = false;
+let studentName = "";
+
+/* =========================================================
+   QUESTIONS
+   ========================================================= */
+
+const questions = [
+
+/* ================= EASY 1-20 ================= */
+
+{
+q: "Which of the following best describes health?",
+options: [
+"A. Only being free from diseases",
+"B. A state of physical, mental and social well-being",
+"C. Having a strong body only",
+"D. Being able to play sports"
+],
+answer: "B"
+},
+
+{
+q: "Which habit is important for maintaining good health?",
+options: [
+"A. Eating only sweets",
+"B. Skipping meals",
+"C. Eating a balanced diet",
+"D. Sleeping very little"
+],
+answer: "C"
+},
+
+{
+q: "Which nutrient mainly helps our body grow and repair tissues?",
+options: [
+"A. Proteins",
+"B. Water",
+"C. Vitamins",
+"D. Minerals"
+],
+answer: "A"
+},
+
+{
+q: "Which nutrient is an important source of energy?",
+options: [
+"A. Vitamins",
+"B. Carbohydrates",
+"C. Minerals",
+"D. Water"
+],
+answer: "B"
+},
+
+{
+q: "Which of these is a protective food component?",
+options: [
+"A. Vitamins",
+"B. Plastic",
+"C. Sand",
+"D. Smoke"
+],
+answer: "A"
+},
+
+{
+q: "Which mineral is important for strong bones and teeth?",
+options: [
+"A. Iron",
+"B. Calcium",
+"C. Iodine",
+"D. Sodium"
+],
+answer: "B"
+},
+
+{
+q: "Which mineral helps in the formation of haemoglobin?",
+options: [
+"A. Calcium",
+"B. Iron",
+"C. Iodine",
+"D. Sodium"
+],
+answer: "B"
+},
+
+{
+q: "Which vitamin helps maintain healthy eyesight?",
+options: [
+"A. Vitamin A",
+"B. Vitamin C",
+"C. Vitamin D",
+"D. Vitamin K"
+],
+answer: "A"
+},
+
+{
+q: "Which vitamin is commonly obtained through exposure to sunlight?",
+options: [
+"A. Vitamin A",
+"B. Vitamin B",
+"C. Vitamin C",
+"D. Vitamin D"
+],
+answer: "D"
+},
+
+{
+q: "Which of the following is a good source of vitamin C?",
+options: [
+"A. Citrus fruits",
+"B. Butter",
+"C. Rice",
+"D. Salt"
+],
+answer: "A"
+},
+
+{
+q: "Why is water important for our body?",
+options: [
+"A. It helps body functions",
+"B. It replaces all nutrients",
+"C. It provides no useful function",
+"D. It makes us sleepy"
+],
+answer: "A"
+},
+
+{
+q: "Which activity helps keep the body physically fit?",
+options: [
+"A. Regular exercise",
+"B. Sitting all day",
+"C. Avoiding movement",
+"D. Sleeping during all free time"
+],
+answer: "A"
+},
+
+{
+q: "How much sleep do growing children generally need?",
+options: [
+"A. Very little sleep",
+"B. Adequate regular sleep",
+"C. No sleep",
+"D. Only one hour"
+],
+answer: "B"
+},
+
+{
+q: "Which practice helps prevent many infections?",
+options: [
+"A. Washing hands regularly",
+"B. Sharing dirty towels",
+"C. Drinking unsafe water",
+"D. Eating uncovered food"
+],
+answer: "A"
+},
+
+{
+q: "Which type of water is safest for drinking?",
+options: [
+"A. Contaminated water",
+"B. Clean and safe drinking water",
+"C. Stagnant water",
+"D. Drain water"
+],
+answer: "B"
+},
+
+{
+q: "What is a balanced diet?",
+options: [
+"A. A diet containing only carbohydrates",
+"B. A diet containing only fruits",
+"C. A diet containing nutrients in suitable amounts",
+"D. A diet containing only proteins"
+],
+answer: "C"
+},
+
+{
+q: "Which is an example of a physical activity?",
+options: [
+"A. Running",
+"B. Watching television",
+"C. Reading silently",
+"D. Sleeping"
+],
+answer: "A"
+},
+
+{
+q: "Which habit can help maintain dental health?",
+options: [
+"A. Brushing teeth regularly",
+"B. Eating sweets all day",
+"C. Never cleaning teeth",
+"D. Drinking soft drinks continuously"
+],
+answer: "A"
+},
+
+{
+q: "What should we do before eating food?",
+options: [
+"A. Wash our hands",
+"B. Touch dirty surfaces",
+"C. Avoid cleaning hands",
+"D. Share unwashed utensils"
+],
+answer: "A"
+},
+
+{
+q: "Which of the following can affect mental well-being positively?",
+options: [
+"A. Adequate rest and healthy relationships",
+"B. Constant stress",
+"C. No sleep",
+"D. Isolation all the time"
+],
+answer: "A"
+},
+
+/* ================= MODERATE 21-40 ================= */
+
+{
+q: "A child eats mainly chips, sweets and soft drinks. What is the main concern?",
+options: [
+"A. The diet may lack several essential nutrients",
+"B. The child will receive all nutrients",
+"C. The child will never need water",
+"D. The diet contains every food group"
+],
+answer: "A"
+},
+
+{
+q: "Why should different types of foods be included in our meals?",
+options: [
+"A. Different foods provide different nutrients",
+"B. All foods contain exactly the same nutrients",
+"C. Only taste matters",
+"D. Different foods prevent the need for water"
+],
+answer: "A"
+},
+
+{
+q: "A person has a lack of iron in the diet. Which problem may occur?",
+options: [
+"A. Anaemia",
+"B. Stronger bones",
+"C. Better eyesight",
+"D. Faster digestion"
+],
+answer: "A"
+},
+
+{
+q: "Why is roughage useful in our diet?",
+options: [
+"A. It supports proper bowel movement",
+"B. It replaces water",
+"C. It builds bones directly",
+"D. It supplies all vitamins"
+],
+answer: "A"
+},
+
+{
+q: "Why should fruits and vegetables be included regularly in meals?",
+options: [
+"A. They provide vitamins, minerals and other useful components",
+"B. They contain no nutrients",
+"C. They replace every other food group",
+"D. They eliminate the need for exercise"
+],
+answer: "A"
+},
+
+{
+q: "Which combination represents healthier daily habits?",
+options: [
+"A. Balanced diet, exercise and adequate sleep",
+"B. Junk food, no exercise and little sleep",
+"C. Skipping meals and avoiding water",
+"D. Only studying and no rest"
+],
+answer: "A"
+},
+
+{
+q: "Why can contaminated food cause illness?",
+options: [
+"A. It may contain harmful microorganisms or substances",
+"B. It always contains extra vitamins",
+"C. It increases cleanliness",
+"D. It makes all microorganisms harmless"
+],
+answer: "A"
+},
+
+{
+q: "Which action can reduce the spread of infectious diseases?",
+options: [
+"A. Maintaining hygiene",
+"B. Sharing personal items carelessly",
+"C. Drinking contaminated water",
+"D. Ignoring symptoms"
+],
+answer: "A"
+},
+
+{
+q: "Why is regular physical activity important?",
+options: [
+"A. It supports physical fitness and overall health",
+"B. It removes the need for food",
+"C. It guarantees that no disease can ever occur",
+"D. It replaces sleep"
+],
+answer: "A"
+},
+
+{
+q: "A child frequently skips breakfast and feels tired during school. What is a reasonable concern?",
+options: [
+"A. The child may not be getting adequate energy from regular meals",
+"B. Skipping meals always improves health",
+"C. Breakfast has no connection with daily energy",
+"D. The child should stop drinking water"
+],
+answer: "A"
+},
+
+{
+q: "Which factor is most likely to support mental well-being?",
+options: [
+"A. Healthy relationships and sufficient rest",
+"B. Constant worry",
+"C. Continuous lack of sleep",
+"D. Avoiding all social interaction"
+],
+answer: "A"
+},
+
+{
+q: "Why should drinking water from an unsafe source be avoided?",
+options: [
+"A. It may contain disease-causing organisms or harmful substances",
+"B. It contains too many vitamins",
+"C. It always improves digestion",
+"D. It makes food more nutritious"
+],
+answer: "A"
+},
+
+{
+q: "Which statement about personal hygiene is correct?",
+options: [
+"A. Good hygiene can reduce the spread of many infections",
+"B. Hygiene is important only for adults",
+"C. Hygiene has no connection with health",
+"D. Washing hands is never necessary"
+],
+answer: "A"
+},
+
+{
+q: "Which meal is most likely to be balanced?",
+options: [
+"A. Rice, vegetables, dal, curd and fruit",
+"B. Only sweets",
+"C. Only chips",
+"D. Only soft drinks"
+],
+answer: "A"
+},
+
+{
+q: "Why is adequate sleep especially important for children?",
+options: [
+"A. The body and brain need rest for growth and proper functioning",
+"B. Sleep replaces healthy food",
+"C. Sleep prevents the need for exercise",
+"D. Children do not need rest"
+],
+answer: "A"
+},
+
+{
+q: "A student studies for many hours without breaks and sleeps very little. What should the student change?",
+options: [
+"A. Include adequate rest and sleep",
+"B. Reduce sleep further",
+"C. Avoid all physical activity",
+"D. Skip meals"
+],
+answer: "A"
+},
+
+{
+q: "Which is an example of a communicable disease?",
+options: [
+"A. Common cold",
+"B. A broken bone",
+"C. A physical injury",
+"D. A genetic trait"
+],
+answer: "A"
+},
+
+{
+q: "What is one important way to make food safer?",
+options: [
+"A. Keep food covered and maintain cleanliness",
+"B. Leave food uncovered for long periods",
+"C. Use dirty utensils",
+"D. Store food near waste"
+],
+answer: "A"
+},
+
+{
+q: "Why is a variety of food important for growing children?",
+options: [
+"A. Growth requires different nutrients",
+"B. Children need only carbohydrates",
+"C. Children need only fats",
+"D. Children do not need minerals"
+],
+answer: "A"
+},
+
+{
+q: "Which statement best connects health and lifestyle?",
+options: [
+"A. Daily habits can strongly influence overall health",
+"B. Lifestyle has no effect on health",
+"C. Only medicines determine health",
+"D. Exercise is harmful for everyone"
+],
+answer: "A"
+},
+
+/* ================= APPLICATION 41-60 ================= */
+
+{
+q: "Riya usually eats vegetables, fruits, pulses and grains, drinks enough water and exercises regularly. What does this routine show?",
+options: [
+"A. Healthy lifestyle habits",
+"B. Unhealthy eating",
+"C. Poor hygiene",
+"D. Lack of physical activity"
+],
+answer: "A"
+},
+
+{
+q: "Arun often feels weak and tired and his doctor finds that he has low haemoglobin. Which nutrient may be lacking?",
+options: [
+"A. Iron",
+"B. Calcium",
+"C. Vitamin C",
+"D. Iodine"
+],
+answer: "A"
+},
+
+{
+q: "A family stores drinking water in an open container near a waste area. What is the best advice?",
+options: [
+"A. Keep drinking water covered and stored hygienically",
+"B. Leave it open",
+"C. Add dust to the container",
+"D. Store it beside waste"
+],
+answer: "A"
+},
+
+{
+q: "A student spends most of the day sitting and rarely plays or exercises. Which change would best support health?",
+options: [
+"A. Include regular physical activity",
+"B. Spend more time sitting",
+"C. Reduce sleep",
+"D. Skip meals"
+],
+answer: "A"
+},
+
+{
+q: "Meena washes her hands before eating and after using the toilet. Why is this useful?",
+options: [
+"A. It can reduce the transfer of harmful microorganisms",
+"B. It removes the need for a balanced diet",
+"C. It guarantees that she can never become ill",
+"D. It replaces vaccination"
+],
+answer: "A"
+},
+
+{
+q: "A child eats only polished rice at every meal. Why may this diet be unsuitable?",
+options: [
+"A. It may not provide all the nutrients needed by the body",
+"B. Rice contains every nutrient in sufficient amounts",
+"C. Rice replaces all vegetables and fruits",
+"D. The child does not need proteins"
+],
+answer: "A"
+},
+
+{
+q: "Two students have exams. Student A sleeps well, eats balanced meals and takes short breaks. Student B sleeps very little and skips meals. Who is following healthier habits?",
+options: [
+"A. Student A",
+"B. Student B",
+"C. Both equally",
+"D. Neither"
+],
+answer: "A"
+},
+
+{
+q: "A child spends time outdoors and gets appropriate sunlight. Which nutrient can be produced in the skin with sunlight?",
+options: [
+"A. Vitamin D",
+"B. Vitamin C",
+"C. Vitamin B12",
+"D. Vitamin A"
+],
+answer: "A"
+},
+
+{
+q: "A student notices that a classmate is feeling stressed before an examination. Which response supports social and mental well-being?",
+options: [
+"A. Listen supportively and encourage healthy coping",
+"B. Make fun of the student",
+"C. Increase the student's worry",
+"D. Tell everyone about the student's problem"
+],
+answer: "A"
+},
+
+{
+q: "A family buys uncovered food from a place with poor hygiene. What is the main health concern?",
+options: [
+"A. The food may become contaminated",
+"B. The food will contain extra nutrients",
+"C. The food becomes automatically safer",
+"D. Hygiene does not affect food"
+],
+answer: "A"
+},
+
+{
+q: "A student drinks very little water during a hot day and becomes thirsty and tired. What is the most appropriate healthy habit?",
+options: [
+"A. Drink sufficient safe water",
+"B. Stop drinking water",
+"C. Replace all water with sweets",
+"D. Avoid fluids completely"
+],
+answer: "A"
+},
+
+{
+q: "A child has weak bones because of insufficient calcium in the diet. Which foods could help provide calcium?",
+options: [
+"A. Milk and curd",
+"B. Sugar and sweets",
+"C. Soft drinks",
+"D. Cooking oil only"
+],
+answer: "A"
+},
+
+{
+q: "A student wants to improve overall health. Which plan is most suitable?",
+options: [
+"A. Balanced diet, exercise, hygiene, sleep and positive relationships",
+"B. Only exercise and no food",
+"C. Only studying without sleep",
+"D. Only taking supplements"
+],
+answer: "A"
+},
+
+{
+q: "During a school picnic, a student finds food that has been left uncovered for a long time. What is the safest choice?",
+options: [
+"A. Avoid eating it if it may have become unsafe",
+"B. Eat it immediately",
+"C. Share it with everyone",
+"D. Mix it with clean food"
+],
+answer: "A"
+},
+
+{
+q: "A student wants to maintain healthy teeth. Which routine is most appropriate?",
+options: [
+"A. Brush regularly, limit excessive sugary foods and maintain oral hygiene",
+"B. Eat sweets frequently and never brush",
+"C. Avoid drinking water",
+"D. Brush only once a month"
+],
+answer: "A"
+},
+
+{
+q: "A child regularly gets very little sleep and feels unable to concentrate in class. What lifestyle change is most appropriate?",
+options: [
+"A. Establish a regular adequate sleep routine",
+"B. Reduce sleep further",
+"C. Skip breakfast",
+"D. Avoid all outdoor activity"
+],
+answer: "A"
+},
+
+{
+q: "A family member has a contagious illness. Which action can help reduce transmission?",
+options: [
+"A. Follow hygiene measures and avoid unnecessary close contact",
+"B. Share used tissues",
+"C. Ignore hand hygiene",
+"D. Share personal towels"
+],
+answer: "A"
+},
+
+{
+q: "A student wants to choose a healthy snack. Which is the better choice?",
+options: [
+"A. Fresh fruit and a suitable nutritious snack",
+"B. Only candy",
+"C. Several packets of chips",
+"D. Sugary soft drink only"
+],
+answer: "A"
+},
+
+{
+q: "A child has a varied diet, exercises, sleeps adequately and maintains hygiene. What can we reasonably conclude?",
+options: [
+"A. These habits support good overall health",
+"B. These habits guarantee that the child will never get sick",
+"C. Exercise makes food unnecessary",
+"D. Hygiene makes sleep unnecessary"
+],
+answer: "A"
+},
+
+{
+q: "A school wants to promote health among students. Which programme would be most effective?",
+options: [
+"A. Encourage nutritious food, physical activity, hygiene and mental well-being",
+"B. Encourage students to skip meals",
+"C. Remove all physical activities",
+"D. Reduce students' sleeping time"
+],
+answer: "A"
+}
+
+];
+
+/* =========================================================
+   ANSWER KEY
+   ========================================================= */
+
+const answers = {};
+
+questions.forEach((question, index) => {
+    answers["q" + (index + 1)] = question.answer;
+});
+
+/* =========================================================
+   DISPLAY QUESTIONS
+   ========================================================= */
+
+function renderQuestions() {
+
+    const easy = document.getElementById("easyQuestions");
+    const moderate = document.getElementById("moderateQuestions");
+    const application = document.getElementById("applicationQuestions");
+
+    questions.forEach((item, index) => {
+
+        const number = index + 1;
+
+        const div = document.createElement("div");
+        div.className = "question-card";
+
+        let html = `
+            <div class="question-number">
+                Question ${number}
+            </div>
+
+            <div class="question">
+                ${item.q}
+            </div>
+        `;
+
+        item.options.forEach((option, optionIndex) => {
+
+            const letter = String.fromCharCode(65 + optionIndex);
+
+            html += `
+                <label class="option">
+                    <input
+                        type="radio"
+                        name="q${number}"
+                        value="${letter}"
+                        onchange="updateProgress()"
+                    >
+                    <strong>${letter}.</strong> ${option}
+                </label>
+            `;
+        });
+
+        div.innerHTML = html;
+
+        if (number <= 20) {
+            easy.appendChild(div);
+        } else if (number <= 40) {
+            moderate.appendChild(div);
+        } else {
+            application.appendChild(div);
+        }
+    });
+}
+
+/* =========================================================
+   STUDENT KEY
+   ========================================================= */
+
+function normalizeName(name) {
+    return name
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, " ");
+}
+
+function makeAttemptKey(name) {
+
+    const normalized = normalizeName(name);
+
+    return normalized
+        .replace(/[^a-z0-9]+/g, "_")
+        .replace(/^_+|_+$/g, "")
+        .substring(0, 80);
+}
+
+/* =========================================================
+   CHECK PREVIOUS ATTEMPT
+   ========================================================= */
+
+async function checkPreviousAttempt(name) {
+
+    const key = makeAttemptKey(name);
+
+    try {
+
+        const snapshot = await database
+            .ref("quizAttempts/" + CLASS_ID + "/" + QUIZ_ID + "/" + key)
+            .once("value");
+
+        return snapshot.exists();
+
+    } catch (error) {
+
+        console.error(error);
+
+        return false;
+    }
+}
+
+/* =========================================================
+   START QUIZ
+   ========================================================= */
+
+async function startQuiz() {
+
+    const nameInput = document.getElementById("studentName");
+    const message = document.getElementById("startMessage");
+
+    studentName = nameInput.value.trim();
+
+    if (studentName.length < 2) {
+
+        message.innerHTML = `
+            <div class="lock-message">
+                Please enter your full name before starting.
+            </div>
+        `;
+
+        return;
+    }
+
+    message.innerHTML = `
+        <p>Checking previous attempt...</p>
+    `;
+
+    const alreadyAttempted =
+        await checkPreviousAttempt(studentName);
+
+    if (alreadyAttempted) {
+
+        message.innerHTML = `
+            <div class="lock-message">
+                <h3>Test Already Attempted</h3>
+                <p>
+                    This student has already completed
+                    <strong>Health: The Ultimate Treasure</strong>.
+                </p>
+                <p>
+                    Each student can attend this chapter test only once.
+                </p>
+            </div>
+        `;
+
+        return;
+    }
+
+    quizStarted = true;
+
+    document.getElementById("startScreen")
+        .classList.add("hidden");
+
+    document.getElementById("quizScreen")
+        .classList.remove("hidden");
+
+    window.scrollTo(0, 0);
+
+    startTimer();
+}
+
+/* =========================================================
+   TIMER
+   ========================================================= */
+
+function startTimer() {
+
+    timeRemaining = TOTAL_TIME;
+
+    updateTimer();
+
+    timerInterval = setInterval(() => {
+
+        timeRemaining--;
+
+        updateTimer();
+
+        if (timeRemaining <= 0) {
+
+            clearInterval(timerInterval);
+
+            alert("Time is over. Your test will be submitted automatically.");
+
+            submitQuiz(true);
+        }
+
+    }, 1000);
+}
+
+function updateTimer() {
+
+    const timer = document.getElementById("timer");
+
+    const minutes =
+        Math.floor(timeRemaining / 60);
+
+    const seconds =
+        timeRemaining % 60;
+
+    timer.textContent =
+        "Time Remaining: " +
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(seconds).padStart(2, "0");
+
+    if (timeRemaining <= 300) {
+        timer.classList.add("timer-warning");
+    }
+}
+
+/* =========================================================
+   PROGRESS
+   ========================================================= */
+
+function updateProgress() {
+
+    let answered = 0;
+
+    for (let i = 1; i <= questions.length; i++) {
+
+        const selected =
+            document.querySelector(
+                `input[name="q${i}"]:checked`
+            );
+
+        if (selected) {
+            answered++;
+        }
+    }
+
+    const percentage =
+        (answered / questions.length) * 100;
+
+    document.getElementById("progressBar")
+        .style.width = percentage + "%";
+
+    document.getElementById("progressText")
+        .textContent =
+        answered + " / " +
+        questions.length +
+        " answered";
+}
+
+/* =========================================================
+   CONFIRM SUBMISSION
+   ========================================================= */
+
+function confirmSubmit() {
+
+    let unanswered = 0;
+
+    for (let i = 1; i <= questions.length; i++) {
+
+        const selected =
+            document.querySelector(
+                `input[name="q${i}"]:checked`
+            );
+
+        if (!selected) {
+            unanswered++;
+        }
+    }
+
+    if (unanswered > 0) {
+
+        const proceed = confirm(
+            "You have " +
+            unanswered +
+            " unanswered question(s).\n\n" +
+            "Do you still want to submit?"
+        );
+
+        if (!proceed) {
+            return;
+        }
+    } else {
+
+        const proceed = confirm(
+            "Are you sure you want to submit the test?"
+        );
+
+        if (!proceed) {
+            return;
+        }
+    }
+
+    submitQuiz(false);
+}
+
+/* =========================================================
+   SUBMIT QUIZ
+   ========================================================= */
+
+async function submitQuiz(autoSubmit) {
+
+    if (quizSubmitted) {
+        return;
+    }
+
+    quizSubmitted = true;
+
+    if (timerInterval) {
+        clearInterval(timerInterval);
+    }
+
+    const submitButton =
+        document.querySelector(".submit-btn");
+
+    if (submitButton) {
+        submitButton.disabled = true;
+    }
+
+    let correct = 0;
+    let wrong = 0;
+    let unanswered = 0;
+
+    const studentAnswers = {};
+
+    for (let i = 1; i <= questions.length; i++) {
+
+        const selected =
+            document.querySelector(
+                `input[name="q${i}"]:checked`
+            );
+
+        const key = "q" + i;
+
+        if (!selected) {
+
+            unanswered++;
+
+            studentAnswers[key] = "";
+
+        } else {
+
+            const selectedAnswer =
+                selected.value;
+
+            studentAnswers[key] =
+                selectedAnswer;
+
+            if (selectedAnswer === answers[key]) {
+                correct++;
+            } else {
+                wrong++;
+            }
+        }
+    }
+
+    const total = questions.length;
+
+    const percentage =
+        (correct / total) * 100;
+
+    const grade = getGrade(percentage);
+
+    document.getElementById("quizScreen")
+        .classList.add("hidden");
+
+    document.getElementById("resultScreen")
+        .classList.remove("hidden");
+
+    document.getElementById("studentResultName")
+        .textContent =
+        "Student: " + studentName;
+
+    document.getElementById("scoreCircle")
+        .textContent =
+        percentage.toFixed(1) + "%";
+
+    document.getElementById("gradeText")
+        .textContent =
+        "Grade: " + grade;
+
+    document.getElementById("correctCount")
+        .textContent = correct;
+
+    document.getElementById("wrongCount")
+        .textContent = wrong;
+
+    document.getElementById("unansweredCount")
+        .textContent = unanswered;
+
+    document.getElementById("totalScore")
+        .textContent =
+        correct + "/" + total;
+
+    createReview(studentAnswers);
+
+    const result = {
+
+        name: studentName,
+
+        classId: CLASS_ID,
+
+        quizTitle: QUIZ_TITLE,
+
+        quizId: QUIZ_ID,
+
+        score: correct,
+
+        total: total,
+
+        percentage:
+            Number(percentage.toFixed(1)),
+
+        grade: grade,
+
+        correct: correct,
+
+        wrong: wrong,
+
+        unanswered: unanswered,
+
+        date:
+            new Date().toLocaleString(),
+
+        timestamp:
+            Date.now()
+    };
+
+    await saveResult(result);
+}
+
+/* =========================================================
+   GRADE
+   ========================================================= */
+
+function getGrade(percentage) {
+
+    if (percentage >= 90) return "A+";
+    if (percentage >= 80) return "A";
+    if (percentage >= 70) return "B";
+    if (percentage >= 60) return "C";
+    if (percentage >= 50) return "D";
+
+    return "Needs Improvement";
+}
+
+/* =========================================================
+   SAVE RESULT
+   ========================================================= */
+
+async function saveResult(result) {
+
+    const message =
+        document.getElementById("firebaseMessage");
+
+    try {
+
+        const resultRef =
+            database.ref("quizResults").push();
+
+        await resultRef.set(result);
+
+        const attemptKey =
+            makeAttemptKey(studentName);
+
+        await database
+            .ref(
+                "quizAttempts/" +
+                CLASS_ID +
+                "/" +
+                QUIZ_ID +
+                "/" +
+                attemptKey
+            )
+            .set({
+
+                name: studentName,
+
+                classId: CLASS_ID,
+
+                quizId: QUIZ_ID,
+
+                quizTitle: QUIZ_TITLE,
+
+                timestamp: Date.now()
+
+            });
+
+        message.innerHTML = `
+            <div class="success-message">
+                <strong>Your result has been submitted successfully.</strong>
+                <br><br>
+                This chapter test has now been recorded as your one attempt.
+            </div>
+        `;
+
+    } catch (error) {
+
+        console.error(error);
+
+        message.innerHTML = `
+            <div class="lock-message">
+                Your score was calculated, but there was a problem
+                saving the result to the database.
+                <br><br>
+                Please inform your teacher.
+            </div>
+        `;
+    }
+}
+
+/* =========================================================
+   ANSWER REVIEW
+   ========================================================= */
+
+function createReview(studentAnswers) {
+
+    const container =
+        document.getElementById("reviewContainer");
+
+    container.innerHTML = "";
+
+    questions.forEach((item, index) => {
+
+        const number = index + 1;
+
+        const correctAnswer =
+            answers["q" + number];
+
+        const selectedAnswer =
+            studentAnswers["q" + number];
+
+        const div =
+            document.createElement("div");
+
+        if (!selectedAnswer) {
+
+            div.className =
+                "review-item review-unanswered";
+
+            div.innerHTML = `
+                <strong>Question ${number}</strong>
+                <p>${item.q}</p>
+                <p>
+                    <strong>Your answer:</strong>
+                    Not answered
+                </p>
+                <p>
+                    <strong>Correct answer:</strong>
+                    ${correctAnswer}
+                </p>
+            `;
+
+        } else if (selectedAnswer === correctAnswer) {
+
+            div.className =
+                "review-item review-correct";
+
+            div.innerHTML = `
+                <strong>Question ${number} ✓</strong>
+                <p>${item.q}</p>
+                <p>
+                    <strong>Your answer:</strong>
+                    ${selectedAnswer}
+                </p>
+            `;
+
+        } else {
+
+            div.className =
+                "review-item review-wrong";
+
+            div.innerHTML = `
+                <strong>Question ${number} ✗</strong>
+                <p>${item.q}</p>
+                <p>
+                    <strong>Your answer:</strong>
+                    ${selectedAnswer}
+                </p>
+                <p>
+                    <strong>Correct answer:</strong>
+                    ${correctAnswer}
+                </p>
+            `;
+        }
+
+        container.appendChild(div);
+    });
+}
+
+/* =========================================================
+   PAGE EXIT WARNING
+   ========================================================= */
+
+window.addEventListener("beforeunload", function(event) {
+
+    if (quizStarted && !quizSubmitted) {
+
+        event.preventDefault();
+
+        event.returnValue =
+            "Your test is still in progress.";
+    }
+});
+
+/* =========================================================
+   INITIALIZE
+   ========================================================= */
+
+renderQuestions();
+
+</script>
+
+</body>
+</html>
