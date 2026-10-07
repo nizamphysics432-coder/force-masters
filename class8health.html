@@ -1,0 +1,1855 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Health: The Ultimate Treasure - Class 8 Science</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
+    color: #263238;
+}
+
+.container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px;
+}
+
+.header {
+    background: linear-gradient(135deg, #00695c, #26a69a);
+    color: white;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+}
+
+.header h1 {
+    margin: 0 0 10px;
+    font-size: 28px;
+}
+
+.header p {
+    margin: 5px 0;
+}
+
+.card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #b0bec5;
+    border-radius: 10px;
+    font-size: 16px;
+    margin-top: 8px;
+}
+
+button {
+    border: none;
+    border-radius: 10px;
+    padding: 13px 22px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.start-btn {
+    background: #00796b;
+    color: white;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.start-btn:hover {
+    background: #004d40;
+}
+
+.timer-box {
+    position: sticky;
+    top: 10px;
+    z-index: 100;
+    background: #263238;
+    color: white;
+    padding: 14px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.timer-warning {
+    background: #c62828;
+}
+
+.progress-container {
+    background: #cfd8dc;
+    border-radius: 20px;
+    height: 14px;
+    margin: 10px 0 12px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: #00796b;
+    transition: width 0.3s;
+}
+
+.question-card {
+    background: white;
+    border-radius: 15px;
+    padding: 22px;
+    margin-bottom: 18px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.question-number {
+    color: #00796b;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.question {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.option {
+    display: block;
+    background: #f5f5f5;
+    padding: 13px;
+    margin: 9px 0;
+    border-radius: 9px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: 0.2s;
+    line-height: 1.4;
+}
+
+.option:hover {
+    background: #e0f2f1;
+    border-color: #80cbc4;
+}
+
+.option input {
+    margin-right: 10px;
+}
+
+.section-title {
+    background: #e0f2f1;
+    color: #00695c;
+    padding: 14px;
+    border-radius: 10px;
+    margin: 25px 0 15px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.submit-btn {
+    background: #1565c0;
+    color: white;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.submit-btn:hover {
+    background: #0d47a1;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.result {
+    text-align: center;
+}
+
+.score-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: #00796b;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.result-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.result-box {
+    padding: 18px;
+    border-radius: 12px;
+    background: #eceff1;
+}
+
+.result-box strong {
+    display: block;
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.correct {
+    background: #c8e6c9;
+}
+
+.wrong {
+    background: #ffcdd2;
+}
+
+.unanswered {
+    background: #fff9c4;
+}
+
+.review {
+    text-align: left;
+    margin-top: 25px;
+}
+
+.review-item {
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 10px;
+    background: #f5f5f5;
+    line-height: 1.5;
+}
+
+.review-correct {
+    border-left: 6px solid #2e7d32;
+}
+
+.review-wrong {
+    border-left: 6px solid #c62828;
+}
+
+.review-unanswered {
+    border-left: 6px solid #f9a825;
+}
+
+.success-message {
+    background: #e8f5e9;
+    border: 2px solid #66bb6a;
+    color: #1b5e20;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.error-message {
+    background: #ffebee;
+    border: 2px solid #ef5350;
+    color: #b71c1c;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+@media(max-width: 700px) {
+    .container {
+        padding: 10px;
+    }
+
+    .header h1 {
+        font-size: 22px;
+    }
+
+    .question {
+        font-size: 16px;
+    }
+
+    .result-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card {
+        padding: 16px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1>Health: The Ultimate Treasure</h1>
+        <p>Class 8 Science – NCERT</p>
+        <p>60 MCQs • 30 Minutes</p>
+    </div>
+
+
+    <!-- START SCREEN -->
+    <div id="startScreen" class="card">
+
+        <h2>Student Information</h2>
+
+        <p>
+            <strong>Enter your full name:</strong>
+        </p>
+
+        <input
+            type="text"
+            id="studentName"
+            placeholder="Enter your full name"
+            autocomplete="off"
+        >
+
+        <p style="color:#607d8b;">
+            Please enter your name correctly before starting the test.
+        </p>
+
+        <button
+            class="start-btn"
+            onclick="startQuiz()"
+        >
+            Start Test
+        </button>
+
+        <div id="startMessage"></div>
+
+    </div>
+
+
+    <!-- QUIZ SCREEN -->
+    <div id="quizScreen" class="hidden">
+
+        <div class="timer-box" id="timer">
+            Time Remaining: 30:00
+        </div>
+
+        <div class="card">
+
+            <strong>Progress</strong>
+
+            <div class="progress-container">
+                <div
+                    class="progress-bar"
+                    id="progressBar"
+                ></div>
+            </div>
+
+            <span id="progressText">
+                0 / 60 answered
+            </span>
+
+        </div>
+
+
+        <form id="quizForm">
+
+            <!-- EASY -->
+            <div class="section-title">
+                🟢 Easy Level – Questions 1–20
+            </div>
+
+            <div id="easyQuestions"></div>
+
+
+            <!-- MODERATE -->
+            <div class="section-title">
+                🟡 Moderate Level – Questions 21–40
+            </div>
+
+            <div id="moderateQuestions"></div>
+
+
+            <!-- APPLICATION -->
+            <div class="section-title">
+                🔵 Application-Based – Questions 41–60
+            </div>
+
+            <div id="applicationQuestions"></div>
+
+
+            <div class="card">
+
+                <button
+                    type="button"
+                    class="submit-btn"
+                    id="submitButton"
+                    onclick="confirmSubmit()"
+                >
+                    Submit Test
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <!-- RESULT SCREEN -->
+    <div id="resultScreen" class="card hidden result">
+
+        <h2>Test Completed</h2>
+
+        <p id="studentResultName"></p>
+
+        <div class="score-circle" id="scoreCircle">
+            0%
+        </div>
+
+        <h2 id="gradeText"></h2>
+
+        <div class="result-grid">
+
+            <div class="result-box correct">
+                <strong id="correctCount">0</strong>
+                Correct
+            </div>
+
+            <div class="result-box wrong">
+                <strong id="wrongCount">0</strong>
+                Wrong
+            </div>
+
+            <div class="result-box unanswered">
+                <strong id="unansweredCount">0</strong>
+                Unanswered
+            </div>
+
+            <div class="result-box">
+                <strong id="totalScore">0/60</strong>
+                Score
+            </div>
+
+        </div>
+
+        <div id="firebaseMessage"></div>
+
+        <div class="review">
+
+            <h2>Answer Review</h2>
+
+            <div id="reviewContainer"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- FIREBASE -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+
+<script>
+
+/* =========================================================
+   FIREBASE CONFIGURATION
+   ========================================================= */
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCfI3zEpaiRA3OjgYiTuvnuA3GGyQGQNpU",
+    authDomain: "sciencequiz2026-ccd77.firebaseapp.com",
+    databaseURL: "https://sciencequiz2026-ccd77-default-rtdb.firebaseio.com",
+    projectId: "sciencequiz2026-ccd77",
+    storageBucket: "sciencequiz2026-ccd77.firebasestorage.app",
+    messagingSenderId: "412753144312",
+    appId: "1:412753144312:web:fe66b332abcadfb0438e0d",
+    measurementId: "G-YC0DM7M07F"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const database = firebase.database();
+
+
+/* =========================================================
+   QUIZ INFORMATION
+   ========================================================= */
+
+const CLASS_ID = "8";
+
+const QUIZ_TITLE =
+    "Health: The Ultimate Treasure - Class 8 Science";
+
+const TOTAL_TIME = 30 * 60;
+
+let timeRemaining = TOTAL_TIME;
+
+let timerInterval = null;
+
+let quizStarted = false;
+
+let quizSubmitted = false;
+
+let studentName = "";
+
+
+/* =========================================================
+   QUESTIONS
+   ========================================================= */
+
+const questions = [
+
+/* ================= EASY 1-20 ================= */
+
+{
+q: "Which of the following best describes health?",
+options: [
+"A. Only being free from diseases",
+"B. A state of physical, mental and social well-being",
+"C. Being physically strong only",
+"D. Being able to play sports"
+],
+answer: "B"
+},
+
+{
+q: "Which of the following is important for maintaining good health?",
+options: [
+"A. Proper nutrition",
+"B. Eating only sweets",
+"C. Avoiding sleep",
+"D. Avoiding physical activity"
+],
+answer: "A"
+},
+
+{
+q: "A disease that can spread from one person to another is called:",
+options: [
+"A. Non-communicable disease",
+"B. Communicable disease",
+"C. Deficiency disease",
+"D. Hereditary trait"
+],
+answer: "B"
+},
+
+{
+q: "Which of the following is a communicable disease?",
+options: [
+"A. Diabetes",
+"B. Common cold",
+"C. High blood pressure",
+"D. Cancer"
+],
+answer: "B"
+},
+
+{
+q: "Which of the following is generally a non-communicable disease?",
+options: [
+"A. Common cold",
+"B. Cholera",
+"C. Diabetes",
+"D. Tuberculosis"
+],
+answer: "C"
+},
+
+{
+q: "Which microorganism causes malaria?",
+options: [
+"A. Plasmodium",
+"B. Yeast",
+"C. Rhizobium",
+"D. Lactobacillus"
+],
+answer: "A"
+},
+
+{
+q: "Malaria is transmitted through the bite of:",
+options: [
+"A. Housefly",
+"B. Female Anopheles mosquito",
+"C. Cockroach",
+"D. Honeybee"
+],
+answer: "B"
+},
+
+{
+q: "Which of the following is caused by a virus?",
+options: [
+"A. Common cold",
+"B. Malaria",
+"C. Cholera",
+"D. Ringworm"
+],
+answer: "A"
+},
+
+{
+q: "Which disease is caused by bacteria?",
+options: [
+"A. Cholera",
+"B. Common cold",
+"C. Dengue",
+"D. Measles"
+],
+answer: "A"
+},
+
+{
+q: "A disease-causing microorganism is called a:",
+options: [
+"A. Pathogen",
+"B. Nutrient",
+"C. Vitamin",
+"D. Hormone"
+],
+answer: "A"
+},
+
+{
+q: "Which practice helps prevent the spread of infectious diseases?",
+options: [
+"A. Maintaining personal hygiene",
+"B. Sharing used towels",
+"C. Drinking contaminated water",
+"D. Leaving food uncovered"
+],
+answer: "A"
+},
+
+{
+q: "Why should drinking water be safe and clean?",
+options: [
+"A. Contaminated water may spread diseases",
+"B. Water is not related to health",
+"C. Dirty water contains extra nutrients",
+"D. Unsafe water always improves digestion"
+],
+answer: "A"
+},
+
+{
+q: "Which disease may spread through contaminated food and water?",
+options: [
+"A. Cholera",
+"B. Diabetes",
+"C. Cancer",
+"D. High blood pressure"
+],
+answer: "A"
+},
+
+{
+q: "Which method helps prevent many infectious diseases?",
+options: [
+"A. Vaccination",
+"B. Skipping meals",
+"C. Avoiding sleep",
+"D. Eating only junk food"
+],
+answer: "A"
+},
+
+{
+q: "Vaccines help the body to:",
+options: [
+"A. Develop protection against particular diseases",
+"B. Stop needing food",
+"C. Replace exercise",
+"D. Remove all microorganisms from the environment"
+],
+answer: "A"
+},
+
+{
+q: "Which of the following is important for maintaining physical health?",
+options: [
+"A. Regular physical activity",
+"B. Continuous sitting",
+"C. Avoiding movement",
+"D. Sleeping throughout the day"
+],
+answer: "A"
+},
+
+{
+q: "Which of the following is an example of good personal hygiene?",
+options: [
+"A. Washing hands regularly",
+"B. Sharing unwashed towels",
+"C. Drinking unsafe water",
+"D. Eating uncovered food"
+],
+answer: "A"
+},
+
+{
+q: "Why is a balanced diet important?",
+options: [
+"A. It supplies different nutrients required by the body",
+"B. It contains only carbohydrates",
+"C. It contains only fats",
+"D. It eliminates the need for water"
+],
+answer: "A"
+},
+
+{
+q: "Which nutrient is mainly required for growth and repair of body tissues?",
+options: [
+"A. Protein",
+"B. Water",
+"C. Roughage",
+"D. Salt"
+],
+answer: "A"
+},
+
+{
+q: "Which habit can contribute to good mental health?",
+options: [
+"A. Adequate rest and healthy relationships",
+"B. Constant stress",
+"C. Lack of sleep",
+"D. Complete social isolation"
+],
+answer: "A"
+},
+
+
+/* ================= MODERATE 21-40 ================= */
+
+{
+q: "Why is it difficult for antibiotics to cure diseases caused by viruses?",
+options: [
+"A. Antibiotics act against bacteria, not viruses",
+"B. Viruses are always larger than bacteria",
+"C. Antibiotics contain vitamins only",
+"D. Viruses are not microorganisms"
+],
+answer: "A"
+},
+
+{
+q: "Why should antibiotics not be taken unnecessarily?",
+options: [
+"A. Their misuse can lead to antibiotic resistance",
+"B. They always improve viral infections",
+"C. They replace vaccines",
+"D. They are needed for every minor illness"
+],
+answer: "A"
+},
+
+{
+q: "Which factor can contribute to the spread of communicable diseases?",
+options: [
+"A. Poor sanitation",
+"B. Clean drinking water",
+"C. Proper waste disposal",
+"D. Good personal hygiene"
+],
+answer: "A"
+},
+
+{
+q: "Why can stagnant water increase the risk of mosquito-borne diseases?",
+options: [
+"A. Mosquitoes can breed in stagnant water",
+"B. Stagnant water destroys all mosquitoes",
+"C. Mosquitoes cannot reproduce near water",
+"D. Stagnant water acts as a vaccine"
+],
+answer: "A"
+},
+
+{
+q: "Which disease can be spread by mosquitoes?",
+options: [
+"A. Malaria",
+"B. Diabetes",
+"C. Scurvy",
+"D. Goitre"
+],
+answer: "A"
+},
+
+{
+q: "Why can poor nutrition make a person more likely to become ill?",
+options: [
+"A. The body may not get nutrients needed for proper functioning",
+"B. Nutrition has no relationship with health",
+"C. Poor nutrition makes all microorganisms harmless",
+"D. It eliminates the need for immunity"
+],
+answer: "A"
+},
+
+{
+q: "Which statement about non-communicable diseases is correct?",
+options: [
+"A. They generally do not spread directly from one person to another",
+"B. They are always caused by bacteria",
+"C. They are always caused by viruses",
+"D. They are all spread by mosquitoes"
+],
+answer: "A"
+},
+
+{
+q: "Which of the following can contribute to lifestyle-related health problems?",
+options: [
+"A. Lack of physical activity",
+"B. Balanced diet",
+"C. Regular exercise",
+"D. Adequate sleep"
+],
+answer: "A"
+},
+
+{
+q: "Why is proper disposal of waste important for community health?",
+options: [
+"A. It reduces conditions that can support disease spread",
+"B. It increases contamination",
+"C. It creates breeding places for insects",
+"D. It makes drinking water unsafe"
+],
+answer: "A"
+},
+
+{
+q: "Which practice is most useful for reducing water-borne diseases?",
+options: [
+"A. Drinking safe water and maintaining sanitation",
+"B. Drinking untreated water",
+"C. Storing water in dirty containers",
+"D. Leaving drinking water uncovered"
+],
+answer: "A"
+},
+
+{
+q: "Why does vaccination help protect a population?",
+options: [
+"A. It reduces the number of susceptible people for particular diseases",
+"B. It makes all microorganisms disappear",
+"C. It replaces sanitation",
+"D. It guarantees that no disease can ever occur"
+],
+answer: "A"
+},
+
+{
+q: "Which statement best explains the relationship between health and the environment?",
+options: [
+"A. Clean surroundings can help reduce exposure to disease-causing agents",
+"B. Environment has no effect on health",
+"C. Dirty surroundings always improve immunity",
+"D. Waste has no connection with disease"
+],
+answer: "A"
+},
+
+{
+q: "A person regularly eats nutritious food and exercises. What is one likely benefit?",
+options: [
+"A. Better support for overall physical health",
+"B. Guaranteed freedom from every disease",
+"C. No need for sleep",
+"D. No need for hygiene"
+],
+answer: "A"
+},
+
+{
+q: "Which condition can increase the spread of respiratory infections?",
+options: [
+"A. Close contact with an infected person",
+"B. Good ventilation",
+"C. Proper hygiene",
+"D. Staying away from infected individuals"
+],
+answer: "A"
+},
+
+{
+q: "Why should infected people take appropriate precautions around others?",
+options: [
+"A. To reduce the possibility of transmitting infection",
+"B. To make microorganisms stronger",
+"C. To avoid all medical care",
+"D. To increase disease transmission"
+],
+answer: "A"
+},
+
+{
+q: "Which statement about disease prevention is most appropriate?",
+options: [
+"A. Prevention can include hygiene, vaccination, safe food and clean water",
+"B. Prevention is never possible",
+"C. Only medicines prevent diseases",
+"D. Only exercise prevents diseases"
+],
+answer: "A"
+},
+
+{
+q: "Why is regular exercise beneficial?",
+options: [
+"A. It supports fitness and helps maintain healthy body functions",
+"B. It replaces a balanced diet",
+"C. It eliminates all diseases",
+"D. It removes the need for sleep"
+],
+answer: "A"
+},
+
+{
+q: "Which of the following can help maintain mental well-being?",
+options: [
+"A. Adequate sleep, relaxation and supportive relationships",
+"B. Constant stress",
+"C. Continuous sleep deprivation",
+"D. Avoiding all communication"
+],
+answer: "A"
+},
+
+{
+q: "Why should food be protected from flies and other insects?",
+options: [
+"A. Insects can carry disease-causing microorganisms to food",
+"B. Insects increase the nutritional value of food",
+"C. Insects sterilize food",
+"D. Insects make food safer"
+],
+answer: "A"
+},
+
+{
+q: "Which combination best supports good health?",
+options: [
+"A. Balanced nutrition, hygiene, physical activity and adequate rest",
+"B. Junk food, no exercise and little sleep",
+"C. Only medicines",
+"D. Skipping meals and avoiding water"
+],
+answer: "A"
+},
+
+
+/* ================= APPLICATION 41-60 ================= */
+
+{
+q: "After heavy rain, water collects in containers around a school. What should the school do to reduce mosquito breeding?",
+options: [
+"A. Remove or cover the stagnant water",
+"B. Add more water to the containers",
+"C. Leave the containers untouched",
+"D. Keep the containers open"
+],
+answer: "A"
+},
+
+{
+q: "A student has a cold and cough. Which action can help reduce the spread of infection?",
+options: [
+"A. Cover the mouth and nose while coughing and maintain hand hygiene",
+"B. Share used tissues",
+"C. Share drinking bottles",
+"D. Avoid washing hands"
+],
+answer: "A"
+},
+
+{
+q: "A child has been prescribed antibiotics for a bacterial infection. What is the best practice?",
+options: [
+"A. Take them as directed by the healthcare professional",
+"B. Stop immediately whenever symptoms improve without advice",
+"C. Share them with friends",
+"D. Save them for every future illness"
+],
+answer: "A"
+},
+
+{
+q: "A family drinks water directly from an uncertain source. What is the safest approach?",
+options: [
+"A. Use a safe drinking-water source or appropriate purification method",
+"B. Drink it without concern",
+"C. Store it uncovered",
+"D. Mix it with soft drinks"
+],
+answer: "A"
+},
+
+{
+q: "A school canteen leaves cooked food uncovered. Which change would improve food safety?",
+options: [
+"A. Keep food covered and maintain clean preparation areas",
+"B. Leave food uncovered",
+"C. Keep food near waste bins",
+"D. Use unwashed utensils"
+],
+answer: "A"
+},
+
+{
+q: "A student spends most of the day using a screen and does very little physical activity. Which change would be healthier?",
+options: [
+"A. Include regular physical activity and suitable breaks",
+"B. Increase screen time",
+"C. Avoid outdoor activity",
+"D. Reduce sleep"
+],
+answer: "A"
+},
+
+{
+q: "A child frequently eats foods high in sugar and fat and rarely exercises. Why should the child change these habits?",
+options: [
+"A. Such habits can increase the risk of some lifestyle-related health problems",
+"B. Such habits guarantee perfect health",
+"C. Exercise is unnecessary",
+"D. Nutrition has no effect on health"
+],
+answer: "A"
+},
+
+{
+q: "Several students in a class develop the same infectious illness. Which school measure could help reduce further spread?",
+options: [
+"A. Improve hygiene, ventilation and appropriate illness precautions",
+"B. Share personal items",
+"C. Stop handwashing",
+"D. Keep sick students in close contact with others"
+],
+answer: "A"
+},
+
+{
+q: "A student has received the recommended vaccination for a particular disease. What is the main purpose of the vaccination?",
+options: [
+"A. To help the immune system develop protection against that disease",
+"B. To cure every possible disease",
+"C. To replace healthy food",
+"D. To eliminate all microorganisms from the body"
+],
+answer: "A"
+},
+
+{
+q: "A family notices many mosquitoes near uncovered water containers. What is the most appropriate action?",
+options: [
+"A. Remove stagnant water and prevent mosquitoes from breeding",
+"B. Add more stagnant water",
+"C. Leave containers uncovered",
+"D. Store more water outdoors without lids"
+],
+answer: "A"
+},
+
+{
+q: "A student feels stressed because of examinations. Which combination is most supportive of health?",
+options: [
+"A. Adequate sleep, sensible study breaks, physical activity and support",
+"B. No sleep and continuous studying",
+"C. Skipping meals",
+"D. Avoiding everyone"
+],
+answer: "A"
+},
+
+{
+q: "A child frequently becomes ill because meals are lacking important nutrients. What should be considered?",
+options: [
+"A. Improving the variety and nutritional quality of the diet",
+"B. Removing all fruits and vegetables",
+"C. Avoiding proteins",
+"D. Replacing meals with sugary drinks"
+],
+answer: "A"
+},
+
+{
+q: "A neighbourhood has poor drainage and accumulated garbage. Which health concern is most relevant?",
+options: [
+"A. Such conditions can support the spread of disease",
+"B. Garbage always improves sanitation",
+"C. Poor drainage prevents insects",
+"D. Waste has no relationship with health"
+],
+answer: "A"
+},
+
+{
+q: "A person with a communicable disease continues sharing personal towels with family members. What would be better?",
+options: [
+"A. Avoid sharing personal items and maintain good hygiene",
+"B. Share more personal items",
+"C. Avoid washing hands",
+"D. Leave used towels in common areas"
+],
+answer: "A"
+},
+
+{
+q: "A student wants to prevent diseases caused by contaminated food. Which habit is most appropriate?",
+options: [
+"A. Wash hands, use clean utensils and eat properly stored food",
+"B. Eat food left uncovered",
+"C. Use dirty utensils",
+"D. Ignore food hygiene"
+],
+answer: "A"
+},
+
+{
+q: "A family member has a disease that does not spread from person to person. Which statement is appropriate?",
+options: [
+"A. It may be a non-communicable disease",
+"B. It must be caused by a virus",
+"C. It must spread through water",
+"D. It must be transmitted by mosquitoes"
+],
+answer: "A"
+},
+
+{
+q: "A student asks why one person's illness can sometimes spread quickly through a classroom. What is the best explanation?",
+options: [
+"A. Some diseases are communicable and can spread through specific routes",
+"B. All diseases spread equally",
+"C. Only non-communicable diseases spread",
+"D. Diseases never spread between people"
+],
+answer: "A"
+},
+
+{
+q: "A school wants to improve the health of its entire community. Which plan is most comprehensive?",
+options: [
+"A. Safe water, sanitation, hygiene, nutritious food, activity and health education",
+"B. Only provide medicines",
+"C. Only build a playground",
+"D. Only increase classroom study time"
+],
+answer: "A"
+},
+
+{
+q: "A student says, 'If I eat healthy food, I will never get any disease.' What is the best response?",
+options: [
+"A. Healthy habits reduce risks and support health, but they cannot guarantee complete freedom from disease",
+"B. The statement is always true",
+"C. Food has no effect on health",
+"D. Disease prevention depends only on exercise"
+],
+answer: "A"
+},
+
+{
+q: "Which situation best demonstrates that health is also a community responsibility?",
+options: [
+"A. People maintaining sanitation and preventing disease spread together",
+"B. One person ignoring all hygiene",
+"C. Throwing waste into public spaces",
+"D. Leaving stagnant water around homes"
+],
+answer: "A"
+}
+
+];
+
+
+/* =========================================================
+   CREATE ANSWER KEY
+   ========================================================= */
+
+const answers = {};
+
+questions.forEach(function(question, index) {
+    answers["q" + (index + 1)] = question.answer;
+});
+
+
+/* =========================================================
+   RENDER QUESTIONS
+   ========================================================= */
+
+function renderQuestions() {
+
+    const easy =
+        document.getElementById("easyQuestions");
+
+    const moderate =
+        document.getElementById("moderateQuestions");
+
+    const application =
+        document.getElementById("applicationQuestions");
+
+    questions.forEach(function(item, index) {
+
+        const number = index + 1;
+
+        const div =
+            document.createElement("div");
+
+        div.className = "question-card";
+
+        let html = `
+            <div class="question-number">
+                Question ${number}
+            </div>
+
+            <div class="question">
+                ${item.q}
+            </div>
+        `;
+
+        item.options.forEach(function(option, optionIndex) {
+
+            const letter =
+                String.fromCharCode(65 + optionIndex);
+
+            html += `
+                <label class="option">
+
+                    <input
+                        type="radio"
+                        name="q${number}"
+                        value="${letter}"
+                        onchange="updateProgress()"
+                    >
+
+                    <strong>${letter}.</strong>
+                    ${option}
+
+                </label>
+            `;
+        });
+
+        div.innerHTML = html;
+
+        if (number <= 20) {
+            easy.appendChild(div);
+        } else if (number <= 40) {
+            moderate.appendChild(div);
+        } else {
+            application.appendChild(div);
+        }
+
+    });
+}
+
+
+/* =========================================================
+   START QUIZ
+   ========================================================= */
+
+function startQuiz() {
+
+    const input =
+        document.getElementById("studentName");
+
+    const message =
+        document.getElementById("startMessage");
+
+    studentName =
+        input.value.trim();
+
+    if (studentName.length < 2) {
+
+        message.innerHTML = `
+            <div class="error-message">
+                Please enter your full name before starting.
+            </div>
+        `;
+
+        return;
+    }
+
+    quizStarted = true;
+
+    document
+        .getElementById("startScreen")
+        .classList.add("hidden");
+
+    document
+        .getElementById("quizScreen")
+        .classList.remove("hidden");
+
+    window.scrollTo(0, 0);
+
+    startTimer();
+}
+
+
+/* =========================================================
+   TIMER
+   ========================================================= */
+
+function startTimer() {
+
+    timeRemaining = TOTAL_TIME;
+
+    updateTimer();
+
+    timerInterval =
+        setInterval(function() {
+
+            timeRemaining--;
+
+            updateTimer();
+
+            if (timeRemaining <= 0) {
+
+                clearInterval(timerInterval);
+
+                alert(
+                    "Time is over. Your test will be submitted automatically."
+                );
+
+                submitQuiz(true);
+            }
+
+        }, 1000);
+}
+
+
+/* =========================================================
+   UPDATE TIMER
+   ========================================================= */
+
+function updateTimer() {
+
+    const timer =
+        document.getElementById("timer");
+
+    const minutes =
+        Math.floor(timeRemaining / 60);
+
+    const seconds =
+        timeRemaining % 60;
+
+    timer.textContent =
+        "Time Remaining: " +
+        String(minutes).padStart(2, "0") +
+        ":" +
+        String(seconds).padStart(2, "0");
+
+    if (timeRemaining <= 300) {
+        timer.classList.add("timer-warning");
+    }
+}
+
+
+/* =========================================================
+   PROGRESS
+   ========================================================= */
+
+function updateProgress() {
+
+    let answered = 0;
+
+    for (
+        let i = 1;
+        i <= questions.length;
+        i++
+    ) {
+
+        const selected =
+            document.querySelector(
+                `input[name="q${i}"]:checked`
+            );
+
+        if (selected) {
+            answered++;
+        }
+    }
+
+    const percentage =
+        (answered / questions.length) * 100;
+
+    document
+        .getElementById("progressBar")
+        .style.width =
+        percentage + "%";
+
+    document
+        .getElementById("progressText")
+        .textContent =
+        answered +
+        " / " +
+        questions.length +
+        " answered";
+}
+
+
+/* =========================================================
+   CONFIRM SUBMISSION
+   ========================================================= */
+
+function confirmSubmit() {
+
+    let unanswered = 0;
+
+    for (
+        let i = 1;
+        i <= questions.length;
+        i++
+    ) {
+
+        const selected =
+            document.querySelector(
+                `input[name="q${i}"]:checked`
+            );
+
+        if (!selected) {
+            unanswered++;
+        }
+    }
+
+    if (unanswered > 0) {
+
+        const proceed =
+            confirm(
+                "You have " +
+                unanswered +
+                " unanswered question(s).\n\n" +
+                "Do you still want to submit?"
+            );
+
+        if (!proceed) {
+            return;
+        }
+
+    } else {
+
+        const proceed =
+            confirm(
+                "Are you sure you want to submit the test?"
+            );
+
+        if (!proceed) {
+            return;
+        }
+    }
+
+    submitQuiz(false);
+}
+
+
+/* =========================================================
+   SUBMIT QUIZ
+   ========================================================= */
+
+async function submitQuiz(autoSubmit) {
+
+    if (quizSubmitted) {
+        return;
+    }
+
+    quizSubmitted = true;
+
+    if (timerInterval) {
+        clearInterval(timerInterval);
+    }
+
+    const submitButton =
+        document.getElementById("submitButton");
+
+    submitButton.disabled = true;
+
+    let correct = 0;
+    let wrong = 0;
+    let unanswered = 0;
+
+    const studentAnswers = {};
+
+    for (
+        let i = 1;
+        i <= questions.length;
+        i++
+    ) {
+
+        const key = "q" + i;
+
+        const selected =
+            document.querySelector(
+                `input[name="q${i}"]:checked`
+            );
+
+        if (!selected) {
+
+            unanswered++;
+
+            studentAnswers[key] = "";
+
+        } else {
+
+            const selectedAnswer =
+                selected.value;
+
+            studentAnswers[key] =
+                selectedAnswer;
+
+            if (
+                selectedAnswer === answers[key]
+            ) {
+
+                correct++;
+
+            } else {
+
+                wrong++;
+            }
+        }
+    }
+
+    const total =
+        questions.length;
+
+    const percentage =
+        (correct / total) * 100;
+
+    const grade =
+        getGrade(percentage);
+
+    document
+        .getElementById("quizScreen")
+        .classList.add("hidden");
+
+    document
+        .getElementById("resultScreen")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("studentResultName")
+        .textContent =
+        "Student: " + studentName;
+
+    document
+        .getElementById("scoreCircle")
+        .textContent =
+        percentage.toFixed(1) + "%";
+
+    document
+        .getElementById("gradeText")
+        .textContent =
+        "Grade: " + grade;
+
+    document
+        .getElementById("correctCount")
+        .textContent =
+        correct;
+
+    document
+        .getElementById("wrongCount")
+        .textContent =
+        wrong;
+
+    document
+        .getElementById("unansweredCount")
+        .textContent =
+        unanswered;
+
+    document
+        .getElementById("totalScore")
+        .textContent =
+        correct + "/" + total;
+
+    createReview(studentAnswers);
+
+    const result = {
+
+        name: studentName,
+
+        classId: CLASS_ID,
+
+        quizTitle: QUIZ_TITLE,
+
+        score: correct,
+
+        total: total,
+
+        percentage:
+            Number(
+                percentage.toFixed(1)
+            ),
+
+        grade: grade,
+
+        correct: correct,
+
+        wrong: wrong,
+
+        unanswered: unanswered,
+
+        date:
+            new Date().toLocaleString(),
+
+        timestamp:
+            Date.now()
+    };
+
+    await saveResult(result);
+}
+
+
+/* =========================================================
+   GRADE
+   ========================================================= */
+
+function getGrade(percentage) {
+
+    if (percentage >= 90) {
+        return "A+";
+    }
+
+    if (percentage >= 80) {
+        return "A";
+    }
+
+    if (percentage >= 70) {
+        return "B";
+    }
+
+    if (percentage >= 60) {
+        return "C";
+    }
+
+    if (percentage >= 50) {
+        return "D";
+    }
+
+    return "Needs Improvement";
+}
+
+
+/* =========================================================
+   SAVE RESULT TO FIREBASE
+   ========================================================= */
+
+async function saveResult(result) {
+
+    const message =
+        document.getElementById(
+            "firebaseMessage"
+        );
+
+    try {
+
+        const resultRef =
+            database
+                .ref("quizResults")
+                .push();
+
+        await resultRef.set(result);
+
+        message.innerHTML = `
+            <div class="success-message">
+
+                <strong>
+                    Result submitted successfully!
+                </strong>
+
+                <br><br>
+
+                Your result has been recorded.
+
+            </div>
+        `;
+
+    } catch (error) {
+
+        console.error(
+            "Firebase error:",
+            error
+        );
+
+        message.innerHTML = `
+            <div class="error-message">
+
+                Your score was calculated,
+                but there was a problem saving
+                the result.
+
+                <br><br>
+
+                Please inform your teacher.
+
+            </div>
+        `;
+    }
+}
+
+
+/* =========================================================
+   ANSWER REVIEW
+   ========================================================= */
+
+function createReview(studentAnswers) {
+
+    const container =
+        document.getElementById(
+            "reviewContainer"
+        );
+
+    container.innerHTML = "";
+
+    questions.forEach(
+        function(item, index) {
+
+            const number =
+                index + 1;
+
+            const correctAnswer =
+                answers["q" + number];
+
+            const selectedAnswer =
+                studentAnswers["q" + number];
+
+            const div =
+                document.createElement("div");
+
+            if (!selectedAnswer) {
+
+                div.className =
+                    "review-item review-unanswered";
+
+                div.innerHTML = `
+                    <strong>
+                        Question ${number}
+                    </strong>
+
+                    <p>
+                        ${item.q}
+                    </p>
+
+                    <p>
+                        <strong>Your answer:</strong>
+                        Not answered
+                    </p>
+
+                    <p>
+                        <strong>Correct answer:</strong>
+                        ${correctAnswer}
+                    </p>
+                `;
+
+            } else if (
+                selectedAnswer === correctAnswer
+            ) {
+
+                div.className =
+                    "review-item review-correct";
+
+                div.innerHTML = `
+                    <strong>
+                        Question ${number} ✓
+                    </strong>
+
+                    <p>
+                        ${item.q}
+                    </p>
+
+                    <p>
+                        <strong>Your answer:</strong>
+                        ${selectedAnswer}
+                    </p>
+                `;
+
+            } else {
+
+                div.className =
+                    "review-item review-wrong";
+
+                div.innerHTML = `
+                    <strong>
+                        Question ${number} ✗
+                    </strong>
+
+                    <p>
+                        ${item.q}
+                    </p>
+
+                    <p>
+                        <strong>Your answer:</strong>
+                        ${selectedAnswer}
+                    </p>
+
+                    <p>
+                        <strong>Correct answer:</strong>
+                        ${correctAnswer}
+                    </p>
+                `;
+            }
+
+            container.appendChild(div);
+
+        }
+    );
+}
+
+
+/* =========================================================
+   PAGE EXIT WARNING
+   ========================================================= */
+
+window.addEventListener(
+    "beforeunload",
+    function(event) {
+
+        if (
+            quizStarted &&
+            !quizSubmitted
+        ) {
+
+            event.preventDefault();
+
+            event.returnValue =
+                "Your test is still in progress.";
+        }
+
+    }
+);
+
+
+/* =========================================================
+   INITIALIZE
+   ========================================================= */
+
+renderQuestions();
+
+</script>
+
+</body>
+</html>
