@@ -12,302 +12,319 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <style>
-    * {
-        box-sizing: border-box;
-    }
+* {
+    box-sizing: border-box;
+}
 
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background: #f4f7fb;
-        color: #222;
-    }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #222;
+}
 
-    header {
-        background: linear-gradient(135deg, #1565c0, #0d47a1);
-        color: white;
-        padding: 25px 20px;
-        text-align: center;
-    }
+/* HEADER */
 
-    header h1 {
-        margin: 0;
-        font-size: 28px;
-    }
+header {
+    background: linear-gradient(135deg, #1565c0, #0d47a1);
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
 
-    header p {
-        margin: 8px 0 0;
-        opacity: 0.9;
-    }
+header h1 {
+    margin: 0;
+    font-size: 28px;
+}
 
-    .container {
-        max-width: 1400px;
-        margin: 25px auto;
-        padding: 0 15px;
-    }
+header p {
+    margin: 8px 0 0;
+    opacity: 0.9;
+}
 
-    /* LOGIN */
+/* CONTAINER */
 
-    #loginSection {
-        max-width: 420px;
-        margin: 70px auto;
-        background: white;
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 5px 25px rgba(0,0,0,0.1);
-    }
+.container {
+    max-width: 1400px;
+    margin: 25px auto;
+    padding: 0 15px;
+}
 
-    #loginSection h2 {
-        text-align: center;
-        margin-top: 0;
-        color: #1565c0;
-    }
+/* LOGIN */
 
-    input {
-        width: 100%;
-        padding: 13px;
-        margin: 8px 0;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        font-size: 15px;
-    }
+#loginSection {
+    max-width: 420px;
+    margin: 70px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+}
 
-    button {
-        border: none;
-        border-radius: 8px;
-        padding: 12px 18px;
-        cursor: pointer;
-        font-size: 15px;
-    }
+#loginSection h2 {
+    text-align: center;
+    margin-top: 0;
+    color: #1565c0;
+}
 
-    .login-btn {
-        width: 100%;
-        background: #1565c0;
-        color: white;
-        margin-top: 10px;
-    }
+input {
+    width: 100%;
+    padding: 13px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
 
-    .login-btn:hover {
-        background: #0d47a1;
-    }
+.login-btn {
+    width: 100%;
+    background: #1565c0;
+    color: white;
+    margin-top: 10px;
+}
 
-    #loginError {
-        color: #d32f2f;
-        text-align: center;
-        margin-top: 12px;
-        display: none;
-    }
+.login-btn:hover {
+    background: #0d47a1;
+}
 
-    /* DASHBOARD */
+#loginError {
+    color: #d32f2f;
+    text-align: center;
+    margin-top: 12px;
+    display: none;
+}
 
-    #dashboard {
-        display: none;
-    }
+/* DASHBOARD */
 
-    .top-bar {
-        background: white;
-        padding: 18px;
-        border-radius: 12px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-        margin-bottom: 20px;
+#dashboard {
+    display: none;
+}
 
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 15px;
-        flex-wrap: wrap;
-    }
+.top-bar {
+    background: white;
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    margin-bottom: 20px;
 
-    .teacher-info {
-        font-weight: bold;
-        color: #333;
-    }
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
 
-    .logout-btn {
-        background: #d32f2f;
-        color: white;
-    }
+.teacher-info {
+    font-weight: bold;
+    color: #333;
+}
 
-    .logout-btn:hover {
-        background: #b71c1c;
-    }
+.teacher-info small {
+    font-weight: normal;
+    color: #666;
+}
 
-    /* FILTERS */
+.logout-btn {
+    background: #d32f2f;
+    color: white;
+}
 
-    .filters {
-        background: white;
-        padding: 20px;
-        border-radius: 12px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-        margin-bottom: 20px;
-    }
+.logout-btn:hover {
+    background: #b71c1c;
+}
 
-    .filters h3 {
-        margin-top: 0;
-        color: #1565c0;
-    }
+.refresh-btn {
+    background: #2e7d32;
+    color: white;
+    margin-right: 8px;
+}
 
-    .filter-row {
-        display: flex;
-        gap: 15px;
-        flex-wrap: wrap;
-    }
+.refresh-btn:hover {
+    background: #1b5e20;
+}
 
-    .filter-group {
-        flex: 1;
-        min-width: 220px;
-    }
+/* FILTERS */
 
-    .filter-group label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 7px;
-    }
+.filters {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    margin-bottom: 20px;
+}
 
-    select {
-        width: 100%;
-        padding: 12px;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        font-size: 15px;
-        background: white;
-    }
+.filters h3 {
+    margin-top: 0;
+    color: #1565c0;
+}
 
-    /* STATS */
+.filter-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    flex: 1;
+    min-width: 220px;
+}
+
+.filter-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    background: white;
+}
+
+/* STATS */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    text-align: center;
+}
+
+.stat-card h3 {
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+}
+
+.stat-card p {
+    margin: 10px 0 0;
+    font-size: 28px;
+    font-weight: bold;
+    color: #1565c0;
+}
+
+/* TABLE */
+
+.table-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1100px;
+}
+
+th {
+    background: #1565c0;
+    color: white;
+    padding: 13px 10px;
+    text-align: center;
+    font-size: 14px;
+}
+
+td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+    font-size: 14px;
+}
+
+tr:hover {
+    background: #f5f9ff;
+}
+
+.student-name {
+    font-weight: bold;
+    text-align: left;
+}
+
+.chapter-name {
+    text-align: left;
+    max-width: 280px;
+}
+
+.grade {
+    font-weight: bold;
+}
+
+.loading {
+    text-align: center;
+    padding: 35px;
+    color: #666;
+}
+
+.no-results {
+    text-align: center;
+    padding: 40px;
+    color: #777;
+    font-size: 16px;
+}
+
+/* MOBILE */
+
+@media (max-width: 900px) {
 
     .stats {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 15px;
-        margin-bottom: 20px;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+
+    header h1 {
+        font-size: 22px;
     }
 
-    .stat-card {
-        background: white;
-        padding: 20px;
-        border-radius: 12px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-        text-align: center;
-    }
-
-    .stat-card h3 {
-        margin: 0;
-        font-size: 14px;
-        color: #666;
+    .stats {
+        grid-template-columns: 1fr 1fr;
     }
 
     .stat-card p {
-        margin: 10px 0 0;
-        font-size: 28px;
-        font-weight: bold;
-        color: #1565c0;
+        font-size: 22px;
     }
 
-    /* TABLE */
-
-    .table-container {
-        background: white;
-        border-radius: 12px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-        overflow-x: auto;
+    .filter-group {
+        min-width: 100%;
     }
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        min-width: 1000px;
+    .top-bar {
+        align-items: flex-start;
     }
-
-    th {
-        background: #1565c0;
-        color: white;
-        padding: 13px 10px;
-        text-align: center;
-        font-size: 14px;
-    }
-
-    td {
-        padding: 12px 10px;
-        border-bottom: 1px solid #eee;
-        text-align: center;
-        font-size: 14px;
-    }
-
-    tr:hover {
-        background: #f5f9ff;
-    }
-
-    .student-name {
-        font-weight: bold;
-        text-align: left;
-    }
-
-    .chapter-name {
-        text-align: left;
-        max-width: 280px;
-    }
-
-    .grade {
-        font-weight: bold;
-    }
-
-    .no-results {
-        text-align: center;
-        padding: 40px;
-        color: #777;
-        font-size: 16px;
-    }
-
-    .loading {
-        text-align: center;
-        padding: 30px;
-        color: #666;
-    }
-
-    .refresh-btn {
-        background: #2e7d32;
-        color: white;
-        margin-right: 8px;
-    }
-
-    .refresh-btn:hover {
-        background: #1b5e20;
-    }
-
-    @media (max-width: 900px) {
-        .stats {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
-    @media (max-width: 600px) {
-        header h1 {
-            font-size: 22px;
-        }
-
-        .stats {
-            grid-template-columns: 1fr 1fr;
-        }
-
-        .stat-card p {
-            font-size: 22px;
-        }
-
-        .filter-group {
-            min-width: 100%;
-        }
-    }
+}
 </style>
+
 </head>
 
 <body>
 
 <header>
+
     <h1>🔬 Science Quiz Teacher Dashboard</h1>
+
     <p>Chapter-wise Student Performance</p>
+
 </header>
 
-<!-- LOGIN -->
+
+<!-- =========================
+     LOGIN SECTION
+========================= -->
+
 <div id="loginSection">
 
     <h2>Teacher Login</h2>
@@ -324,7 +341,10 @@
         placeholder="Password"
     >
 
-    <button class="login-btn" onclick="login()">
+    <button
+        class="login-btn"
+        onclick="login()"
+    >
         Login
     </button>
 
@@ -333,184 +353,257 @@
 </div>
 
 
-<!-- DASHBOARD -->
+<!-- =========================
+     DASHBOARD
+========================= -->
+
 <div id="dashboard">
 
-    <div class="container">
+<div class="container">
 
-        <!-- TOP BAR -->
-        <div class="top-bar">
+    <!-- TOP BAR -->
 
-            <div class="teacher-info">
-                👨‍🏫 Teacher Dashboard
-                <br>
-                <small id="loggedInEmail"></small>
-            </div>
+    <div class="top-bar">
 
-            <div>
-                <button class="refresh-btn" onclick="loadResults()">
-                    🔄 Refresh
-                </button>
+        <div class="teacher-info">
 
-                <button class="logout-btn" onclick="logout()">
-                    Logout
-                </button>
-            </div>
+            👨‍🏫 Teacher Dashboard
+
+            <br>
+
+            <small id="loggedInEmail"></small>
 
         </div>
 
+        <div>
 
-        <!-- FILTERS -->
-        <div class="filters">
-
-            <h3>📊 Filter Results</h3>
-
-            <div class="filter-row">
-
-                <!-- CLASS -->
-                <div class="filter-group">
-
-                    <label for="classFilter">
-                        Class
-                    </label>
-
-                    <select
-                        id="classFilter"
-                        onchange="updateChapterDropdown(); displayResults();"
-                    >
-
-                        <option value="all">
-                            All Classes
-                        </option>
-
-                        <option value="6">
-                            Class 6
-                        </option>
-
-                        <option value="7">
-                            Class 7
-                        </option>
-
-                        <option value="8">
-                            Class 8
-                        </option>
-
-                    </select>
-
-                </div>
-
-
-                <!-- CHAPTER -->
-                <div class="filter-group">
-
-                    <label for="chapterFilter">
-                        Chapter
-                    </label>
-
-                    <select
-                        id="chapterFilter"
-                        onchange="displayResults()"
-                    >
-
-                        <option value="all">
-                            All Chapters
-                        </option>
-
-                    </select>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-        <!-- STATS -->
-        <div class="stats">
-
-            <div class="stat-card">
-                <h3>Students</h3>
-                <p id="studentCount">0</p>
-            </div>
-
-            <div class="stat-card">
-                <h3>Average</h3>
-                <p id="averageScore">0%</p>
-            </div>
-
-            <div class="stat-card">
-                <h3>Highest</h3>
-                <p id="highestScore">0%</p>
-            </div>
-
-            <div class="stat-card">
-                <h3>Last Updated</h3>
-                <p id="lastUpdated" style="font-size:16px;">
-                    -
-                </p>
-            </div>
-
-        </div>
-
-
-        <!-- RESULTS TABLE -->
-        <div class="table-container">
-
-            <div id="loading" class="loading">
-                Loading results...
-            </div>
-
-            <table id="resultsTable" style="display:none;">
-
-                <thead>
-
-                    <tr>
-                        <th>Rank</th>
-                        <th>Student</th>
-                        <th>Class</th>
-                        <th>Chapter</th>
-                        <th>Score</th>
-                        <th>Percentage</th>
-                        <th>Grade</th>
-                        <th>Correct</th>
-                        <th>Wrong</th>
-                        <th>Unanswered</th>
-                        <th>Submitted</th>
-                    </tr>
-
-                </thead>
-
-                <tbody id="resultsBody">
-                </tbody>
-
-            </table>
-
-            <div
-                id="noResults"
-                class="no-results"
-                style="display:none;"
+            <button
+                class="refresh-btn"
+                onclick="loadResults()"
             >
-                No results found for the selected filters.
+                🔄 Refresh
+            </button>
+
+            <button
+                class="logout-btn"
+                onclick="logout()"
+            >
+                Logout
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         FILTERS
+    ========================== -->
+
+    <div class="filters">
+
+        <h3>📊 Filter Results</h3>
+
+        <div class="filter-row">
+
+            <!-- CLASS -->
+
+            <div class="filter-group">
+
+                <label for="classFilter">
+                    Class
+                </label>
+
+                <select
+                    id="classFilter"
+                    onchange="classChanged()"
+                >
+
+                    <option value="all">
+                        All Classes
+                    </option>
+
+                    <option value="6">
+                        Class 6
+                    </option>
+
+                    <option value="7">
+                        Class 7
+                    </option>
+
+                    <option value="8">
+                        Class 8
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- CHAPTER -->
+
+            <div class="filter-group">
+
+                <label for="chapterFilter">
+                    Chapter
+                </label>
+
+                <select
+                    id="chapterFilter"
+                    onchange="displayResults()"
+                >
+
+                    <option value="all">
+                        All Chapters
+                    </option>
+
+                </select>
+
             </div>
 
         </div>
 
     </div>
 
+
+    <!-- =========================
+         STATISTICS
+    ========================== -->
+
+    <div class="stats">
+
+        <div class="stat-card">
+
+            <h3>Students / Attempts</h3>
+
+            <p id="studentCount">
+                0
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>Average</h3>
+
+            <p id="averageScore">
+                0%
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>Highest</h3>
+
+            <p id="highestScore">
+                0%
+            </p>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <h3>Last Updated</h3>
+
+            <p
+                id="lastUpdated"
+                style="font-size:16px;"
+            >
+                -
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         RESULTS
+    ========================== -->
+
+    <div class="table-container">
+
+        <div
+            id="loading"
+            class="loading"
+        >
+            Loading results...
+        </div>
+
+
+        <table
+            id="resultsTable"
+            style="display:none;"
+        >
+
+            <thead>
+
+                <tr>
+
+                    <th>Rank</th>
+
+                    <th>Student</th>
+
+                    <th>Class</th>
+
+                    <th>Chapter</th>
+
+                    <th>Score</th>
+
+                    <th>Percentage</th>
+
+                    <th>Grade</th>
+
+                    <th>Correct</th>
+
+                    <th>Wrong</th>
+
+                    <th>Unanswered</th>
+
+                    <th>Submitted</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="resultsBody"></tbody>
+
+        </table>
+
+
+        <div
+            id="noResults"
+            class="no-results"
+            style="display:none;"
+        >
+            No results found for the selected filters.
+        </div>
+
+    </div>
+
+</div>
+
 </div>
 
 
 <script>
 
-/* =========================================================
+/* =====================================================
    FIREBASE CONFIGURATION
-========================================================= */
+===================================================== */
 
 const firebaseConfig = {
 
-    apiKey: "AIzaSyCfI3zEpaiRA3OjgYiTuvnuA3GGyQGNpU",
+    apiKey:
+        "AIzaSyCfI3zEpaiRA3OjgYiTuvnuA3GGyQGQNpU",
 
-    authDomain: "sciencequiz2026-ccd77.firebaseapp.com",
+    authDomain:
+        "sciencequiz2026-ccd77.firebaseapp.com",
 
     databaseURL:
         "https://sciencequiz2026-ccd77-default-rtdb.firebaseio.com",
@@ -541,53 +634,86 @@ const auth = firebase.auth();
 const database = firebase.database();
 
 
-/* Store all results */
+/* Store all Firebase results */
 
 let allResults = [];
 
 
-/* =========================================================
+/* =====================================================
    LOGIN
-========================================================= */
+===================================================== */
 
 function login() {
 
     const email =
-        document.getElementById("email").value.trim();
+        document.getElementById("email")
+        .value
+        .trim();
 
     const password =
-        document.getElementById("password").value;
+        document.getElementById("password")
+        .value;
 
     const errorBox =
         document.getElementById("loginError");
 
+
     errorBox.style.display = "none";
+
 
     if (!email || !password) {
 
         errorBox.textContent =
-            "Please enter email and password.";
+            "Please enter your email and password.";
 
         errorBox.style.display = "block";
 
         return;
     }
 
+
     auth.signInWithEmailAndPassword(
         email,
         password
     )
-    .then(() => {
 
-        console.log("Login successful");
+    .then(function() {
+
+        console.log("Teacher login successful.");
 
     })
-    .catch((error) => {
+
+    .catch(function(error) {
 
         console.error(error);
 
-        errorBox.textContent =
+        let message =
             "Login failed: " + error.message;
+
+
+        if (
+            error.code ===
+            "auth/api-key-not-valid"
+        ) {
+
+            message =
+                "Firebase API key is not valid. Please make sure this file is using the latest Firebase configuration.";
+
+        }
+
+
+        if (
+            error.code ===
+            "auth/invalid-credential"
+        ) {
+
+            message =
+                "Incorrect email or password.";
+
+        }
+
+
+        errorBox.textContent = message;
 
         errorBox.style.display = "block";
 
@@ -596,63 +722,84 @@ function login() {
 }
 
 
-/* =========================================================
-   AUTH STATE
-========================================================= */
+/* =====================================================
+   AUTHENTICATION STATE
+===================================================== */
 
 auth.onAuthStateChanged(function(user) {
 
     if (user) {
 
-        document.getElementById("loginSection")
-            .style.display = "none";
+        document.getElementById(
+            "loginSection"
+        ).style.display = "none";
 
-        document.getElementById("dashboard")
-            .style.display = "block";
 
-        document.getElementById("loggedInEmail")
-            .textContent = user.email;
+        document.getElementById(
+            "dashboard"
+        ).style.display = "block";
+
+
+        document.getElementById(
+            "loggedInEmail"
+        ).textContent = user.email;
+
 
         loadResults();
 
-    } else {
+    }
 
-        document.getElementById("loginSection")
-            .style.display = "block";
+    else {
 
-        document.getElementById("dashboard")
-            .style.display = "none";
+        document.getElementById(
+            "loginSection"
+        ).style.display = "block";
+
+
+        document.getElementById(
+            "dashboard"
+        ).style.display = "none";
 
     }
 
 });
 
 
-/* =========================================================
-   LOAD RESULTS FROM FIREBASE
-========================================================= */
+/* =====================================================
+   LOAD RESULTS
+===================================================== */
 
 function loadResults() {
 
-    document.getElementById("loading")
-        .style.display = "block";
+    document.getElementById(
+        "loading"
+    ).style.display = "block";
 
-    document.getElementById("resultsTable")
-        .style.display = "none";
 
-    database.ref("quizResults").once("value")
+    document.getElementById(
+        "resultsTable"
+    ).style.display = "none";
 
-        .then((snapshot) => {
+
+    database
+        .ref("quizResults")
+        .once("value")
+
+        .then(function(snapshot) {
 
             allResults = [];
 
-            snapshot.forEach((child) => {
 
-                const result = child.val();
+            snapshot.forEach(function(child) {
+
+                const result =
+                    child.val();
+
 
                 if (result) {
 
-                    result.id = child.key;
+                    result.id =
+                        child.key;
 
                     allResults.push(result);
 
@@ -661,7 +808,7 @@ function loadResults() {
             });
 
 
-            /* Sort highest percentage first */
+            /* Sort by percentage */
 
             allResults.sort(function(a, b) {
 
@@ -679,88 +826,123 @@ function loadResults() {
 
         })
 
-        .catch((error) => {
+        .catch(function(error) {
 
             console.error(
                 "Error loading results:",
                 error
             );
 
-            document.getElementById("loading")
-                .textContent =
-                "Unable to load results.";
+
+            document.getElementById(
+                "loading"
+            ).textContent =
+                "Unable to load results. Please refresh.";
 
         });
 
 }
 
 
-/* =========================================================
+/* =====================================================
    GET CHAPTER NAME
-========================================================= */
+===================================================== */
 
 function getChapterName(result) {
 
     /*
-       The quiz apps already save quizTitle.
+       Existing quiz results contain:
 
-       Example:
+       quizTitle:
        "Measurement of Motion and Length - Class 6 Science"
 
-       We remove " - Class X Science"
-       to get the chapter name.
+       This function removes:
+
+       " - Class 6 Science"
+
+       leaving:
+
+       "Measurement of Motion and Length"
     */
+
 
     if (result.quizTitle) {
 
-        let title = result.quizTitle;
+        let title =
+            String(result.quizTitle);
+
 
         title = title.replace(
             /\s*-\s*Class\s*\d+\s*Science\s*$/i,
             ""
         );
 
+
         return title.trim();
 
     }
 
 
-    /* Fallback */
+    /* If a future quiz stores chapter directly */
 
     if (result.chapter) {
-        return result.chapter;
+
+        return String(result.chapter);
+
     }
+
 
     return "Unknown Chapter";
 
 }
 
 
-/* =========================================================
+/* =====================================================
+   CLASS FILTER CHANGED
+===================================================== */
+
+function classChanged() {
+
+    updateChapterDropdown();
+
+    displayResults();
+
+}
+
+
+/* =====================================================
    UPDATE CHAPTER DROPDOWN
-========================================================= */
+===================================================== */
 
 function updateChapterDropdown() {
 
     const classFilter =
-        document.getElementById("classFilter").value;
+        document.getElementById(
+            "classFilter"
+        ).value;
+
 
     const chapterFilter =
-        document.getElementById("chapterFilter");
+        document.getElementById(
+            "chapterFilter"
+        );
 
-    const currentChapter =
+
+    const oldChapter =
         chapterFilter.value;
 
 
-    /* Find chapters */
+    const chapters =
+        new Set();
 
-    const chapters = new Set();
 
+    /* Find chapters belonging to selected class */
 
     allResults.forEach(function(result) {
 
         const resultClass =
             String(result.classId || "");
+
 
         if (
             classFilter === "all" ||
@@ -776,10 +958,14 @@ function updateChapterDropdown() {
     });
 
 
-    /* Sort chapters alphabetically */
+    /* Sort alphabetically */
 
     const sortedChapters =
-        Array.from(chapters).sort();
+        Array.from(chapters).sort(
+            function(a, b) {
+                return a.localeCompare(b);
+            }
+        );
 
 
     /* Clear dropdown */
@@ -787,119 +973,162 @@ function updateChapterDropdown() {
     chapterFilter.innerHTML = "";
 
 
-    /* All Chapters */
+    /* All Chapters option */
 
     const allOption =
         document.createElement("option");
+
 
     allOption.value = "all";
 
     allOption.textContent =
         "All Chapters";
 
-    chapterFilter.appendChild(allOption);
+
+    chapterFilter.appendChild(
+        allOption
+    );
 
 
     /* Add chapters */
 
-    sortedChapters.forEach(function(chapter) {
+    sortedChapters.forEach(
+        function(chapter) {
 
-        const option =
-            document.createElement("option");
-
-        option.value = chapter;
-
-        option.textContent = chapter;
-
-        chapterFilter.appendChild(option);
-
-    });
+            const option =
+                document.createElement(
+                    "option"
+                );
 
 
-    /* Restore previous selection */
+            option.value =
+                chapter;
+
+
+            option.textContent =
+                chapter;
+
+
+            chapterFilter.appendChild(
+                option
+            );
+
+        }
+    );
+
+
+    /* Restore old selection if possible */
 
     if (
-        currentChapter !== "all" &&
-        sortedChapters.includes(currentChapter)
+        oldChapter !== "all" &&
+        sortedChapters.includes(oldChapter)
     ) {
 
         chapterFilter.value =
-            currentChapter;
+            oldChapter;
 
-    } else {
+    }
 
-        chapterFilter.value = "all";
+    else {
+
+        chapterFilter.value =
+            "all";
 
     }
 
 }
 
 
-/* =========================================================
+/* =====================================================
    DISPLAY RESULTS
-========================================================= */
+===================================================== */
 
 function displayResults() {
 
     const classFilter =
-        document.getElementById("classFilter").value;
+        document.getElementById(
+            "classFilter"
+        ).value;
+
 
     const chapterFilter =
-        document.getElementById("chapterFilter").value;
+        document.getElementById(
+            "chapterFilter"
+        ).value;
+
 
     const tbody =
-        document.getElementById("resultsBody");
+        document.getElementById(
+            "resultsBody"
+        );
+
 
     const table =
-        document.getElementById("resultsTable");
+        document.getElementById(
+            "resultsTable"
+        );
+
 
     const noResults =
-        document.getElementById("noResults");
+        document.getElementById(
+            "noResults"
+        );
 
 
     tbody.innerHTML = "";
 
 
-    /* Filter results */
+    /* Filter */
 
     let filteredResults =
-        allResults.filter(function(result) {
+        allResults.filter(
+            function(result) {
 
-            const resultClass =
-                String(result.classId || "");
-
-            const resultChapter =
-                getChapterName(result);
-
-
-            const classMatches =
-                classFilter === "all" ||
-                resultClass === classFilter;
+                const resultClass =
+                    String(
+                        result.classId || ""
+                    );
 
 
-            const chapterMatches =
-                chapterFilter === "all" ||
-                resultChapter === chapterFilter;
+                const resultChapter =
+                    getChapterName(result);
 
 
-            return (
-                classMatches &&
-                chapterMatches
-            );
+                const classMatches =
+                    (
+                        classFilter === "all" ||
+                        resultClass === classFilter
+                    );
 
-        });
+
+                const chapterMatches =
+                    (
+                        chapterFilter === "all" ||
+                        resultChapter === chapterFilter
+                    );
 
 
-    /* Sort highest percentage first */
+                return (
+                    classMatches &&
+                    chapterMatches
+                );
 
-    filteredResults.sort(function(a, b) {
-
-        return (
-            Number(b.percentage || 0) -
-            Number(a.percentage || 0)
+            }
         );
 
-    });
+
+    /* Highest percentage first */
+
+    filteredResults.sort(
+        function(a, b) {
+
+            return (
+                Number(b.percentage || 0) -
+                Number(a.percentage || 0)
+            );
+
+        }
+    );
 
 
     /* No results */
@@ -908,173 +1137,223 @@ function displayResults() {
 
         table.style.display = "none";
 
-        noResults.style.display = "block";
+        noResults.style.display =
+            "block";
 
         updateStats([]);
 
-        document.getElementById("loading")
-            .style.display = "none";
+        document.getElementById(
+            "loading"
+        ).style.display = "none";
 
         return;
 
     }
 
 
-    noResults.style.display = "none";
+    noResults.style.display =
+        "none";
 
-    table.style.display = "table";
+    table.style.display =
+        "table";
 
 
     /* Create rows */
 
-    filteredResults.forEach(function(result, index) {
+    filteredResults.forEach(
+        function(result, index) {
 
-        const row =
-            document.createElement("tr");
-
-
-        const percentage =
-            Number(result.percentage || 0);
+            const row =
+                document.createElement("tr");
 
 
-        const total =
-            Number(result.total || 0);
+            const percentage =
+                Number(
+                    result.percentage || 0
+                );
 
 
-        const score =
-            Number(
-                result.score !== undefined
-                    ? result.score
-                    : result.correct || 0
-            );
+            const total =
+                Number(
+                    result.total || 0
+                );
 
 
-        const correct =
-            Number(result.correct || 0);
+            const score =
+                Number(
+                    result.score !== undefined
+                        ? result.score
+                        : result.correct || 0
+                );
 
 
-        const wrong =
-            Number(result.wrong || 0);
+            const correct =
+                Number(
+                    result.correct || 0
+                );
 
 
-        const unanswered =
-            Number(result.unanswered || 0);
+            const wrong =
+                Number(
+                    result.wrong || 0
+                );
 
 
-        const grade =
-            result.grade || "-";
+            const unanswered =
+                Number(
+                    result.unanswered || 0
+                );
 
 
-        const chapter =
-            getChapterName(result);
+            const grade =
+                result.grade || "-";
 
 
-        const date =
-            result.date || "-";
+            const chapter =
+                getChapterName(result);
 
 
-        row.innerHTML = `
-
-            <td>
-                <strong>${index + 1}</strong>
-            </td>
-
-            <td class="student-name">
-                ${escapeHTML(result.name || "Unknown")}
-            </td>
-
-            <td>
-                Class ${escapeHTML(result.classId || "-")}
-            </td>
-
-            <td class="chapter-name">
-                ${escapeHTML(chapter)}
-            </td>
-
-            <td>
-                <strong>
-                    ${score} / ${total}
-                </strong>
-            </td>
-
-            <td>
-                <strong>
-                    ${percentage.toFixed(1)}%
-                </strong>
-            </td>
-
-            <td class="grade">
-                ${escapeHTML(grade)}
-            </td>
-
-            <td>
-                ${correct}
-            </td>
-
-            <td>
-                ${wrong}
-            </td>
-
-            <td>
-                ${unanswered}
-            </td>
-
-            <td>
-                ${escapeHTML(date)}
-            </td>
-
-        `;
+            const student =
+                result.name || "Unknown";
 
 
-        tbody.appendChild(row);
+            const className =
+                result.classId || "-";
 
-    });
+
+            const date =
+                result.date || "-";
+
+
+            row.innerHTML = `
+
+                <td>
+                    <strong>
+                        ${index + 1}
+                    </strong>
+                </td>
+
+                <td class="student-name">
+                    ${escapeHTML(student)}
+                </td>
+
+                <td>
+                    Class
+                    ${escapeHTML(className)}
+                </td>
+
+                <td class="chapter-name">
+                    ${escapeHTML(chapter)}
+                </td>
+
+                <td>
+                    <strong>
+                        ${score} / ${total}
+                    </strong>
+                </td>
+
+                <td>
+                    <strong>
+                        ${percentage.toFixed(1)}%
+                    </strong>
+                </td>
+
+                <td class="grade">
+                    ${escapeHTML(grade)}
+                </td>
+
+                <td>
+                    ${correct}
+                </td>
+
+                <td>
+                    ${wrong}
+                </td>
+
+                <td>
+                    ${unanswered}
+                </td>
+
+                <td>
+                    ${escapeHTML(date)}
+                </td>
+
+            `;
+
+
+            tbody.appendChild(row);
+
+        }
+    );
 
 
     updateStats(filteredResults);
 
 
-    document.getElementById("loading")
-        .style.display = "none";
+    document.getElementById(
+        "loading"
+    ).style.display = "none";
 
 }
 
 
-/* =========================================================
+/* =====================================================
    UPDATE STATISTICS
-========================================================= */
+===================================================== */
 
 function updateStats(results) {
 
     const studentCount =
-        document.getElementById("studentCount");
+        document.getElementById(
+            "studentCount"
+        );
+
 
     const averageScore =
-        document.getElementById("averageScore");
+        document.getElementById(
+            "averageScore"
+        );
+
 
     const highestScore =
-        document.getElementById("highestScore");
+        document.getElementById(
+            "highestScore"
+        );
+
 
     const lastUpdated =
-        document.getElementById("lastUpdated");
+        document.getElementById(
+            "lastUpdated"
+        );
 
 
-    if (!results || results.length === 0) {
+    if (
+        !results ||
+        results.length === 0
+    ) {
 
-        studentCount.textContent = "0";
+        studentCount.textContent =
+            "0";
 
-        averageScore.textContent = "0%";
 
-        highestScore.textContent = "0%";
+        averageScore.textContent =
+            "0%";
 
-        lastUpdated.textContent = "-";
+
+        highestScore.textContent =
+            "0%";
+
+
+        lastUpdated.textContent =
+            "-";
+
 
         return;
 
     }
 
 
-    /* Number of submissions */
+    /* Number of attempts */
 
     studentCount.textContent =
         results.length;
@@ -1082,13 +1361,19 @@ function updateStats(results) {
 
     /* Average */
 
-    const totalPercentage =
-        results.reduce(function(sum, result) {
+    let totalPercentage = 0;
 
-            return sum +
-                Number(result.percentage || 0);
 
-        }, 0);
+    results.forEach(
+        function(result) {
+
+            totalPercentage +=
+                Number(
+                    result.percentage || 0
+                );
+
+        }
+    );
 
 
     const average =
@@ -1102,17 +1387,26 @@ function updateStats(results) {
 
     /* Highest */
 
-    const highest =
-        Math.max.apply(
-            null,
-            results.map(function(result) {
+    let highest = 0;
 
-                return Number(
+
+    results.forEach(
+        function(result) {
+
+            const percentage =
+                Number(
                     result.percentage || 0
                 );
 
-            })
-        );
+
+            if (percentage > highest) {
+
+                highest = percentage;
+
+            }
+
+        }
+    );
 
 
     highestScore.textContent =
@@ -1121,26 +1415,42 @@ function updateStats(results) {
 
     /* Latest submission */
 
-    const latest =
-        results.reduce(function(latest, result) {
+    let latestTimestamp = 0;
+
+
+    results.forEach(
+        function(result) {
 
             const timestamp =
-                Number(result.timestamp || 0);
-
-            return timestamp > latest
-                ? timestamp
-                : latest;
-
-        }, 0);
+                Number(
+                    result.timestamp || 0
+                );
 
 
-    if (latest > 0) {
+            if (
+                timestamp >
+                latestTimestamp
+            ) {
+
+                latestTimestamp =
+                    timestamp;
+
+            }
+
+        }
+    );
+
+
+    if (latestTimestamp > 0) {
 
         lastUpdated.textContent =
-            new Date(latest)
-                .toLocaleString();
+            new Date(
+                latestTimestamp
+            ).toLocaleString();
 
-    } else {
+    }
+
+    else {
 
         lastUpdated.textContent =
             "-";
@@ -1150,18 +1460,22 @@ function updateStats(results) {
 }
 
 
-/* =========================================================
+/* =====================================================
    LOGOUT
-========================================================= */
+===================================================== */
 
 function logout() {
 
     auth.signOut()
+
         .then(function() {
 
-            console.log("Logged out");
+            console.log(
+                "Teacher logged out."
+            );
 
         })
+
         .catch(function(error) {
 
             console.error(
@@ -1174,37 +1488,45 @@ function logout() {
 }
 
 
-/* =========================================================
-   HTML ESCAPE
-========================================================= */
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
 
 function escapeHTML(value) {
 
     const div =
         document.createElement("div");
 
+
     div.textContent =
         String(value);
+
 
     return div.innerHTML;
 
 }
 
 
-/* =========================================================
+/* =====================================================
    ENTER KEY LOGIN
-========================================================= */
+===================================================== */
 
-document.getElementById("password")
-    .addEventListener("keypress", function(event) {
+document
+    .getElementById("password")
+    .addEventListener(
+        "keypress",
+        function(event) {
 
-        if (event.key === "Enter") {
+            if (
+                event.key === "Enter"
+            ) {
 
-            login();
+                login();
+
+            }
 
         }
-
-    });
+    );
 
 </script>
 
