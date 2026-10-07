@@ -1,1 +1,1449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class 7 Science - Adolescence: A Stage of Growth and Change</title>
 
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(135deg, #eef6ff, #f7f9fc);
+    color: #1f2937;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    border-radius: 18px;
+    padding: 25px;
+    margin: 20px 0;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+h1 {
+    margin: 0 0 8px;
+    text-align: center;
+    color: #173b6c;
+    font-size: 30px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #64748b;
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 14px;
+    border: 2px solid #dbe4ef;
+    border-radius: 10px;
+    font-size: 16px;
+    margin-top: 8px;
+}
+
+button {
+    border: 0;
+    border-radius: 10px;
+    padding: 13px 20px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    background: #1769aa;
+    color: white;
+}
+
+button:hover {
+    opacity: 0.92;
+}
+
+.start-btn {
+    width: 100%;
+    margin-top: 15px;
+    font-size: 18px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: white;
+    padding: 12px 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    margin-bottom: 18px;
+}
+
+.timer {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 800;
+    color: #b42318;
+    margin-bottom: 8px;
+}
+
+.timer.warning {
+    color: #c2410c;
+}
+
+.timer.danger {
+    color: #b91c1c;
+}
+
+.progress-wrap {
+    height: 12px;
+    background: #e5e7eb;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    width: 0;
+    background: #1769aa;
+    transition: width 0.25s;
+}
+
+.question-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 20px;
+    margin: 18px 0;
+}
+
+.question-number {
+    font-size: 14px;
+    font-weight: 800;
+    color: #1769aa;
+    margin-bottom: 8px;
+}
+
+.question-text {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+
+.option {
+    display: block;
+    padding: 12px 14px;
+    margin: 9px 0;
+    border: 1px solid #dbe4ef;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #fafcff;
+}
+
+.option:hover {
+    background: #f0f7ff;
+}
+
+.option input {
+    margin-right: 10px;
+}
+
+.section-title {
+    padding: 13px 16px;
+    border-radius: 10px;
+    margin-top: 25px;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.easy {
+    background: #15803d;
+}
+
+.moderate {
+    background: #ca8a04;
+}
+
+.application {
+    background: #2563eb;
+}
+
+.submit-area {
+    text-align: center;
+    padding: 20px;
+}
+
+.results {
+    text-align: center;
+}
+
+.score {
+    font-size: 48px;
+    font-weight: 900;
+    color: #1769aa;
+}
+
+.grade {
+    font-size: 28px;
+    font-weight: 800;
+    margin: 10px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.stat {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 15px;
+}
+
+.stat strong {
+    display: block;
+    font-size: 24px;
+}
+
+.review {
+    text-align: left;
+}
+
+.review-item {
+    padding: 14px;
+    border-radius: 10px;
+    margin: 10px 0;
+    background: #f8fafc;
+    border-left: 5px solid #94a3b8;
+}
+
+.review-item.correct {
+    border-left-color: #16a34a;
+}
+
+.review-item.wrong {
+    border-left-color: #dc2626;
+}
+
+.review-item.unanswered {
+    border-left-color: #f59e0b;
+}
+
+.small {
+    font-size: 13px;
+    color: #64748b;
+}
+
+@media(max-width:650px) {
+    .container {
+        padding: 10px;
+    }
+
+    .card {
+        padding: 16px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .question-text {
+        font-size: 16px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- START SCREEN -->
+<div id="startScreen" class="card">
+
+    <h1>🧪 Class 7 Science Quiz</h1>
+
+    <div class="subtitle">
+        Lesson 6: Adolescence – A Stage of Growth and Change
+    </div>
+
+    <p>
+        <strong>60 MCQs</strong> • Easy • Moderate • Application-Based
+    </p>
+
+    <p>
+        ⏱️ Time limit: <strong>30 minutes</strong>
+    </p>
+
+    <label for="studentName">
+        <strong>Enter Student Name</strong>
+    </label>
+
+    <input
+        id="studentName"
+        type="text"
+        placeholder="Enter your full name"
+        autocomplete="name"
+    >
+
+    <button class="start-btn" onclick="startQuiz()">
+        🚀 Start Quiz
+    </button>
+
+    <p class="small" style="margin-top:15px">
+        Your result will be automatically submitted to the teacher dashboard after you finish.
+    </p>
+
+</div>
+
+
+<!-- QUIZ SCREEN -->
+<div id="quizScreen" class="hidden">
+
+    <div class="topbar">
+
+        <div id="timer" class="timer">
+            30:00
+        </div>
+
+        <div class="progress-wrap">
+            <div id="progress" class="progress"></div>
+        </div>
+
+    </div>
+
+    <div id="quizForm"></div>
+
+    <div class="card submit-area">
+
+        <button onclick="finishQuiz(false)">
+            ✅ Submit Quiz
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- RESULT SCREEN -->
+<div id="resultScreen" class="hidden">
+
+    <div class="card results">
+
+        <h1>🎉 Quiz Completed!</h1>
+
+        <p id="resultStudent"></p>
+
+        <div class="score" id="scoreText">
+            0/60
+        </div>
+
+        <div class="grade" id="gradeText"></div>
+
+        <div id="percentageText"></div>
+
+        <div class="stats">
+
+            <div class="stat">
+                <strong id="correctText">0</strong>
+                Correct
+            </div>
+
+            <div class="stat">
+                <strong id="wrongText">0</strong>
+                Wrong
+            </div>
+
+            <div class="stat">
+                <strong id="unansweredText">0</strong>
+                Unanswered
+            </div>
+
+            <div class="stat">
+                <strong>60</strong>
+                Total
+            </div>
+
+        </div>
+
+        <p id="saveStatus">
+            Saving your result...
+        </p>
+
+    </div>
+
+
+    <div class="card review">
+
+        <h2>📖 Answer Review</h2>
+
+        <div id="reviewContainer"></div>
+
+    </div>
+
+</div>
+
+</div>
+
+
+<!-- FIREBASE -->
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    push
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyCfI3zEpaiRA3OjgYiTuvnuA3GGyQGQNpU",
+
+    authDomain:
+    "sciencequiz2026-ccd77.firebaseapp.com",
+
+    databaseURL:
+    "https://sciencequiz2026-ccd77-default-rtdb.firebaseio.com",
+
+    projectId:
+    "sciencequiz2026-ccd77",
+
+    storageBucket:
+    "sciencequiz2026-ccd77.firebasestorage.app",
+
+    messagingSenderId:
+    "412753144312",
+
+    appId:
+    "1:412753144312:web:fe66b332abcadfb0438e0d",
+
+    measurementId:
+    "G-YC0DM7M07F"
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const database = getDatabase(app);
+
+
+window.saveResultToFirebase = async function(result) {
+
+    try {
+
+        const resultsRef =
+            ref(database, "quizResults");
+
+        await push(resultsRef, result);
+
+        document.getElementById("saveStatus").textContent =
+            "✅ Your result has been sent to the teacher dashboard.";
+
+    }
+
+    catch(error) {
+
+        console.error("Firebase error:", error);
+
+        document.getElementById("saveStatus").textContent =
+            "⚠️ Your score was calculated, but it could not be sent to the teacher dashboard.";
+
+    }
+
+};
+
+</script>
+
+
+<script>
+
+/* =========================================================
+   60 QUESTIONS
+========================================================= */
+
+const questions = [
+
+/* EASY */
+
+{
+q:"The period of life between childhood and adulthood is called:",
+o:["Infancy","Adolescence","Old age","Adulthood"],
+a:"B"
+},
+
+{
+q:"Adolescence generally begins around the age of:",
+o:["2 years","5 years","11 years","25 years"],
+a:"C"
+},
+
+{
+q:"Adolescence continues approximately up to the age of:",
+o:["10 years","13 years","18–19 years","30 years"],
+a:"C"
+},
+
+{
+q:"The changes that occur in the body during adolescence are mainly controlled by:",
+o:["Bones","Hormones","Muscles","Blood cells"],
+a:"B"
+},
+
+{
+q:"The chemical substances secreted by endocrine glands are called:",
+o:["Enzymes","Hormones","Vitamins","Nutrients"],
+a:"B"
+},
+
+{
+q:"Which gland is often called the “master gland”?",
+o:["Thyroid gland","Pituitary gland","Adrenal gland","Pancreas"],
+a:"B"
+},
+
+{
+q:"The male sex hormone is mainly:",
+o:["Estrogen","Testosterone","Insulin","Thyroxine"],
+a:"B"
+},
+
+{
+q:"The female sex hormones include:",
+o:["Estrogen and progesterone","Insulin and thyroxine","Testosterone and insulin","Adrenaline and thyroxine"],
+a:"A"
+},
+
+{
+q:"The period when reproductive organs become mature is called:",
+o:["Digestion","Puberty","Respiration","Growth"],
+a:"B"
+},
+
+{
+q:"Which of the following is a secondary sexual characteristic in boys?",
+o:["Growth of beard and moustache","Development of milk teeth","Loss of hair from the head","Shortening of bones"],
+a:"A"
+},
+
+{
+q:"Which of the following is a secondary sexual characteristic in girls?",
+o:["Growth of moustache","Development of breasts","Deepening of voice only","Growth of beard"],
+a:"B"
+},
+
+{
+q:"The reproductive organs in boys are called:",
+o:["Ovaries","Testes","Uterus","Kidneys"],
+a:"B"
+},
+
+{
+q:"The reproductive organs in girls that produce ova are called:",
+o:["Testes","Ovaries","Lungs","Adrenal glands"],
+a:"B"
+},
+
+{
+q:"The male reproductive hormone responsible for changes during puberty is produced mainly by the:",
+o:["Testes","Ovaries","Thyroid","Pituitary"],
+a:"A"
+},
+
+{
+q:"The female reproductive hormones are produced mainly by the:",
+o:["Testes","Ovaries","Kidneys","Pancreas"],
+a:"B"
+},
+
+{
+q:"Which nutrient is especially important for the formation of strong bones during adolescence?",
+o:["Calcium","Iodine","Sodium","Water"],
+a:"A"
+},
+
+{
+q:"A balanced diet should contain:",
+o:["Only carbohydrates","Only proteins","All essential nutrients in appropriate amounts","Only fats"],
+a:"C"
+},
+
+{
+q:"Which of the following is a healthy habit during adolescence?",
+o:["Skipping meals","Eating a balanced diet","Avoiding physical activity","Sleeping very little"],
+a:"B"
+},
+
+{
+q:"Iodine is necessary for the production of:",
+o:["Growth hormone","Thyroxine","Insulin","Testosterone"],
+a:"B"
+},
+
+{
+q:"The thyroid gland is located in the:",
+o:["Chest","Neck","Abdomen","Leg"],
+a:"B"
+},
+
+
+/* MODERATE */
+
+{
+q:"Why does the height of adolescents increase rapidly?",
+o:["Their bones stop growing","Their body undergoes rapid growth during adolescence","Their muscles disappear","Their food intake decreases"],
+a:"B"
+},
+
+{
+q:"Which gland secretes growth hormone?",
+o:["Pituitary gland","Thyroid gland","Pancreas","Adrenal gland"],
+a:"A"
+},
+
+{
+q:"Which sequence correctly represents the stages?",
+o:["Adulthood → childhood → adolescence","Childhood → adolescence → adulthood","Adolescence → infancy → adulthood","Adulthood → infancy → adolescence"],
+a:"B"
+},
+
+{
+q:"Which change is commonly observed in both boys and girls during adolescence?",
+o:["Growth of hair in the armpits","Growth of beard","Development of breasts","Production of sperm"],
+a:"A"
+},
+
+{
+q:"Which of the following is NOT usually considered a change during adolescence?",
+o:["Increase in height","Change in body shape","Maturation of reproductive organs","Formation of milk teeth"],
+a:"D"
+},
+
+{
+q:"The voice of boys generally becomes deeper during adolescence because of:",
+o:["Growth of the voice box","Shrinking of the lungs","Loss of teeth","Growth of the stomach"],
+a:"A"
+},
+
+{
+q:"The voice box is also known as the:",
+o:["Larynx","Pharynx","Trachea","Oesophagus"],
+a:"A"
+},
+
+{
+q:"The Adam’s apple becomes more prominent in:",
+o:["Boys during adolescence","Girls during infancy","All newborn babies","Only elderly people"],
+a:"A"
+},
+
+{
+q:"Which hormone helps control the development of female secondary sexual characteristics?",
+o:["Testosterone","Estrogen","Insulin","Adrenaline"],
+a:"B"
+},
+
+{
+q:"Which hormone helps control the development of male secondary sexual characteristics?",
+o:["Estrogen","Testosterone","Thyroxine","Insulin"],
+a:"B"
+},
+
+{
+q:"Why is a nutritious diet especially important during adolescence?",
+o:["The body stops growing","The body is undergoing rapid growth and development","Adolescents do not need energy","Digestion completely stops"],
+a:"B"
+},
+
+{
+q:"Which food combination would be most suitable for a growing adolescent?",
+o:["Chips and soft drinks","Rice, vegetables, pulses, milk and fruits","Only sweets","Only fried foods"],
+a:"B"
+},
+
+{
+q:"Which disease can result from iodine deficiency?",
+o:["Goitre","Diabetes","Scurvy","Rickets"],
+a:"A"
+},
+
+{
+q:"The hormone responsible for controlling metabolism is:",
+o:["Thyroxine","Testosterone","Estrogen","Growth hormone"],
+a:"A"
+},
+
+{
+q:"Which statement about hormones is correct?",
+o:["They are chemical messengers produced by endocrine glands.","They are only found in food.","They are produced only by bones.","They have no role in growth."],
+a:"A"
+},
+
+{
+q:"Which of the following is an important physical change during adolescence?",
+o:["Decrease in height","Growth of body hair","Loss of all teeth","Decrease in body size"],
+a:"B"
+},
+
+{
+q:"Acne during adolescence is often associated with:",
+o:["Changes in hormone levels","Lack of bones","Stopping growth completely","Lack of oxygen in the blood"],
+a:"A"
+},
+
+{
+q:"Which practice is most appropriate for maintaining personal hygiene during adolescence?",
+o:["Avoiding bathing","Wearing unwashed clothes","Regular bathing and keeping the body clean","Sharing personal towels"],
+a:"C"
+},
+
+{
+q:"Which of the following is important for healthy development during adolescence?",
+o:["Regular physical activity","Skipping breakfast","Excessive screen time","Avoiding sleep"],
+a:"A"
+},
+
+{
+q:"Which statement is correct about puberty?",
+o:["It occurs at exactly the same age in everyone.","It is a stage when reproductive organs mature.","It occurs only in boys.","It occurs only after adulthood."],
+a:"B"
+},
+
+
+/* APPLICATION */
+
+{
+q:"Rahul, aged 13, notices that his voice is becoming deeper and hair is growing on his face. What is the most likely reason?",
+o:["He is entering adolescence","He is becoming younger","His bones are shrinking","His digestive system has stopped working"],
+a:"A"
+},
+
+{
+q:"An adolescent regularly eats chips, sweets and soft drinks but avoids vegetables, fruits and pulses. What is the main concern?",
+o:["The diet may not provide all essential nutrients","The person will stop growing immediately","The person will never need water","The person's bones will disappear"],
+a:"A"
+},
+
+{
+q:"A student has swelling in the neck due to iodine deficiency. Which gland is most likely affected?",
+o:["Thyroid gland","Pituitary gland","Adrenal gland","Pancreas"],
+a:"A"
+},
+
+{
+q:"Meera notices that her height has increased considerably over the past year. Which process best explains this?",
+o:["Rapid growth during adolescence","Ageing","Digestion","Respiration"],
+a:"A"
+},
+
+{
+q:"A boy notices that his shoulders are becoming broader during adolescence. This change is mainly associated with:",
+o:["Physical development during puberty","Loss of nutrients","Decrease in hormone production","Old age"],
+a:"A"
+},
+
+{
+q:"A girl begins to experience menstruation during adolescence. This indicates that:",
+o:["Her reproductive system is maturing","Her growth has completely stopped","Her digestive system has matured","Her bones have become weaker"],
+a:"A"
+},
+
+{
+q:"Arjun sleeps only four hours every night because he spends most of his time playing video games. Which advice is most appropriate?",
+o:["Continue because sleep is unnecessary","Get adequate sleep as part of a healthy lifestyle","Skip meals instead","Avoid physical activity"],
+a:"B"
+},
+
+{
+q:"A student wants to support healthy bone development during adolescence. Which combination is most appropriate?",
+o:["Calcium-rich foods, balanced diet and physical activity","Only sugary drinks","Only fried foods","Skipping meals"],
+a:"A"
+},
+
+{
+q:"During a science lesson, a student says, “Everyone enters puberty at exactly the same age.” What is the best response?",
+o:["Correct; everyone changes at exactly the same time.","Incorrect; the timing of puberty can vary among individuals.","Correct; puberty always begins at age 11.","Incorrect; puberty never occurs naturally."],
+a:"B"
+},
+
+{
+q:"A student observes increased sweating and body odour during adolescence. What is the best response?",
+o:["Ignore personal hygiene","Maintain regular bathing and hygiene","Stop drinking water","Avoid all physical activity"],
+a:"B"
+},
+
+{
+q:"A doctor advises an adolescent to include milk, pulses, vegetables, fruits and cereals in the diet. What is the main purpose?",
+o:["To provide a variety of nutrients needed for growth","To prevent all physical changes","To stop puberty","To reduce the need for sleep"],
+a:"A"
+},
+
+{
+q:"A student is experiencing several physical and emotional changes and feels worried that something is wrong. What would be the most appropriate advice?",
+o:["Avoid talking to anyone","Understand that many changes are a normal part of adolescence and seek guidance from a trusted adult if needed","Stop eating nutritious food","Avoid school completely"],
+a:"B"
+},
+
+{
+q:"During puberty, hormones cause changes in both boys and girls. Which organ releases hormones that help initiate these changes?",
+o:["Pituitary gland","Stomach","Lungs","Heart"],
+a:"A"
+},
+
+{
+q:"A boy's body begins producing sperm during adolescence. What does this indicate?",
+o:["His reproductive organs are becoming mature","His childhood has just begun","His growth has stopped completely","His thyroid gland has stopped functioning"],
+a:"A"
+},
+
+{
+q:"A girl wants to maintain good health during adolescence. Which routine would be most suitable?",
+o:["Balanced diet, adequate sleep, exercise and personal hygiene","Skipping breakfast and sleeping late every day","Eating only processed foods","Avoiding outdoor activity completely"],
+a:"A"
+},
+
+{
+q:"Two students of the same age have different heights and show puberty-related changes at different times. Which conclusion is most appropriate?",
+o:["One of them must be unhealthy","Individual growth and puberty can occur at different rates","Both must have the same hormone levels","Puberty occurs only at one fixed age"],
+a:"B"
+},
+
+{
+q:"A student learns that hormones act as chemical messengers. Which situation best demonstrates their role?",
+o:["Hormones help bring about changes during puberty","Hormones digest food in the stomach","Hormones form all bones directly","Hormones carry oxygen in red blood cells"],
+a:"A"
+},
+
+{
+q:"A teenager frequently skips meals while trying to manage their weight. Why is this a poor practice during adolescence?",
+o:["The growing body needs adequate nutrients and energy","Adolescents do not need food","Skipping meals increases bone growth","It stops all hormonal changes"],
+a:"A"
+},
+
+{
+q:"A student notices hair growth in the armpits and a change in body shape. These changes are best described as:",
+o:["Changes associated with puberty","Symptoms of old age","Changes caused only by exercise","Changes occurring only in infancy"],
+a:"A"
+},
+
+{
+q:"A teacher asks students why adolescence is called a stage of growth and change. Which answer is BEST?",
+o:["Because the body and reproductive system undergo significant physical and hormonal changes","Because no changes occur during this period","Because only height changes","Because adolescence is the final stage of life"],
+a:"A"
+}
+
+];
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+const studentAnswers = {};
+
+let studentName = "";
+
+let timerInterval = null;
+
+let timeLeft = 30 * 60;
+
+let quizFinished = false;
+
+
+/* =========================================================
+   LETTER FUNCTION
+========================================================= */
+
+function letter(index) {
+
+    return String.fromCharCode(65 + index);
+
+}
+
+
+/* =========================================================
+   RENDER QUIZ
+========================================================= */
+
+function renderQuiz() {
+
+    const form =
+        document.getElementById("quizForm");
+
+    let html = "";
+
+
+    questions.forEach((item,index) => {
+
+        const n = index + 1;
+
+
+        if(n === 1) {
+
+            html += `
+            <div class="section-title easy">
+                🟢 Easy Level
+            </div>`;
+        }
+
+
+        if(n === 21) {
+
+            html += `
+            <div class="section-title moderate">
+                🟡 Moderate Level
+            </div>`;
+        }
+
+
+        if(n === 41) {
+
+            html += `
+            <div class="section-title application">
+                🔵 Application-Based Questions
+            </div>`;
+        }
+
+
+        html += `
+        <div class="question-card">
+
+            <div class="question-number">
+                Question ${n} of 60
+            </div>
+
+            <div class="question-text">
+                ${n}. ${item.q}
+            </div>
+        `;
+
+
+        item.o.forEach((option,i) => {
+
+            const l = letter(i);
+
+
+            html += `
+            <label class="option">
+
+                <input
+                    type="radio"
+                    name="q${n}"
+                    value="${l}"
+                    onchange="recordAnswer(${n},'${l}')"
+                >
+
+                <strong>${l}.</strong>
+                ${option}
+
+            </label>
+            `;
+
+        });
+
+
+        html += `</div>`;
+
+    });
+
+
+    form.innerHTML = html;
+
+}
+
+
+/* =========================================================
+   RECORD ANSWER
+========================================================= */
+
+window.recordAnswer = function(n,answer) {
+
+    studentAnswers["q" + n] = answer;
+
+    updateProgress();
+
+};
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+function updateProgress() {
+
+    const answered =
+        Object.keys(studentAnswers).length;
+
+
+    document.getElementById("progress").style.width =
+        (answered / questions.length * 100) + "%";
+
+}
+
+
+/* =========================================================
+   START QUIZ
+========================================================= */
+
+window.startQuiz = function() {
+
+    const input =
+        document.getElementById("studentName");
+
+
+    studentName =
+        input.value.trim();
+
+
+    if(!studentName) {
+
+        alert(
+            "Please enter the student's name before starting the quiz."
+        );
+
+        input.focus();
+
+        return;
+    }
+
+
+    document
+        .getElementById("startScreen")
+        .classList.add("hidden");
+
+
+    document
+        .getElementById("quizScreen")
+        .classList.remove("hidden");
+
+
+    renderQuiz();
+
+    startTimer();
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+};
+
+
+/* =========================================================
+   TIMER
+========================================================= */
+
+function startTimer() {
+
+    updateTimer();
+
+
+    timerInterval =
+        setInterval(() => {
+
+            timeLeft--;
+
+            updateTimer();
+
+
+            if(timeLeft <= 0) {
+
+                clearInterval(timerInterval);
+
+                finishQuiz(true);
+
+            }
+
+        },1000);
+
+}
+
+
+function updateTimer() {
+
+    const min =
+        Math.floor(timeLeft / 60);
+
+
+    const sec =
+        timeLeft % 60;
+
+
+    const el =
+        document.getElementById("timer");
+
+
+    el.textContent =
+        `${String(min).padStart(2,"0")}:${String(sec).padStart(2,"0")}`;
+
+
+    el.classList.toggle(
+        "warning",
+        timeLeft <= 10 * 60 &&
+        timeLeft > 5 * 60
+    );
+
+
+    el.classList.toggle(
+        "danger",
+        timeLeft <= 5 * 60
+    );
+
+}
+
+
+/* =========================================================
+   FINISH QUIZ
+========================================================= */
+
+window.finishQuiz = function(autoSubmitted) {
+
+    if(quizFinished) return;
+
+
+    if(!autoSubmitted) {
+
+        const unanswered =
+            questions.length -
+            Object.keys(studentAnswers).length;
+
+
+        if(unanswered > 0) {
+
+            const ok = confirm(
+                `You have ${unanswered} unanswered question(s). Are you sure you want to submit?`
+            );
+
+
+            if(!ok) return;
+
+        }
+
+        else {
+
+            if(
+                !confirm(
+                    "Are you sure you want to submit the quiz?"
+                )
+            ) return;
+
+        }
+
+    }
+
+
+    quizFinished = true;
+
+
+    clearInterval(timerInterval);
+
+
+    let correct = 0;
+
+
+    questions.forEach((item,index) => {
+
+        if(
+            studentAnswers["q" + (index + 1)]
+            === item.a
+        ) {
+
+            correct++;
+
+        }
+
+    });
+
+
+    const total =
+        questions.length;
+
+
+    const unanswered =
+        total -
+        Object.keys(studentAnswers).length;
+
+
+    const wrong =
+        total -
+        correct -
+        unanswered;
+
+
+    const percentage =
+        (correct / total) * 100;
+
+
+    let grade;
+
+
+    if(percentage >= 90)
+
+        grade = "A+";
+
+    else if(percentage >= 80)
+
+        grade = "A";
+
+    else if(percentage >= 70)
+
+        grade = "B";
+
+    else if(percentage >= 60)
+
+        grade = "C";
+
+    else if(percentage >= 50)
+
+        grade = "D";
+
+    else
+
+        grade = "Needs Improvement";
+
+
+    document
+        .getElementById("quizScreen")
+        .classList.add("hidden");
+
+
+    document
+        .getElementById("resultScreen")
+        .classList.remove("hidden");
+
+
+    document.getElementById("resultStudent")
+        .textContent =
+        "Student: " + studentName;
+
+
+    document.getElementById("scoreText")
+        .textContent =
+        `${correct}/${total}`;
+
+
+    document.getElementById("gradeText")
+        .textContent =
+        "Grade: " + grade;
+
+
+    document.getElementById("percentageText")
+        .textContent =
+        `Percentage: ${percentage.toFixed(1)}%`;
+
+
+    document.getElementById("correctText")
+        .textContent = correct;
+
+
+    document.getElementById("wrongText")
+        .textContent = wrong;
+
+
+    document.getElementById("unansweredText")
+        .textContent = unanswered;
+
+
+    buildReview();
+
+
+    const result = {
+
+        name: studentName,
+
+        classId: "7",
+
+        quizTitle:
+        "Adolescence: A Stage of Growth and Change - Class 7 Science",
+
+        score: correct,
+
+        total: total,
+
+        percentage:
+        Number(percentage.toFixed(1)),
+
+        grade: grade,
+
+        correct: correct,
+
+        wrong: wrong,
+
+        unanswered: unanswered,
+
+        date:
+        new Date().toLocaleString(),
+
+        timestamp:
+        Date.now()
+
+    };
+
+
+    if(window.saveResultToFirebase) {
+
+        window.saveResultToFirebase(result);
+
+    }
+
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+};
+
+
+/* =========================================================
+   ANSWER REVIEW
+========================================================= */
+
+function buildReview() {
+
+    let html = "";
+
+
+    questions.forEach((item,index) => {
+
+        const n = index + 1;
+
+
+        const selected =
+            studentAnswers["q" + n];
+
+
+        const correct =
+            item.a;
+
+
+        let cls = "unanswered";
+
+        let status = "⚠️ Unanswered";
+
+
+        if(selected) {
+
+            if(selected === correct) {
+
+                cls = "correct";
+
+                status = "✅ Correct";
+
+            }
+
+            else {
+
+                cls = "wrong";
+
+                status = "❌ Incorrect";
+
+            }
+
+        }
+
+
+        const selectedText =
+            selected
+            ? item.o[selected.charCodeAt(0)-65]
+            : "No answer";
+
+
+        const correctText =
+            item.o[correct.charCodeAt(0)-65];
+
+
+        html += `
+
+        <div class="review-item ${cls}">
+
+            <strong>
+                ${n}. ${item.q}
+            </strong>
+
+            <br>
+
+            <span>
+                ${status}
+            </span>
+
+            <br>
+
+            <span>
+                Your answer:
+                <strong>${selected || "—"}</strong>
+                ${selected ? " - " + selectedText : ""}
+            </span>
+
+            <br>
+
+            <span>
+                Correct answer:
+                <strong>${correct}</strong>
+                - ${correctText}
+            </span>
+
+        </div>
+
+        `;
+
+    });
+
+
+    document.getElementById("reviewContainer")
+        .innerHTML = html;
+
+}
+
+
+/* =========================================================
+   LEAVE PAGE WARNING
+========================================================= */
+
+window.addEventListener(
+    "beforeunload",
+    function(e) {
+
+        if(
+            !quizFinished &&
+            !document
+                .getElementById("quizScreen")
+                .classList
+                .contains("hidden")
+        ) {
+
+            e.preventDefault();
+
+            e.returnValue = "";
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
