@@ -1,0 +1,1764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Class 6 Science - Measurement of Motion and Length</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(135deg, #e3f2fd, #f8f9fa);
+        color: #222;
+    }
+
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .header {
+        background: linear-gradient(135deg, #1565c0, #42a5f5);
+        color: white;
+        padding: 25px;
+        border-radius: 15px;
+        text-align: center;
+        margin-bottom: 20px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    }
+
+    .header h1 {
+        margin: 0 0 10px;
+        font-size: 28px;
+    }
+
+    .header p {
+        margin: 5px 0;
+        font-size: 16px;
+    }
+
+    .card {
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .student-section {
+        text-align: center;
+    }
+
+    .student-section h2 {
+        color: #1565c0;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        max-width: 500px;
+        padding: 14px;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+        margin: 10px 0;
+    }
+
+    button {
+        border: none;
+        border-radius: 8px;
+        padding: 13px 22px;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .start-btn {
+        background: #1565c0;
+        color: white;
+        margin-top: 10px;
+    }
+
+    .start-btn:hover {
+        background: #0d47a1;
+    }
+
+    .quiz-top {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: white;
+        padding: 15px;
+        border-radius: 12px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+        margin-bottom: 20px;
+    }
+
+    .timer {
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        color: #d32f2f;
+        margin-bottom: 10px;
+    }
+
+    .progress-container {
+        width: 100%;
+        height: 12px;
+        background: #e0e0e0;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .progress-bar {
+        height: 100%;
+        width: 0%;
+        background: #1565c0;
+        transition: width 0.3s ease;
+    }
+
+    .progress-text {
+        text-align: center;
+        margin-top: 8px;
+        font-size: 14px;
+        color: #555;
+    }
+
+    .section-title {
+        background: #1565c0;
+        color: white;
+        padding: 15px;
+        border-radius: 10px;
+        margin: 25px 0 15px;
+        text-align: center;
+    }
+
+    .section-title.moderate {
+        background: #7b1fa2;
+    }
+
+    .section-title.application {
+        background: #ef6c00;
+    }
+
+    .question {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 18px;
+        box-shadow: 0 2px 7px rgba(0,0,0,0.06);
+    }
+
+    .question h3 {
+        margin-top: 0;
+        color: #1565c0;
+        font-size: 17px;
+    }
+
+    .option {
+        display: block;
+        padding: 12px;
+        margin: 8px 0;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .option:hover {
+        background: #f1f8ff;
+        border-color: #1565c0;
+    }
+
+    .option input {
+        margin-right: 10px;
+    }
+
+    .submit-area {
+        text-align: center;
+        padding: 20px;
+    }
+
+    .submit-btn {
+        background: #2e7d32;
+        color: white;
+        font-size: 18px;
+        padding: 15px 35px;
+    }
+
+    .submit-btn:hover {
+        background: #1b5e20;
+    }
+
+    .result {
+        display: none;
+    }
+
+    .result-header {
+        text-align: center;
+        background: linear-gradient(135deg, #2e7d32, #66bb6a);
+        color: white;
+        padding: 25px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+    }
+
+    .score {
+        font-size: 42px;
+        font-weight: bold;
+    }
+
+    .result-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        margin: 20px 0;
+    }
+
+    .result-box {
+        padding: 18px;
+        background: #f5f5f5;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    .result-box strong {
+        display: block;
+        font-size: 24px;
+        margin-bottom: 5px;
+    }
+
+    .review-item {
+        padding: 18px;
+        border-radius: 10px;
+        margin-bottom: 12px;
+    }
+
+    .correct-answer {
+        background: #e8f5e9;
+        border-left: 5px solid #2e7d32;
+    }
+
+    .wrong-answer {
+        background: #ffebee;
+        border-left: 5px solid #c62828;
+    }
+
+    .unanswered {
+        background: #fff8e1;
+        border-left: 5px solid #f9a825;
+    }
+
+    .save-status {
+        text-align: center;
+        margin-top: 20px;
+        font-weight: bold;
+    }
+
+    .hidden {
+        display: none !important;
+    }
+
+    .warning {
+        background: #fff3cd;
+        border: 1px solid #ffeeba;
+        color: #856404;
+        padding: 12px;
+        border-radius: 8px;
+        margin: 15px 0;
+    }
+
+    @media (max-width: 700px) {
+        .container {
+            padding: 10px;
+        }
+
+        .header h1 {
+            font-size: 22px;
+        }
+
+        .card {
+            padding: 15px;
+        }
+
+        .result-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .question {
+            padding: 15px;
+        }
+
+        .timer {
+            font-size: 20px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>Class 6 Science Quiz</h1>
+        <p><strong>Measurement of Motion and Length</strong></p>
+        <p>60 Multiple Choice Questions | 30 Minutes</p>
+    </div>
+
+    <!-- START SCREEN -->
+    <div id="startScreen" class="card student-section">
+
+        <h2>Ready to Begin?</h2>
+
+        <p>
+            Enter your name below and click
+            <strong>Start Quiz</strong>.
+        </p>
+
+        <input
+            type="text"
+            id="studentName"
+            placeholder="Enter your full name"
+            autocomplete="off"
+        >
+
+        <div class="warning">
+            Please answer all questions carefully. Once submitted,
+            your result will be sent to the teacher dashboard.
+        </div>
+
+        <button class="start-btn" onclick="startQuiz()">
+            Start Quiz
+        </button>
+
+    </div>
+
+    <!-- QUIZ -->
+    <div id="quizScreen" class="hidden">
+
+        <div class="quiz-top">
+
+            <div class="timer">
+                Time Remaining: <span id="timer">30:00</span>
+            </div>
+
+            <div class="progress-container">
+                <div id="progressBar" class="progress-bar"></div>
+            </div>
+
+            <div id="progressText" class="progress-text">
+                0 of 60 answered
+            </div>
+
+        </div>
+
+        <div id="questionsContainer"></div>
+
+        <div class="card submit-area">
+
+            <button class="submit-btn" onclick="confirmSubmit()">
+                Submit Quiz
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- RESULT -->
+    <div id="resultScreen" class="result">
+
+        <div class="result-header">
+
+            <h2>Quiz Completed!</h2>
+
+            <p id="resultStudent"></p>
+
+            <div class="score" id="scoreDisplay">
+                0 / 60
+            </div>
+
+            <p id="percentageDisplay"></p>
+            <p id="gradeDisplay"></p>
+
+        </div>
+
+        <div class="card">
+
+            <div class="result-grid">
+
+                <div class="result-box">
+                    <strong id="correctDisplay">0</strong>
+                    Correct
+                </div>
+
+                <div class="result-box">
+                    <strong id="wrongDisplay">0</strong>
+                    Wrong
+                </div>
+
+                <div class="result-box">
+                    <strong id="unansweredDisplay">0</strong>
+                    Unanswered
+                </div>
+
+                <div class="result-box">
+                    <strong id="totalDisplay">60</strong>
+                    Total
+                </div>
+
+            </div>
+
+            <div id="saveStatus" class="save-status">
+                Saving result...
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <h2>Answer Review</h2>
+
+            <div id="reviewContainer"></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script type="module">
+
+/* =========================================================
+   FIREBASE
+========================================================= */
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+    getDatabase,
+    ref,
+    push
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyCfI3zEpaiRA3OjgYiTuvnuA3GGyQGNpU",
+
+    authDomain: "sciencequiz2026-ccd77.firebaseapp.com",
+
+    databaseURL:
+        "https://sciencequiz2026-ccd77-default-rtdb.firebaseio.com",
+
+    projectId: "sciencequiz2026-ccd77",
+
+    storageBucket:
+        "sciencequiz2026-ccd77.firebasestorage.app",
+
+    messagingSenderId: "412753144312",
+
+    appId:
+        "1:412753144312:web:fe66b332abcadfb0438e0d",
+
+    measurementId: "G-YC0DM7M07F"
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const database = getDatabase(app);
+
+
+/* =========================================================
+   QUESTIONS
+========================================================= */
+
+const questions = [
+
+    /* =========================
+       EASY - 1 TO 20
+    ========================= */
+
+    {
+        q: "Which instrument is commonly used to measure the length of a pencil?",
+        options: [
+            "Ruler",
+            "Stopwatch",
+            "Thermometer",
+            "Balance"
+        ],
+        answer: "A"
+    },
+
+    {
+        q: "What is the SI unit of length?",
+        options: [
+            "Centimetre",
+            "Metre",
+            "Kilometre",
+            "Millimetre"
+        ],
+        answer: "B"
+    },
+
+    {
+        q: "Which unit is most suitable for measuring the distance between two cities?",
+        options: [
+            "Millimetre",
+            "Centimetre",
+            "Kilometre",
+            "Metre"
+        ],
+        answer: "C"
+    },
+
+    {
+        q: "Which unit is commonly used to measure time?",
+        options: [
+            "Second",
+            "Metre",
+            "Kilogram",
+            "Centimetre"
+        ],
+        answer: "A"
+    },
+
+    {
+        q: "A change in the position of an object with time is called:",
+        options: [
+            "Length",
+            "Motion",
+            "Mass",
+            "Temperature"
+        ],
+        answer: "B"
+    },
+
+    {
+        q: "Which instrument can be used to measure the length of a curved line?",
+        options: [
+            "Flexible measuring tape",
+            "Thermometer",
+            "Stopwatch",
+            "Balance"
+        ],
+        answer: "A"
+    },
+
+    {
+        q: "How many centimetres are there in 1 metre?",
+        options: [
+            "10 cm",
+            "50 cm",
+            "100 cm",
+            "1000 cm"
+        ],
+        answer: "C"
+    },
+
+    {
+        q: "Which instrument is suitable for measuring the time taken by a runner?",
+        options: [
+            "Ruler",
+            "Stopwatch",
+            "Measuring tape",
+            "Balance"
+        ],
+        answer: "B"
+    },
+
+    {
+        q: "Which is the smallest unit among the following?",
+        options: [
+            "Kilometre",
+            "Metre",
+            "Centimetre",
+            "Millimetre"
+        ],
+        answer: "D"
+    },
+
+    {
+        q: "A car travelling along a road is an example of:",
+        options: [
+            "Motion",
+            "Rest",
+            "Measurement",
+            "Temperature"
+        ],
+        answer: "A"
+    },
+
+    {
+        q: "A ruler reading starts at 2 cm and ends at 18 cm. What is the length of the object?",
+        options: [
+            "16 cm",
+            "18 cm",
+            "20 cm",
+            "14 cm"
+        ],
+        answer: "A"
+    },
+
+    {
+        q: "A student walks a distance of 500 m. What is the distance travelled?",
+        options: [
+            "50 m",
+            "500 m",
+            "5000 m",
+            "5 m"
+        ],
+        answer: "B"
+    },
+
+    {
+        q: "Which is a reasonable length for a classroom?",
+        options: [
+            "8 mm",
+            "8 cm",
+            "8 m",
+            "8 km"
+        ],
+        answer: "C"
+    },
+
+    {
+        q: "A cyclist travels 2 km and then another 3 km. What is the total distance travelled?",
+        options: [
+            "1 km",
+            "5 km",
+            "6 km",
+            "3 km"
+        ],
+        answer: "B"
+    },
+
+    {
+        q: "Why should your eye be directly above the scale while taking a measurement?",
+        options: [
+            "To reduce reading error",
+            "To increase the length",
+            "To make the ruler heavier",
+            "To change the unit"
+        ],
+        answer: "A"
+    },
+
+    {
+        q: "A bus moves from one bus stop to another. What shows that the bus is in motion?",
+        options: [
+            "Its position changes relative to the stops",
+            "Its colour changes",
+            "Its size changes",
+            "Its mass changes"
+        ],
+        answer: "A"
+    },
+
+    {
+        q: "75 cm is equal to:",
+        options: [
+            "7.5 m",
+            "0.75 m",
+            "75 m",
+            "750 m"
+        ],
+        answer: "B"
+    },
+
+    {
+        q: "A runner takes 20 seconds for one part of a race and 25 seconds for another part. What is the total time?",
+        options: [
+            "40 seconds",
+            "45 seconds",
+            "50 seconds",
+            "55 seconds"
+        ],
+        answer: "B"
+    },
+
+    {
+        q: "A passenger sitting inside a moving bus is at rest relative to the bus. This shows that:",
+        options: [
+            "Motion depends on the reference point",
+            "The passenger is always moving",
+            "The bus is not moving",
+            "Time has stopped"
+        ],
+        answer: "A"
+    },
+
+    {
+        q: "A table is 1 m 25 cm long. What is its length in centimetres?",
+        options: [
+            "125 cm",
+            "105 cm",
+            "150 cm",
+            "25 cm"
+        ],
+        answer: "A"
+    },
+
+
+    /* =========================
+       MODERATE - 21 TO 40
+    ========================= */
+
+    {
+        q: "A ribbon is 2 m long. How many centimetres long is the ribbon?",
+        options: [
+            "20 cm",
+            "200 cm",
+            "2000 cm",
+            "100 cm"
+        ],
+        answer: "B"
+    },
+
+    {
+        q: "A student measures a book as 25 cm long. Which unit would be most convenient to record this measurement?",
+        options: [
+            "Kilometre",
+            "Metre",
+            "Centimetre",
+            "Millimetre"
+        ],
+        answer: "C"
+    },
+
+    {
+        q: "Which measurement is the most suitable for the length of a classroom blackboard?",
+        options: [
+            "3 mm",
+            "3 cm",
+            "3 m",
+            "3 km"
+        ],
+        answer: "C"
+    },
+
+    {
+        q: "A train travels 15 km in the morning and 20 km in the afternoon. What distance does it travel altogether?",
+        options: [
+            "5 km",
+            "25 km",
+            "35 km",
+            "40 km"
+        ],
+        answer: "C"
+    },
+
+    {
+        q: "A pencil is measured from the 3 cm mark to the 15 cm mark on a ruler. What is its length?",
+        options: [
+            "12 cm",
+            "15 cm",
+            "18 cm",
+            "10 cm"
+        ],
+        answer: "A"
+    },
+
+    {
+        q: "Which of the following is equal to 3.5 metres?",
+        options: [
+            "35 cm",
+            "350 cm",
+            "3500 cm",
+            "305 cm"
+        ],
+        answer: "B"
+    },
+
+    {
+        q: "A student walks 750 m and then walks another 250 m. What is the total distance?",
+        options: [
+            "500 m",
+            "750 m",
+            "1000 m",
+            "1250 m"
+        ],
+        answer: "C"
+    },
+
+    {
+        q: "Which instrument would be best for measuring the length of a football field?",
+        options: [
+            "Small ruler",
+            "Measuring tape",
+            "Thermometer",
+            "Stopwatch"
+        ],
+        answer: "B"
+    },
+
+    {
+        q: "A car moves 5 km east and then 2 km west. What is the total distance travelled?",
+        options: [
+            "3 km",
+            "5 km",
+            "7 km",
+            "10 km"
+        ],
+        answer: "C"
+    },
+
+    {
+        q: "Why is a standard unit of measurement useful?",
+        options: [
+            "It allows measurements to be compared accurately",
+            "It makes objects longer",
+            "It changes the mass of objects",
+            "It stops objects from moving"
+        ],
+        answer: "A"
+    },
+
+    {
+        q: "Which of these measurements is the greatest?",
+        options: [
+            "90 cm",
+            "1 m",
+            "80 cm",
+            "95 cm"
+        ],
+        answer: "B"
+    },
+
+    {
+        q: "A student measures a desk three times and gets 120 cm, 121 cm and 120 cm. What is the best conclusion?",
+        options: [
+            "The measurements are reasonably consistent",
+            "The desk is changing length",
+            "The ruler is useless",
+            "The measurements must be ignored"
+        ],
+        answer: "A"
+    },
+
+    {
+        q: "A distance of 4 km is equal to:",
+        options: [
+            "40 m",
+            "400 m",
+            "4000 m",
+            "40,000 m"
+        ],
+        answer: "C"
+    },
+
+    {
+        q: "A toy car moves from position A to B and then returns to A. Which statement is correct?",
+        options: [
+            "It has travelled a distance but its final position is the starting position",
+            "It has not moved at all",
+            "It has no distance travelled",
+            "Its time is zero"
+        ],
+        answer: "A"
+    },
+
+    {
+        q: "Which unit would be most suitable for measuring the thickness of a coin?",
+        options: [
+            "Kilometre",
+            "Metre",
+            "Centimetre",
+            "Millimetre"
+        ],
+        answer: "D"
+    },
+
+    {
+        q: "A boy runs 100 m in 20 seconds. Another boy runs the same distance in 25 seconds. Who takes less time?",
+        options: [
+            "The first boy",
+            "The second boy",
+            "Both take the same time",
+            "Cannot be determined"
+        ],
+        answer: "A"
+    },
+
+    {
+        q: "Which situation clearly shows motion?",
+        options: [
+            "A book lying on a table",
+            "A parked bicycle",
+            "A ball rolling across the floor",
+            "A chair in a classroom"
+        ],
+        answer: "C"
+    },
+
+    {
+        q: "A rope is 2 m 40 cm long. What is its length in centimetres?",
+        options: [
+            "204 cm",
+            "220 cm",
+            "240 cm",
+            "400 cm"
+        ],
+        answer: "C"
+    },
+
+    {
+        q: "A student wants to measure the circumference of a round bottle. Which method is most suitable?",
+        options: [
+            "Use a flexible measuring tape around the bottle",
+            "Use a thermometer",
+            "Use a stopwatch",
+            "Use a balance"
+        ],
+        answer: "A"
+    },
+
+    {
+        q: "A cyclist covers 2 km in the first part and 1500 m in the second part. What is the total distance?",
+        options: [
+            "2.5 km",
+            "3 km",
+            "3.5 km",
+            "4 km"
+        ],
+        answer: "C"
+    },
+
+
+    /* =========================
+       APPLICATION - 41 TO 60
+    ========================= */
+
+    {
+        q: "You need to measure the length of a curved wire. What should you do?",
+        options: [
+            "Guess its length",
+            "Place a thread along the curve and then measure the thread",
+            "Use a thermometer",
+            "Use a balance"
+        ],
+        answer: "B"
+    },
+
+    {
+        q: "A pencil starts at the 2 cm mark and ends at the 14 cm mark on a ruler. What is the actual length of the pencil?",
+        options: [
+            "12 cm",
+            "14 cm",
+            "16 cm",
+            "10 cm"
+        ],
+        answer: "A"
+    },
+
+    {
+        q: "A car travels 4 km from home to a shop and then 4 km back home. What is the total distance travelled?",
+        options: [
+            "4 km",
+            "8 km",
+            "0 km",
+            "16 km"
+        ],
+        answer: "B"
+    },
+
+    {
+        q: "A student walks 30 m down a corridor and then walks back 10 m. What total distance has the student travelled?",
+        options: [
+            "20 m",
+            "30 m",
+            "40 m",
+            "50 m"
+        ],
+        answer: "C"
+    },
+
+    {
+        q: "Two runners complete the same 100 m race. Runner A takes 20 seconds and Runner B takes 16 seconds. Which statement is correct?",
+        options: [
+            "Runner B took less time",
+            "Runner A took less time",
+            "Both took the same time",
+            "Runner A did not move"
+        ],
+        answer: "A"
+    },
+
+    {
+        q: "You want to measure the height of a classroom door. Which instrument is most suitable?",
+        options: [
+            "Measuring tape",
+            "Stopwatch",
+            "Thermometer",
+            "Small coin"
+        ],
+        answer: "A"
+    },
+
+    {
+        q: "A cyclist travels 1 km, then 750 m, and then 250 m. What is the total distance?",
+        options: [
+            "1 km",
+            "2 km",
+            "2.5 km",
+            "3 km"
+        ],
+        answer: "B"
+    },
+
+    {
+        q: "A tree appears stationary when you look at it from the ground. A person in a moving car sees the tree moving backward. What does this demonstrate?",
+        options: [
+            "Motion depends on the reference point",
+            "Trees can move very quickly",
+            "The car is stationary",
+            "The tree changes its size"
+        ],
+        answer: "A"
+    },
+
+    {
+        q: "A table is measured three times and the readings are 120 cm, 121 cm and 120 cm. What should you conclude?",
+        options: [
+            "The measurements are reasonably consistent",
+            "The table is growing",
+            "The ruler is broken",
+            "The table has no length"
+        ],
+        answer: "A"
+    },
+
+    {
+        q: "You want to find how long a toy car takes to travel from a starting point to a finishing point. Which instrument should you use?",
+        options: [
+            "Ruler",
+            "Stopwatch",
+            "Measuring tape",
+            "Balance"
+        ],
+        answer: "B"
+    },
+
+    {
+        q: "A town is 5 km away. How many metres is this distance?",
+        options: [
+            "500 m",
+            "5000 m",
+            "50 m",
+            "50,000 m"
+        ],
+        answer: "B"
+    },
+
+    {
+        q: "A student holds a ruler at an angle while measuring a notebook. What problem may occur?",
+        options: [
+            "The reading may not represent the true length",
+            "The notebook becomes longer",
+            "The ruler changes its unit",
+            "The notebook starts moving"
+        ],
+        answer: "A"
+    },
+
+    {
+        q: "A train travels 3 km, then 2 km, and finally 500 m. What is the total distance travelled?",
+        options: [
+            "5 km",
+            "5.5 km",
+            "6 km",
+            "4.5 km"
+        ],
+        answer: "B"
+    },
+
+    {
+        q: "A student measures an object as 100 cm. Another student measures the same object as 1 m. What can we conclude?",
+        options: [
+            "The first measurement is wrong",
+            "The measurements represent the same length",
+            "The object has changed size",
+            "One student measured time"
+        ],
+        answer: "B"
+    },
+
+    {
+        q: "A toy car travels 2 m forward and then another 3 m forward. What distance has it travelled?",
+        options: [
+            "1 m",
+            "3 m",
+            "5 m",
+            "6 m"
+        ],
+        answer: "C"
+    },
+
+    {
+        q: "Two pencils need to be compared for length. What is the best method?",
+        options: [
+            "Place them together with one end aligned and compare the other ends",
+            "Guess which one is longer",
+            "Measure their weight",
+            "Place them in water"
+        ],
+        answer: "A"
+    },
+
+    {
+        q: "Two runners complete the same 200 m distance. Runner A takes 40 seconds and Runner B takes 35 seconds. Who takes less time?",
+        options: [
+            "Runner A",
+            "Runner B",
+            "Both",
+            "Neither"
+        ],
+        answer: "B"
+    },
+
+    {
+        q: "Which unit would be suitable for measuring the length of a football field?",
+        options: [
+            "Metre",
+            "Millimetre",
+            "Kilometre",
+            "Centimetre"
+        ],
+        answer: "A"
+    },
+
+    {
+        q: "You have a long winding piece of string and want to know its length. What should you do?",
+        options: [
+            "Straighten the string without stretching it and then measure it",
+            "Cut it into pieces",
+            "Guess the length",
+            "Measure its temperature"
+        ],
+        answer: "A"
+    },
+
+    {
+        q: "A football player runs 300 m east and then 200 m west. What is the total distance travelled?",
+        options: [
+            "100 m",
+            "500 m",
+            "300 m",
+            "200 m"
+        ],
+        answer: "B"
+    }
+
+];
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+let studentName = "";
+
+let timeLeft = 30 * 60;
+
+let timerInterval = null;
+
+let submitted = false;
+
+
+/* =========================================================
+   START QUIZ
+========================================================= */
+
+window.startQuiz = function() {
+
+    const nameInput =
+        document.getElementById("studentName");
+
+    studentName =
+        nameInput.value.trim();
+
+    if (studentName === "") {
+
+        alert("Please enter your name before starting the quiz.");
+
+        nameInput.focus();
+
+        return;
+    }
+
+    document
+        .getElementById("startScreen")
+        .classList.add("hidden");
+
+    document
+        .getElementById("quizScreen")
+        .classList.remove("hidden");
+
+    renderQuestions();
+
+    startTimer();
+
+    updateProgress();
+
+};
+
+
+/* =========================================================
+   RENDER QUESTIONS
+========================================================= */
+
+function renderQuestions() {
+
+    const container =
+        document.getElementById("questionsContainer");
+
+    container.innerHTML = "";
+
+    questions.forEach((question, index) => {
+
+        const number = index + 1;
+
+        if (number === 1) {
+
+            container.innerHTML += `
+                <div class="section-title">
+                    🟢 EASY LEVEL — Questions 1–20
+                </div>
+            `;
+
+        }
+
+        if (number === 21) {
+
+            container.innerHTML += `
+                <div class="section-title moderate">
+                    🟣 MODERATE LEVEL — Questions 21–40
+                </div>
+            `;
+
+        }
+
+        if (number === 41) {
+
+            container.innerHTML += `
+                <div class="section-title application">
+                    🟠 APPLICATION-BASED — Questions 41–60
+                </div>
+            `;
+
+        }
+
+        const questionDiv =
+            document.createElement("div");
+
+        questionDiv.className = "question";
+
+        let optionsHTML = "";
+
+        question.options.forEach((option, optionIndex) => {
+
+            const letter =
+                String.fromCharCode(65 + optionIndex);
+
+            optionsHTML += `
+                <label class="option">
+                    <input
+                        type="radio"
+                        name="q${number}"
+                        value="${letter}"
+                        onchange="updateProgress()"
+                    >
+                    <strong>${letter}.</strong>
+                    ${option}
+                </label>
+            `;
+
+        });
+
+        questionDiv.innerHTML = `
+            <h3>${number}. ${question.q}</h3>
+            ${optionsHTML}
+        `;
+
+        container.appendChild(questionDiv);
+
+    });
+
+}
+
+
+/* =========================================================
+   TIMER
+========================================================= */
+
+function startTimer() {
+
+    updateTimerDisplay();
+
+    timerInterval =
+        setInterval(() => {
+
+            timeLeft--;
+
+            updateTimerDisplay();
+
+            if (timeLeft <= 0) {
+
+                clearInterval(timerInterval);
+
+                alert(
+                    "Time is over. Your quiz will be submitted automatically."
+                );
+
+                submitQuiz(true);
+
+            }
+
+        }, 1000);
+
+}
+
+
+function updateTimerDisplay() {
+
+    const minutes =
+        Math.floor(timeLeft / 60);
+
+    const seconds =
+        timeLeft % 60;
+
+    document.getElementById("timer").textContent =
+        String(minutes).padStart(2, "0")
+        + ":"
+        + String(seconds).padStart(2, "0");
+
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+window.updateProgress = function() {
+
+    let answered = 0;
+
+    questions.forEach((question, index) => {
+
+        const selected =
+            document.querySelector(
+                `input[name="q${index + 1}"]:checked`
+            );
+
+        if (selected) {
+            answered++;
+        }
+
+    });
+
+    const percentage =
+        (answered / questions.length) * 100;
+
+    document.getElementById("progressBar").style.width =
+        percentage + "%";
+
+    document.getElementById("progressText").textContent =
+        `${answered} of ${questions.length} answered`;
+
+};
+
+
+/* =========================================================
+   SUBMIT CONFIRMATION
+========================================================= */
+
+window.confirmSubmit = function() {
+
+    if (submitted) {
+        return;
+    }
+
+    let unanswered = 0;
+
+    questions.forEach((question, index) => {
+
+        const selected =
+            document.querySelector(
+                `input[name="q${index + 1}"]:checked`
+            );
+
+        if (!selected) {
+            unanswered++;
+        }
+
+    });
+
+    if (unanswered > 0) {
+
+        const proceed =
+            confirm(
+                `You have ${unanswered} unanswered question(s).\n\nAre you sure you want to submit?`
+            );
+
+        if (!proceed) {
+            return;
+        }
+
+    } else {
+
+        const proceed =
+            confirm(
+                "You have answered all 60 questions.\n\nAre you sure you want to submit the quiz?"
+            );
+
+        if (!proceed) {
+            return;
+        }
+
+    }
+
+    submitQuiz(false);
+
+};
+
+
+/* =========================================================
+   SUBMIT QUIZ
+========================================================= */
+
+window.submitQuiz = async function(autoSubmit = false) {
+
+    if (submitted) {
+        return;
+    }
+
+    submitted = true;
+
+    if (timerInterval) {
+        clearInterval(timerInterval);
+    }
+
+    let correct = 0;
+    let wrong = 0;
+    let unanswered = 0;
+
+    const review = [];
+
+    questions.forEach((question, index) => {
+
+        const number = index + 1;
+
+        const selected =
+            document.querySelector(
+                `input[name="q${number}"]:checked`
+            );
+
+        const userAnswer =
+            selected ? selected.value : null;
+
+        if (!userAnswer) {
+
+            unanswered++;
+
+            review.push({
+                number: number,
+                question: question.q,
+                userAnswer: "Not answered",
+                correctAnswer: question.answer,
+                status: "unanswered",
+                correctText:
+                    question.options[
+                        question.answer.charCodeAt(0) - 65
+                    ]
+            });
+
+        } else if (userAnswer === question.answer) {
+
+            correct++;
+
+            review.push({
+                number: number,
+                question: question.q,
+                userAnswer:
+                    question.options[
+                        userAnswer.charCodeAt(0) - 65
+                    ],
+                correctAnswer:
+                    question.answer,
+                status: "correct",
+                correctText:
+                    question.options[
+                        question.answer.charCodeAt(0) - 65
+                    ]
+            });
+
+        } else {
+
+            wrong++;
+
+            review.push({
+                number: number,
+                question: question.q,
+                userAnswer:
+                    question.options[
+                        userAnswer.charCodeAt(0) - 65
+                    ],
+                correctAnswer:
+                    question.answer,
+                status: "wrong",
+                correctText:
+                    question.options[
+                        question.answer.charCodeAt(0) - 65
+                    ]
+            });
+
+        }
+
+    });
+
+
+    const total =
+        questions.length;
+
+    const percentage =
+        (correct / total) * 100;
+
+
+    let grade = "";
+
+    if (percentage >= 90) {
+        grade = "A+";
+    } else if (percentage >= 80) {
+        grade = "A";
+    } else if (percentage >= 70) {
+        grade = "B";
+    } else if (percentage >= 60) {
+        grade = "C";
+    } else if (percentage >= 50) {
+        grade = "D";
+    } else {
+        grade = "Needs Improvement";
+    }
+
+
+    document
+        .getElementById("quizScreen")
+        .classList.add("hidden");
+
+    document
+        .getElementById("resultScreen")
+        .style.display = "block";
+
+
+    document.getElementById("resultStudent").textContent =
+        "Student: " + studentName;
+
+    document.getElementById("scoreDisplay").textContent =
+        `${correct} / ${total}`;
+
+    document.getElementById("percentageDisplay").textContent =
+        `Percentage: ${percentage.toFixed(1)}%`;
+
+    document.getElementById("gradeDisplay").textContent =
+        `Grade: ${grade}`;
+
+    document.getElementById("correctDisplay").textContent =
+        correct;
+
+    document.getElementById("wrongDisplay").textContent =
+        wrong;
+
+    document.getElementById("unansweredDisplay").textContent =
+        unanswered;
+
+    document.getElementById("totalDisplay").textContent =
+        total;
+
+
+    renderReview(review);
+
+
+    const result = {
+
+        name: studentName,
+
+        classId: "6",
+
+        quizTitle:
+            "Measurement of Motion and Length - Class 6 Science",
+
+        score: correct,
+
+        total: total,
+
+        percentage:
+            Number(percentage.toFixed(1)),
+
+        grade: grade,
+
+        correct: correct,
+
+        wrong: wrong,
+
+        unanswered: unanswered,
+
+        date:
+            new Date().toLocaleString(),
+
+        timestamp:
+            Date.now()
+
+    };
+
+
+    await saveResultToFirebase(result);
+
+};
+
+
+/* =========================================================
+   ANSWER REVIEW
+========================================================= */
+
+function renderReview(review) {
+
+    const container =
+        document.getElementById("reviewContainer");
+
+    container.innerHTML = "";
+
+    review.forEach(item => {
+
+        const div =
+            document.createElement("div");
+
+        if (item.status === "correct") {
+
+            div.className =
+                "review-item correct-answer";
+
+            div.innerHTML = `
+                <strong>Question ${item.number} ✓ Correct</strong>
+                <p>${item.question}</p>
+                <p>
+                    <strong>Your answer:</strong>
+                    ${item.userAnswer}
+                </p>
+            `;
+
+        } else if (item.status === "wrong") {
+
+            div.className =
+                "review-item wrong-answer";
+
+            div.innerHTML = `
+                <strong>Question ${item.number} ✗ Wrong</strong>
+                <p>${item.question}</p>
+                <p>
+                    <strong>Your answer:</strong>
+                    ${item.userAnswer}
+                </p>
+                <p>
+                    <strong>Correct answer:</strong>
+                    ${item.correctAnswer}.
+                    ${item.correctText}
+                </p>
+            `;
+
+        } else {
+
+            div.className =
+                "review-item unanswered";
+
+            div.innerHTML = `
+                <strong>Question ${item.number} — Not Answered</strong>
+                <p>${item.question}</p>
+                <p>
+                    <strong>Correct answer:</strong>
+                    ${item.correctAnswer}.
+                    ${item.correctText}
+                </p>
+            `;
+
+        }
+
+        container.appendChild(div);
+
+    });
+
+}
+
+
+/* =========================================================
+   FIREBASE SAVE
+========================================================= */
+
+async function saveResultToFirebase(result) {
+
+    try {
+
+        const resultsRef =
+            ref(database, "quizResults");
+
+        await push(
+            resultsRef,
+            result
+        );
+
+        document.getElementById("saveStatus").textContent =
+            "✅ Your result has been sent to the teacher dashboard.";
+
+    } catch (error) {
+
+        console.error(
+            "Firebase error:",
+            error
+        );
+
+        document.getElementById("saveStatus").textContent =
+            "⚠️ Your score was calculated, but it could not be sent to the teacher dashboard.";
+
+    }
+
+}
+
+
+/* =========================================================
+   PREVENT ACCIDENTAL PAGE EXIT
+========================================================= */
+
+window.addEventListener(
+    "beforeunload",
+    function(event) {
+
+        if (
+            !submitted &&
+            !document
+                .getElementById("quizScreen")
+                .classList.contains("hidden")
+        ) {
+
+            event.preventDefault();
+
+            event.returnValue = "";
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>
