@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Science Quiz - Teacher Dashboard</title>
 
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
@@ -17,246 +19,320 @@
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(135deg, #eef2ff, #f8fafc);
-    color: #172033;
-}
-
-header {
-    background: linear-gradient(135deg, #1e3a8a, #2563eb);
-    color: white;
-    padding: 22px;
-    text-align: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,.15);
-}
-
-header h1 {
-    margin: 0;
-    font-size: 28px;
-}
-
-header p {
-    margin: 7px 0 0;
-    opacity: .9;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    min-height: 100vh;
+    color: #222;
 }
 
 .container {
-    width: 96%;
-    max-width: 1500px;
-    margin: 25px auto;
+    width: 95%;
+    max-width: 1400px;
+    margin: 30px auto;
 }
 
-.card {
-    background: white;
-    border-radius: 16px;
-    padding: 22px;
-    margin-bottom: 20px;
-    box-shadow: 0 5px 20px rgba(15,23,42,.08);
-}
-
+/* LOGIN */
 .login-card {
     max-width: 430px;
-    margin: 70px auto;
+    margin: 80px auto;
+    background: white;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
 }
 
-h2 {
-    margin-top: 0;
+.login-card h1 {
+    text-align: center;
+    color: #5b3cc4;
+    margin-bottom: 10px;
 }
 
-input,
-select,
-button {
-    width: 100%;
-    padding: 12px 14px;
-    border-radius: 9px;
-    border: 1px solid #cbd5e1;
-    font-size: 15px;
+.login-card p {
+    text-align: center;
+    color: #666;
+    margin-bottom: 25px;
 }
 
 input,
 select {
-    background: white;
-}
-
-.form-group {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ccc;
+    border-radius: 9px;
+    font-size: 15px;
     margin-bottom: 15px;
 }
 
 button {
     border: none;
-    background: #2563eb;
-    color: white;
+    padding: 12px 18px;
+    border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
+    font-size: 14px;
 }
 
-button:hover {
-    background: #1d4ed8;
+.login-btn {
+    width: 100%;
+    background: #5b3cc4;
+    color: white;
+    font-size: 16px;
 }
 
-.logout-btn {
-    width: auto;
-    padding: 9px 18px;
-    background: #dc2626;
+.login-btn:hover {
+    background: #472ba8;
 }
 
-.logout-btn:hover {
-    background: #b91c1c;
+.error {
+    color: #d32f2f;
+    background: #ffebee;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 15px;
+    display: none;
 }
 
-.topbar {
+/* DASHBOARD */
+.dashboard {
+    display: none;
+}
+
+.header {
+    background: white;
+    padding: 22px 25px;
+    border-radius: 18px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 15px;
-    flex-wrap: wrap;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.header h1 {
+    margin: 0;
+    color: #5b3cc4;
+}
+
+.header p {
+    margin: 5px 0 0;
+    color: #666;
+}
+
+.logout-btn {
+    background: #e53935;
+    color: white;
+}
+
+.logout-btn:hover {
+    background: #c62828;
+}
+
+/* STATS */
+.stats {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.stat-card h3 {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+.stat-card .number {
+    font-size: 30px;
+    font-weight: bold;
+    color: #5b3cc4;
+    margin-top: 8px;
+}
+
+/* FILTERS */
+.filter-card {
+    background: white;
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}
+
+.filter-card h2 {
+    margin-top: 0;
+    color: #5b3cc4;
 }
 
 .filters {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-}
-
-.stats {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
     gap: 15px;
 }
 
-.stat {
-    padding: 20px;
-    border-radius: 14px;
-    background: #f8fafc;
-    border: 1px solid #e2e8f0;
-    text-align: center;
-}
-
-.stat strong {
+.filter-group label {
     display: block;
-    font-size: 28px;
-    color: #1d4ed8;
-    margin-bottom: 5px;
+    font-weight: bold;
+    margin-bottom: 7px;
+    font-size: 13px;
 }
 
-.stat span {
-    color: #64748b;
-    font-size: 14px;
+.filter-group input,
+.filter-group select {
+    margin-bottom: 0;
 }
 
-.table-wrapper {
+.actions {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.refresh-btn {
+    background: #2196f3;
+    color: white;
+}
+
+.refresh-btn:hover {
+    background: #1976d2;
+}
+
+.clear-btn {
+    background: #757575;
+    color: white;
+}
+
+.clear-btn:hover {
+    background: #616161;
+}
+
+/* TABLE */
+.table-card {
+    background: white;
+    border-radius: 18px;
+    padding: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12);
     overflow-x: auto;
+}
+
+.table-card h2 {
+    margin-top: 0;
+    color: #5b3cc4;
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 1250px;
+    min-width: 1100px;
 }
 
-th,
-td {
-    padding: 11px 9px;
-    border-bottom: 1px solid #e2e8f0;
+th {
+    background: #5b3cc4;
+    color: white;
+    padding: 12px 8px;
     text-align: left;
     font-size: 13px;
 }
 
-th {
-    background: #eff6ff;
-    color: #1e3a8a;
-    position: sticky;
-    top: 0;
-    z-index: 1;
+td {
+    padding: 11px 8px;
+    border-bottom: 1px solid #eee;
+    font-size: 13px;
 }
 
-tr:hover td {
-    background: #f8fafc;
+tr:hover {
+    background: #f8f6ff;
 }
 
-.badge {
-    display: inline-block;
-    padding: 5px 9px;
-    border-radius: 20px;
-    font-size: 12px;
+.status-normal {
+    color: #2e7d32;
+    background: #e8f5e9;
+    padding: 5px 8px;
+    border-radius: 6px;
     font-weight: bold;
 }
 
-.normal {
-    background: #dcfce7;
-    color: #166534;
+.status-warning {
+    color: #ef6c00;
+    background: #fff3e0;
+    padding: 5px 8px;
+    border-radius: 6px;
+    font-weight: bold;
 }
 
-.possible {
-    background: #fef3c7;
-    color: #92400e;
-}
-
-.flagged {
-    background: #fee2e2;
-    color: #991b1b;
+.status-flagged {
+    color: #c62828;
+    background: #ffebee;
+    padding: 5px 8px;
+    border-radius: 6px;
+    font-weight: bold;
 }
 
 .delete-btn {
-    width: auto;
-    background: #dc2626;
+    background: #e53935;
+    color: white;
     padding: 7px 10px;
     font-size: 12px;
 }
 
-.refresh-btn {
-    width: auto;
-    padding: 9px 18px;
+.delete-btn:hover {
+    background: #c62828;
 }
 
-.error {
-    color: #b91c1c;
-    background: #fee2e2;
-    padding: 10px;
-    border-radius: 8px;
-    display: none;
-    margin-top: 10px;
-}
-
-.success {
-    color: #166534;
-    background: #dcfce7;
-    padding: 10px;
-    border-radius: 8px;
-    display: none;
-    margin-top: 10px;
-}
-
-.empty {
+.no-results {
     text-align: center;
-    padding: 40px;
-    color: #64748b;
+    padding: 35px;
+    color: #777;
+    font-size: 16px;
 }
 
+/* LOADING */
 .loading {
     text-align: center;
     padding: 30px;
-    color: #2563eb;
-    font-weight: bold;
+    color: #666;
 }
 
+/* RESPONSIVE */
 @media (max-width: 1000px) {
+    .stats {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
     .filters {
         grid-template-columns: repeat(2, 1fr);
     }
+}
+
+@media (max-width: 650px) {
+    .container {
+        width: 96%;
+        margin: 15px auto;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 
     .stats {
         grid-template-columns: repeat(2, 1fr);
     }
-}
 
-@media (max-width: 600px) {
-    .filters,
-    .stats {
+    .filters {
         grid-template-columns: 1fr;
     }
 
-    header h1 {
-        font-size: 22px;
+    .login-card {
+        margin: 40px auto;
+        padding: 25px;
     }
 }
 </style>
@@ -264,63 +340,98 @@ tr:hover td {
 
 <body>
 
-<header>
-    <h1>🧪 Science Quiz - Teacher Dashboard</h1>
-    <p>Student Results & Quiz Monitoring</p>
-</header>
-
 <div class="container">
 
     <!-- LOGIN -->
-    <div id="loginSection" class="card login-card">
-        <h2>Teacher Login</h2>
+    <div id="loginSection" class="login-card">
 
-        <div class="form-group">
-            <label>Email</label>
-            <input type="email" id="email" placeholder="Teacher email">
-        </div>
+        <h1>Science Quiz</h1>
+        <p>Teacher Dashboard</p>
 
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" id="password" placeholder="Password">
-        </div>
+        <input
+            type="email"
+            id="email"
+            placeholder="Teacher Email"
+            autocomplete="email"
+        >
 
-        <button id="loginBtn">Login</button>
+        <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            autocomplete="current-password"
+        >
+
+        <button class="login-btn" onclick="login()">
+            Login
+        </button>
 
         <div id="loginError" class="error"></div>
+
     </div>
 
 
     <!-- DASHBOARD -->
-    <div id="dashboardSection" style="display:none;">
+    <div id="dashboardSection" class="dashboard">
 
-        <div class="card topbar">
+        <!-- HEADER -->
+        <div class="header">
+
             <div>
-                <h2 style="margin-bottom:5px;">Teacher Dashboard</h2>
-                <div id="loggedTeacher" style="color:#64748b;"></div>
+                <h1>Science Quiz - Teacher Dashboard</h1>
+                <p id="teacherEmail"></p>
             </div>
 
-            <div style="display:flex;gap:10px;">
-                <button id="refreshBtn" class="refresh-btn">
-                    🔄 Refresh
-                </button>
+            <button class="logout-btn" onclick="logout()">
+                Logout
+            </button>
 
-                <button id="logoutBtn" class="logout-btn">
-                    Logout
-                </button>
+        </div>
+
+
+        <!-- STATS -->
+        <div class="stats">
+
+            <div class="stat-card">
+                <h3>Total Results</h3>
+                <div class="number" id="totalResults">0</div>
             </div>
+
+            <div class="stat-card">
+                <h3>Students</h3>
+                <div class="number" id="totalStudents">0</div>
+            </div>
+
+            <div class="stat-card">
+                <h3>Average Score</h3>
+                <div class="number" id="averageScore">0%</div>
+            </div>
+
+            <div class="stat-card">
+                <h3>Normal</h3>
+                <div class="number" id="normalResults">0</div>
+            </div>
+
+            <div class="stat-card">
+                <h3>Flagged</h3>
+                <div class="number" id="flaggedResults">0</div>
+            </div>
+
         </div>
 
 
         <!-- FILTERS -->
-        <div class="card">
-            <h2>🔎 Filters</h2>
+        <div class="filter-card">
+
+            <h2>Filter Results</h2>
 
             <div class="filters">
 
-                <div>
-                    <label>Class</label>
-                    <select id="classFilter">
+                <!-- CLASS -->
+                <div class="filter-group">
+                    <label for="classFilter">Class</label>
+
+                    <select id="classFilter" onchange="applyFilters()">
                         <option value="">All Classes</option>
                         <option value="6">Class 6</option>
                         <option value="7">Class 7</option>
@@ -332,126 +443,130 @@ tr:hover td {
                     </select>
                 </div>
 
-                <div>
-                    <label>Chapter</label>
-                    <select id="chapterFilter">
+
+                <!-- CHAPTER -->
+                <div class="filter-group">
+                    <label for="chapterFilter">Chapter</label>
+
+                    <select id="chapterFilter" onchange="applyFilters()">
+
                         <option value="">All Chapters</option>
+
                         <option value="Exploring Magnets">
                             Exploring Magnets
                         </option>
+
                         <option value="Adolescence: A Stage of Growth and Change">
                             Adolescence: A Stage of Growth and Change
                         </option>
+
                         <option value="Metals and Non-metals">
                             Metals and Non-metals
                         </option>
+
                         <option value="Particulate Nature of Matter">
                             Particulate Nature of Matter
                         </option>
+
                     </select>
                 </div>
 
-                <div>
-                    <label>Status</label>
-                    <select id="statusFilter">
+
+                <!-- STATUS -->
+                <div class="filter-group">
+                    <label for="statusFilter">Status</label>
+
+                    <select id="statusFilter" onchange="applyFilters()">
+
                         <option value="">All Status</option>
                         <option value="Normal">Normal</option>
                         <option value="Possible Malpractice">
                             Possible Malpractice
                         </option>
                         <option value="Flagged">Flagged</option>
+
                     </select>
                 </div>
 
-                <div>
-                    <label>Student Search</label>
+
+                <!-- SEARCH -->
+                <div class="filter-group">
+
+                    <label for="studentSearch">
+                        Student Search
+                    </label>
+
                     <input
                         type="text"
                         id="studentSearch"
                         placeholder="Search student name..."
+                        oninput="applyFilters()"
                     >
+
                 </div>
 
             </div>
-        </div>
 
 
-        <!-- STATISTICS -->
-        <div class="card">
-            <div class="stats">
+            <div class="actions">
 
-                <div class="stat">
-                    <strong id="totalResults">0</strong>
-                    <span>Total Results</span>
-                </div>
+                <button
+                    class="refresh-btn"
+                    onclick="loadResults()"
+                >
+                    Refresh Results
+                </button>
 
-                <div class="stat">
-                    <strong id="averageScore">0%</strong>
-                    <span>Average</span>
-                </div>
-
-                <div class="stat">
-                    <strong id="highestScore">0%</strong>
-                    <span>Highest</span>
-                </div>
-
-                <div class="stat">
-                    <strong id="passedCount">0</strong>
-                    <span>Passed</span>
-                </div>
-
-                <div class="stat">
-                    <strong id="flaggedCount">0</strong>
-                    <span>Flagged</span>
-                </div>
+                <button
+                    class="clear-btn"
+                    onclick="clearFilters()"
+                >
+                    Clear Filters
+                </button>
 
             </div>
+
         </div>
 
 
         <!-- RESULTS -->
-        <div class="card">
+        <div class="table-card">
 
-            <div class="topbar">
-                <h2>📊 Student Results</h2>
-                <div id="resultMessage"></div>
-            </div>
+            <h2>Student Results</h2>
 
             <div id="loading" class="loading">
                 Loading results...
             </div>
 
-            <div id="emptyResults" class="empty" style="display:none;">
-                No student results found.
+            <div id="noResults" class="no-results" style="display:none;">
+                No results found.
             </div>
 
-            <div class="table-wrapper">
-                <table id="resultsTable" style="display:none;">
+            <table id="resultsTable" style="display:none;">
 
-                    <thead>
-                        <tr>
-                            <th>Rank</th>
-                            <th>Student</th>
-                            <th>Class</th>
-                            <th>Chapter</th>
-                            <th>Quiz</th>
-                            <th>Score</th>
-                            <th>Percentage</th>
-                            <th>Grade</th>
-                            <th>Correct</th>
-                            <th>Wrong</th>
-                            <th>Unanswered</th>
-                            <th>Violations</th>
-                            <th>Status</th>
-                            <th>Submitted</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
+                <thead>
 
-                    <tbody id="resultsBody"></tbody>
+                    <tr>
+                        <th>#</th>
+                        <th>Student</th>
+                        <th>Class</th>
+                        <th>Chapter</th>
+                        <th>Score</th>
+                        <th>Percentage</th>
+                        <th>Grade</th>
+                        <th>Violations</th>
+                        <th>Status</th>
+                        <th>Auto Submit</th>
+                        <th>Date</th>
+                        <th>Action</th>
+                    </tr>
 
-                </table>
-            </div>
+                </thead>
+
+                <tbody id="resultsBody">
+                </tbody>
+
+            </table>
 
         </div>
 
@@ -461,19 +576,35 @@ tr:hover td {
 
 
 <script>
+
 /* =========================================================
    FIREBASE CONFIGURATION
    ========================================================= */
 
 const firebaseConfig = {
+
     apiKey: "AIzaSyCfI3zEpaiRA3OjgYiTuvnuA3GGyQGQNpU",
-    authDomain: "sciencequiz2026-ccd77.firebaseapp.com",
-    databaseURL: "https://sciencequiz2026-ccd77-default-rtdb.firebaseio.com",
-    projectId: "sciencequiz2026-ccd77",
-    storageBucket: "sciencequiz2026-ccd77.firebasestorage.app",
-    messagingSenderId: "412753144312",
-    appId: "1:412753144312:web:fe66b332abcadfb0438e0d",
-    measurementId: "G-YC0DM7M07F"
+
+    authDomain:
+        "sciencequiz2026-ccd77.firebaseapp.com",
+
+    databaseURL:
+        "https://sciencequiz2026-ccd77-default-rtdb.firebaseio.com",
+
+    projectId:
+        "sciencequiz2026-ccd77",
+
+    storageBucket:
+        "sciencequiz2026-ccd77.firebasestorage.app",
+
+    messagingSenderId:
+        "412753144312",
+
+    appId:
+        "1:412753144312:web:fe66b332abcadfb0438e0d",
+
+    measurementId:
+        "G-YC0DM7M07F"
 };
 
 
@@ -484,107 +615,17 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
+
 const database = firebase.database();
 
 
 /* =========================================================
-   DOM ELEMENTS
-   ========================================================= */
-
-const loginSection = document.getElementById("loginSection");
-const dashboardSection = document.getElementById("dashboardSection");
-
-const emailInput = document.getElementById("email");
-const passwordInput = document.getElementById("password");
-
-const loginBtn = document.getElementById("loginBtn");
-const logoutBtn = document.getElementById("logoutBtn");
-const refreshBtn = document.getElementById("refreshBtn");
-
-const loginError = document.getElementById("loginError");
-
-const loggedTeacher = document.getElementById("loggedTeacher");
-
-const classFilter = document.getElementById("classFilter");
-const chapterFilter = document.getElementById("chapterFilter");
-const statusFilter = document.getElementById("statusFilter");
-const studentSearch = document.getElementById("studentSearch");
-
-const resultsBody = document.getElementById("resultsBody");
-const resultsTable = document.getElementById("resultsTable");
-
-const loading = document.getElementById("loading");
-const emptyResults = document.getElementById("emptyResults");
-
-const totalResults = document.getElementById("totalResults");
-const averageScore = document.getElementById("averageScore");
-const highestScore = document.getElementById("highestScore");
-const passedCount = document.getElementById("passedCount");
-const flaggedCount = document.getElementById("flaggedCount");
-
-const resultMessage = document.getElementById("resultMessage");
-
-
-/* =========================================================
-   DATA
+   GLOBAL VARIABLES
    ========================================================= */
 
 let allResults = [];
-let firebaseListener = null;
 
-
-/* =========================================================
-   LOGIN
-   ========================================================= */
-
-loginBtn.addEventListener("click", async function() {
-
-    const email = emailInput.value.trim();
-    const password = passwordInput.value;
-
-    loginError.style.display = "none";
-
-    if (!email || !password) {
-        showLoginError("Please enter your email and password.");
-        return;
-    }
-
-    loginBtn.disabled = true;
-    loginBtn.textContent = "Logging in...";
-
-    try {
-
-        await auth.signInWithEmailAndPassword(
-            email,
-            password
-        );
-
-    } catch (error) {
-
-        console.error("Login error:", error);
-
-        showLoginError(
-            error.message || "Login failed."
-        );
-
-        loginBtn.disabled = false;
-        loginBtn.textContent = "Login";
-    }
-
-});
-
-
-/* =========================================================
-   ENTER KEY LOGIN
-   ========================================================= */
-
-passwordInput.addEventListener("keydown", function(event) {
-
-    if (event.key === "Enter") {
-        loginBtn.click();
-    }
-
-});
+let resultsListener = null;
 
 
 /* =========================================================
@@ -595,26 +636,24 @@ auth.onAuthStateChanged(function(user) {
 
     if (user) {
 
-        loginSection.style.display = "none";
-        dashboardSection.style.display = "block";
+        document.getElementById("loginSection").style.display =
+            "none";
 
-        loggedTeacher.textContent =
-            "Logged in as: " + (user.email || "Teacher");
+        document.getElementById("dashboardSection").style.display =
+            "block";
+
+        document.getElementById("teacherEmail").textContent =
+            "Logged in as: " + user.email;
 
         loadResults();
 
     } else {
 
-        loginSection.style.display = "block";
-        dashboardSection.style.display = "none";
+        document.getElementById("loginSection").style.display =
+            "block";
 
-        if (firebaseListener) {
-            database.ref("quizResults").off(
-                "value",
-                firebaseListener
-            );
-            firebaseListener = null;
-        }
+        document.getElementById("dashboardSection").style.display =
+            "none";
 
     }
 
@@ -622,72 +661,105 @@ auth.onAuthStateChanged(function(user) {
 
 
 /* =========================================================
-   LOAD RESULTS FROM FIREBASE
+   LOGIN
    ========================================================= */
 
-function loadResults() {
+function login() {
 
-    loading.style.display = "block";
-    emptyResults.style.display = "none";
-    resultsTable.style.display = "none";
+    const email =
+        document.getElementById("email").value.trim();
 
-    if (firebaseListener) {
+    const password =
+        document.getElementById("password").value;
 
-        database.ref("quizResults").off(
-            "value",
-            firebaseListener
-        );
+    const errorBox =
+        document.getElementById("loginError");
 
+
+    errorBox.style.display = "none";
+    errorBox.textContent = "";
+
+
+    if (!email || !password) {
+
+        errorBox.textContent =
+            "Please enter your email and password.";
+
+        errorBox.style.display = "block";
+
+        return;
     }
 
 
-    firebaseListener = function(snapshot) {
+    auth.signInWithEmailAndPassword(email, password)
 
-        allResults = [];
+        .then(function() {
 
-        snapshot.forEach(function(childSnapshot) {
+            console.log("Login successful");
 
-            const data = childSnapshot.val();
+        })
 
-            if (!data) return;
+        .catch(function(error) {
 
-            allResults.push({
-                key: childSnapshot.key,
-                ...data
-            });
+            console.error("Login error:", error);
 
-        });
+            let message = error.message;
 
 
-        console.log(
-            "Firebase results loaded:",
-            allResults
-        );
+            if (
+                error.code ===
+                "auth/api-key-not-valid"
+            ) {
+
+                message =
+                    "Firebase API key is not valid. Please check the Firebase configuration.";
+
+            }
+
+            else if (
+                error.code ===
+                "auth/invalid-credential"
+            ) {
+
+                message =
+                    "Invalid email or password.";
+
+            }
+
+            else if (
+                error.code ===
+                "auth/user-not-found"
+            ) {
+
+                message =
+                    "No teacher account exists with this email.";
+
+            }
+
+            else if (
+                error.code ===
+                "auth/wrong-password"
+            ) {
+
+                message =
+                    "Incorrect password.";
+
+            }
+
+            else if (
+                error.code ===
+                "auth/invalid-email"
+            ) {
+
+                message =
+                    "Please enter a valid email address.";
+
+            }
 
 
-        loading.style.display = "none";
+            errorBox.textContent = message;
 
-        applyFilters();
-
-    };
-
-
-    database
-        .ref("quizResults")
-        .on("value", firebaseListener, function(error) {
-
-            console.error(
-                "Firebase read error:",
-                error
-            );
-
-            loading.style.display = "none";
-
-            showResultMessage(
-                "Unable to read Firebase results: " +
-                error.message,
-                true
-            );
+            errorBox.style.display = "block";
 
         });
 
@@ -695,28 +767,209 @@ function loadResults() {
 
 
 /* =========================================================
-   FILTER EVENTS
+   LOGOUT
    ========================================================= */
 
-classFilter.addEventListener(
-    "change",
-    applyFilters
-);
+function logout() {
 
-chapterFilter.addEventListener(
-    "change",
-    applyFilters
-);
+    auth.signOut()
+        .then(function() {
 
-statusFilter.addEventListener(
-    "change",
-    applyFilters
-);
+            allResults = [];
 
-studentSearch.addEventListener(
-    "input",
-    applyFilters
-);
+            document.getElementById("resultsBody").innerHTML = "";
+
+        })
+        .catch(function(error) {
+
+            console.error("Logout error:", error);
+
+        });
+
+}
+
+
+/* =========================================================
+   LOAD RESULTS
+   ========================================================= */
+
+function loadResults() {
+
+    const loading =
+        document.getElementById("loading");
+
+    const table =
+        document.getElementById("resultsTable");
+
+    const noResults =
+        document.getElementById("noResults");
+
+
+    loading.style.display = "block";
+    table.style.display = "none";
+    noResults.style.display = "none";
+
+
+    if (resultsListener) {
+
+        database
+            .ref("quizResults")
+            .off("value", resultsListener);
+
+    }
+
+
+    resultsListener =
+        function(snapshot) {
+
+            allResults = [];
+
+
+            snapshot.forEach(function(childSnapshot) {
+
+                const data =
+                    childSnapshot.val();
+
+                data._key =
+                    childSnapshot.key;
+
+                allResults.push(data);
+
+            });
+
+
+            /* newest first */
+
+            allResults.sort(function(a, b) {
+
+                const timeA =
+                    Number(a.timestamp || 0);
+
+                const timeB =
+                    Number(b.timestamp || 0);
+
+                return timeB - timeA;
+
+            });
+
+
+            loading.style.display = "none";
+
+            updateChapterOptions();
+
+            applyFilters();
+
+        };
+
+
+    database
+        .ref("quizResults")
+        .on("value", resultsListener, function(error) {
+
+            console.error(
+                "Firebase database error:",
+                error
+            );
+
+            loading.style.display = "none";
+
+            noResults.style.display = "block";
+
+            noResults.textContent =
+                "Unable to load results: " +
+                error.message;
+
+        });
+
+}
+
+
+/* =========================================================
+   UPDATE CHAPTER DROPDOWN
+   ========================================================= */
+
+function updateChapterOptions() {
+
+    const chapterFilter =
+        document.getElementById("chapterFilter");
+
+
+    const selected =
+        chapterFilter.value;
+
+
+    const chapters = new Set();
+
+
+    /*
+       Always keep known chapters
+       even if there are currently
+       no results.
+    */
+
+    chapters.add("Exploring Magnets");
+
+    chapters.add(
+        "Adolescence: A Stage of Growth and Change"
+    );
+
+    chapters.add(
+        "Metals and Non-metals"
+    );
+
+    chapters.add(
+        "Particulate Nature of Matter"
+    );
+
+
+    /*
+       Also add any chapter
+       found in Firebase.
+    */
+
+    allResults.forEach(function(result) {
+
+        const chapter =
+            String(result.chapter || "").trim();
+
+        if (chapter) {
+
+            chapters.add(chapter);
+
+        }
+
+    });
+
+
+    chapterFilter.innerHTML =
+        '<option value="">All Chapters</option>';
+
+
+    Array.from(chapters)
+        .sort()
+        .forEach(function(chapter) {
+
+            const option =
+                document.createElement("option");
+
+            option.value = chapter;
+
+            option.textContent = chapter;
+
+            chapterFilter.appendChild(option);
+
+        });
+
+
+    if (
+        Array.from(chapters).includes(selected)
+    ) {
+
+        chapterFilter.value = selected;
+
+    }
+
+}
 
 
 /* =========================================================
@@ -725,106 +978,112 @@ studentSearch.addEventListener(
 
 function applyFilters() {
 
-    const selectedClass =
-        String(classFilter.value || "").trim();
+    const classValue =
+        document.getElementById("classFilter").value;
 
-    const selectedChapter =
-        String(chapterFilter.value || "").trim();
 
-    const selectedStatus =
-        String(statusFilter.value || "").trim();
+    const chapterValue =
+        document.getElementById("chapterFilter").value;
 
-    const search =
-        String(studentSearch.value || "")
+
+    const statusValue =
+        document.getElementById("statusFilter").value;
+
+
+    const searchValue =
+        document.getElementById("studentSearch")
+            .value
             .trim()
             .toLowerCase();
 
 
-    let filtered = allResults.filter(function(result) {
-
-        const resultClass =
-            String(
-                result.classId ??
-                result.class ??
-                ""
-            ).trim();
-
-        const resultChapter =
-            String(
-                result.chapter ??
-                ""
-            ).trim();
-
-        const resultStatus =
-            String(
-                result.status ??
-                ""
-            ).trim();
-
-        const resultName =
-            String(
-                result.name ??
-                result.studentName ??
-                ""
-            ).trim()
-            .toLowerCase();
+    const filtered =
+        allResults.filter(function(result) {
 
 
-        if (
-            selectedClass &&
-            resultClass !== selectedClass
-        ) {
-            return false;
-        }
+            /* CLASS */
+
+            if (classValue) {
+
+                const resultClass =
+                    String(result.classId || "").trim();
+
+                if (resultClass !== classValue) {
+
+                    return false;
+
+                }
+
+            }
 
 
-        if (
-            selectedChapter &&
-            normalizeText(resultChapter) !==
-            normalizeText(selectedChapter)
-        ) {
-            return false;
-        }
+            /* CHAPTER */
+
+            if (chapterValue) {
+
+                const resultChapter =
+                    String(result.chapter || "").trim();
+
+                if (
+                    resultChapter !==
+                    chapterValue
+                ) {
+
+                    return false;
+
+                }
+
+            }
 
 
-        if (
-            selectedStatus &&
-            normalizeText(resultStatus) !==
-            normalizeText(selectedStatus)
-        ) {
-            return false;
-        }
+            /* STATUS */
+
+            if (statusValue) {
+
+                const resultStatus =
+                    String(result.status || "").trim();
+
+                if (
+                    resultStatus !==
+                    statusValue
+                ) {
+
+                    return false;
+
+                }
+
+            }
 
 
-        if (
-            search &&
-            !resultName.includes(search)
-        ) {
-            return false;
-        }
+            /* STUDENT SEARCH */
+
+            if (searchValue) {
+
+                const studentName =
+                    String(result.name || "")
+                        .toLowerCase();
+
+                if (
+                    !studentName.includes(
+                        searchValue
+                    )
+                ) {
+
+                    return false;
+
+                }
+
+            }
 
 
-        return true;
+            return true;
 
-    });
-
-
-    /* Sort highest percentage first */
-
-    filtered.sort(function(a, b) {
-
-        const percentageA =
-            Number(a.percentage || 0);
-
-        const percentageB =
-            Number(b.percentage || 0);
-
-        return percentageB - percentageA;
-
-    });
+        });
 
 
     renderResults(filtered);
+
+    updateStats(filtered);
 
 }
 
@@ -835,22 +1094,36 @@ function applyFilters() {
 
 function renderResults(results) {
 
-    resultsBody.innerHTML = "";
+    const tbody =
+        document.getElementById("resultsBody");
+
+    const table =
+        document.getElementById("resultsTable");
+
+    const noResults =
+        document.getElementById("noResults");
+
+
+    tbody.innerHTML = "";
 
 
     if (results.length === 0) {
 
-        resultsTable.style.display = "none";
-        emptyResults.style.display = "block";
+        table.style.display = "none";
 
-        updateStatistics([]);
+        noResults.style.display = "block";
+
+        noResults.textContent =
+            "No results found.";
 
         return;
+
     }
 
 
-    resultsTable.style.display = "table";
-    emptyResults.style.display = "none";
+    table.style.display = "table";
+
+    noResults.style.display = "none";
 
 
     results.forEach(function(result, index) {
@@ -859,137 +1132,147 @@ function renderResults(results) {
             document.createElement("tr");
 
 
-        const percentage =
-            Number(
-                result.percentage || 0
+        const name =
+            escapeHTML(
+                result.name || "-"
             );
 
 
-        const status =
-            getStatus(result);
+        const classId =
+            escapeHTML(
+                result.classId || "-"
+            );
 
 
-        let statusClass = "normal";
+        const chapter =
+            escapeHTML(
+                result.chapter || "-"
+            );
+
+
+        const score =
+            result.score !== undefined
+                ? result.score
+                : "-";
+
+
+        const total =
+            result.total !== undefined
+                ? result.total
+                : "-";
+
+
+        const percentage =
+            result.percentage !== undefined
+                ? result.percentage
+                : "-";
+
+
+        const grade =
+            escapeHTML(
+                result.grade || "-"
+            );
+
+
+        const violations =
+            result.violations !== undefined
+                ? result.violations
+                : 0;
+
+
+        let status =
+            String(
+                result.status || "Normal"
+            ).trim();
+
+
+        let statusClass =
+            "status-normal";
+
 
         if (
-            status === "Flagged"
+            status.toLowerCase()
+                .includes("flag")
         ) {
-            statusClass = "flagged";
-        } else if (
-            status === "Possible Malpractice"
+
+            statusClass =
+                "status-flagged";
+
+        }
+
+        else if (
+            status.toLowerCase()
+                .includes("malpractice")
         ) {
-            statusClass = "possible";
+
+            statusClass =
+                "status-warning";
+
         }
 
 
-        const submitted =
-            result.date ||
-            result.submittedAt ||
-            formatTimestamp(
-                result.timestamp
-            ) ||
-            "-";
+        const automaticSubmission =
+            result.automaticSubmission
+                ? "Yes"
+                : "No";
+
+
+        const date =
+            escapeHTML(
+                result.date || "-"
+            );
 
 
         row.innerHTML = `
 
+            <td>${index + 1}</td>
+
             <td>
-                <strong>${index + 1}</strong>
+                <strong>${name}</strong>
             </td>
 
             <td>
-                <strong>
-                    ${escapeHTML(
-                        result.name ||
-                        result.studentName ||
-                        "-"
-                    )}
-                </strong>
+                ${classId}
             </td>
 
             <td>
-                ${escapeHTML(
-                    String(
-                        result.classId ??
-                        result.class ??
-                        "-"
-                    )
-                )}
+                ${chapter}
             </td>
 
             <td>
-                ${escapeHTML(
-                    result.chapter ||
-                    "-"
-                )}
+                ${score} / ${total}
             </td>
 
             <td>
-                ${escapeHTML(
-                    result.quizTitle ||
-                    result.quizId ||
-                    "-"
-                )}
+                <strong>${percentage}%</strong>
             </td>
 
             <td>
-                ${Number(result.score || 0)}
-                /
-                ${Number(result.total || 0)}
+                ${grade}
             </td>
 
             <td>
-                <strong>
-                    ${percentage.toFixed(1)}%
-                </strong>
+                ${violations}
             </td>
 
             <td>
-                ${escapeHTML(
-                    result.grade || "-"
-                )}
-            </td>
-
-            <td>
-                ${Number(
-                    result.correct || 0
-                )}
-            </td>
-
-            <td>
-                ${Number(
-                    result.wrong || 0
-                )}
-            </td>
-
-            <td>
-                ${Number(
-                    result.unanswered || 0
-                )}
-            </td>
-
-            <td>
-                ${Number(
-                    result.violations || 0
-                )}
-            </td>
-
-            <td>
-                <span class="badge ${statusClass}">
+                <span class="${statusClass}">
                     ${escapeHTML(status)}
                 </span>
             </td>
 
             <td>
-                ${escapeHTML(
-                    submitted
-                )}
+                ${automaticSubmission}
+            </td>
+
+            <td>
+                ${date}
             </td>
 
             <td>
                 <button
                     class="delete-btn"
-                    onclick="deleteResult('${result.key}')"
+                    onclick="deleteResult('${result._key}')"
                 >
                     Delete
                 </button>
@@ -998,140 +1281,128 @@ function renderResults(results) {
         `;
 
 
-        resultsBody.appendChild(row);
+        tbody.appendChild(row);
+
+    });
+
+}
+
+
+/* =========================================================
+   UPDATE STATISTICS
+   ========================================================= */
+
+function updateStats(results) {
+
+    const total =
+        results.length;
+
+
+    const students =
+        new Set();
+
+
+    let percentageTotal = 0;
+
+    let percentageCount = 0;
+
+    let normal = 0;
+
+    let flagged = 0;
+
+
+    results.forEach(function(result) {
+
+        if (result.name) {
+
+            students.add(
+                String(result.name).trim()
+            );
+
+        }
+
+
+        const percentage =
+            Number(result.percentage);
+
+
+        if (
+            Number.isFinite(percentage)
+        ) {
+
+            percentageTotal += percentage;
+
+            percentageCount++;
+
+        }
+
+
+        const status =
+            String(
+                result.status || "Normal"
+            ).toLowerCase();
+
+
+        if (
+            status === "flagged" ||
+            status.includes("flag")
+        ) {
+
+            flagged++;
+
+        }
+
+        else if (
+            status.includes("malpractice")
+        ) {
+
+            flagged++;
+
+        }
+
+        else {
+
+            normal++;
+
+        }
 
     });
 
 
-    updateStatistics(results);
-
-}
-
-
-/* =========================================================
-   STATUS
-   ========================================================= */
-
-function getStatus(result) {
-
-    const explicitStatus =
-        String(
-            result.status || ""
-        ).trim();
-
-
-    if (explicitStatus) {
-
-        if (
-            normalizeText(explicitStatus) ===
-            "flagged"
-        ) {
-            return "Flagged";
-        }
-
-        if (
-            normalizeText(explicitStatus) ===
-            "possible malpractice"
-        ) {
-            return "Possible Malpractice";
-        }
-
-        return "Normal";
-    }
-
-
-    const violations =
-        Number(
-            result.violations || 0
-        );
-
-
-    if (violations >= 3) {
-        return "Flagged";
-    }
-
-    if (violations > 0) {
-        return "Possible Malpractice";
-    }
-
-    return "Normal";
-
-}
-
-
-/* =========================================================
-   STATISTICS
-   ========================================================= */
-
-function updateStatistics(results) {
-
-    totalResults.textContent =
-        results.length;
-
-
-    if (results.length === 0) {
-
-        averageScore.textContent = "0%";
-        highestScore.textContent = "0%";
-        passedCount.textContent = "0";
-        flaggedCount.textContent = "0";
-
-        return;
-    }
-
-
-    const percentages =
-        results.map(function(result) {
-
-            return Number(
-                result.percentage || 0
-            );
-
-        });
-
-
     const average =
-        percentages.reduce(
-            function(sum, value) {
-                return sum + value;
-            },
-            0
-        ) / percentages.length;
+        percentageCount > 0
+            ? (
+                percentageTotal /
+                percentageCount
+            ).toFixed(1)
+            : "0";
 
 
-    const highest =
-        Math.max(...percentages);
+    document.getElementById(
+        "totalResults"
+    ).textContent = total;
 
 
-    const passed =
-        results.filter(function(result) {
-
-            return Number(
-                result.percentage || 0
-            ) >= 40;
-
-        }).length;
+    document.getElementById(
+        "totalStudents"
+    ).textContent = students.size;
 
 
-    const flagged =
-        results.filter(function(result) {
-
-            return getStatus(result) ===
-                "Flagged";
-
-        }).length;
+    document.getElementById(
+        "averageScore"
+    ).textContent =
+        average + "%";
 
 
-    averageScore.textContent =
-        average.toFixed(1) + "%";
+    document.getElementById(
+        "normalResults"
+    ).textContent =
+        normal;
 
-    highestScore.textContent =
-        highest.toFixed(1) + "%";
 
-    passedCount.textContent =
-        passed;
-
-    flaggedCount.textContent =
+    document.getElementById(
+        "flaggedResults"
+    ).textContent =
         flagged;
 
 }
@@ -1141,10 +1412,16 @@ function updateStatistics(results) {
    DELETE RESULT
    ========================================================= */
 
-window.deleteResult = async function(key) {
+function deleteResult(key) {
 
     if (!key) {
+
+        alert(
+            "Result ID is missing."
+        );
+
         return;
+
     }
 
 
@@ -1155,96 +1432,79 @@ window.deleteResult = async function(key) {
 
 
     if (!confirmed) {
+
         return;
-    }
-
-
-    try {
-
-        await database
-            .ref("quizResults/" + key)
-            .remove();
-
-
-        showResultMessage(
-            "Result deleted successfully.",
-            false
-        );
-
-    } catch (error) {
-
-        console.error(
-            "Delete error:",
-            error
-        );
-
-        showResultMessage(
-            "Could not delete result: " +
-            error.message,
-            true
-        );
 
     }
 
-};
 
+    database
+        .ref("quizResults/" + key)
+        .remove()
 
-/* =========================================================
-   REFRESH
-   ========================================================= */
+        .then(function() {
 
-refreshBtn.addEventListener(
-    "click",
-    function() {
+            console.log(
+                "Result deleted successfully."
+            );
 
-        loadResults();
+        })
 
-    }
-);
-
-
-/* =========================================================
-   LOGOUT
-   ========================================================= */
-
-logoutBtn.addEventListener(
-    "click",
-    async function() {
-
-        try {
-
-            await auth.signOut();
-
-        } catch (error) {
+        .catch(function(error) {
 
             console.error(
-                "Logout error:",
+                "Delete error:",
                 error
             );
 
-        }
+            alert(
+                "Unable to delete result: " +
+                error.message
+            );
 
-    }
-);
-
-
-/* =========================================================
-   HELPERS
-   ========================================================= */
-
-function normalizeText(value) {
-
-    return String(value || "")
-        .trim()
-        .replace(/\s+/g, " ")
-        .toLowerCase();
+        });
 
 }
 
 
+/* =========================================================
+   CLEAR FILTERS
+   ========================================================= */
+
+function clearFilters() {
+
+    document.getElementById(
+        "classFilter"
+    ).value = "";
+
+
+    document.getElementById(
+        "chapterFilter"
+    ).value = "";
+
+
+    document.getElementById(
+        "statusFilter"
+    ).value = "";
+
+
+    document.getElementById(
+        "studentSearch"
+    ).value = "";
+
+
+    applyFilters();
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+   ========================================================= */
+
 function escapeHTML(value) {
 
-    return String(value ?? "")
+    return String(value)
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
@@ -1254,53 +1514,26 @@ function escapeHTML(value) {
 }
 
 
-function formatTimestamp(timestamp) {
+/* =========================================================
+   ENTER KEY LOGIN
+   ========================================================= */
 
-    if (!timestamp) {
-        return "";
-    }
+document
+    .getElementById("password")
+    .addEventListener(
+        "keydown",
+        function(event) {
 
+            if (event.key === "Enter") {
 
-    try {
+                login();
 
-        return new Date(
-            Number(timestamp)
-        ).toLocaleString();
+            }
 
-    } catch (error) {
-
-        return "";
-
-    }
-
-}
+        }
+    );
 
 
-function showLoginError(message) {
-
-    loginError.textContent = message;
-    loginError.style.display = "block";
-
-}
-
-
-function showResultMessage(
-    message,
-    isError
-) {
-
-    resultMessage.textContent = message;
-
-    resultMessage.style.color =
-        isError ? "#b91c1c" : "#166534";
-
-    setTimeout(function() {
-
-        resultMessage.textContent = "";
-
-    }, 4000);
-
-}
 </script>
 
 </body>
