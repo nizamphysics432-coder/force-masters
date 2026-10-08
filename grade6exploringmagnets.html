@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Grade 6 Science - Exploring Magnets</title>
 
 <style>
@@ -12,300 +13,435 @@
 
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f3f6fb;
-    color: #172033;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f7fb;
+    color: #222;
 }
 
 .container {
-    max-width: 900px;
+    max-width: 950px;
     margin: auto;
     padding: 20px;
 }
 
 .card {
     background: white;
-    border-radius: 16px;
+    border-radius: 15px;
     padding: 25px;
-    margin: 20px 0;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+    margin-top: 25px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
 }
 
 h1 {
-    color: #173b72;
+    text-align: center;
+    margin-bottom: 8px;
 }
 
-h2 {
-    color: #244f87;
-}
-
-.badge {
-    display: inline-block;
-    padding: 7px 11px;
-    border-radius: 20px;
-    background: #e7eef9;
-    margin: 4px;
-    font-size: 13px;
+.subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 25px;
 }
 
 label {
-    display: block;
     font-weight: bold;
-    margin: 12px 0 6px;
+    display: block;
+    margin-top: 18px;
+    margin-bottom: 8px;
 }
 
 select {
     width: 100%;
-    padding: 13px;
-    border: 1px solid #ccd5e2;
-    border-radius: 9px;
+    padding: 14px;
     font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.agreement {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 20px;
+}
+
+.agreement ul {
+    line-height: 1.7;
+}
+
+.agreement label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-weight: normal;
+}
+
+.agreement input {
+    margin-top: 4px;
+    transform: scale(1.2);
 }
 
 button {
-    border: 0;
-    border-radius: 10px;
-    padding: 13px 20px;
+    border: none;
+    border-radius: 8px;
+    padding: 13px 22px;
     font-size: 16px;
-    font-weight: bold;
     cursor: pointer;
-    background: #2457a6;
+}
+
+#startBtn {
+    width: 100%;
+    margin-top: 20px;
+    background: #1976d2;
     color: white;
+    font-weight: bold;
 }
 
-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
+#startBtn:hover {
+    background: #125ca8;
 }
 
-.danger {
-    background: #b42318;
+#quizScreen {
+    display: none;
 }
 
-.hidden {
-    display: none !important;
-}
-
-#topbar {
+.topbar {
     position: sticky;
     top: 0;
     z-index: 100;
     background: white;
-    padding: 12px 18px;
-    border-bottom: 1px solid #ddd;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 15px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.timer {
+    text-align: center;
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
 #timer {
-    font-size: 23px;
-    font-weight: bold;
+    color: #d32f2f;
 }
 
-.timer-warning {
-    color: #b42318;
-}
-
-.progress {
+.progress-container {
+    width: 100%;
+    background: #ddd;
     height: 10px;
-    background: #e3e8ef;
     border-radius: 10px;
     overflow: hidden;
-    margin: 15px 0;
 }
 
 #progressBar {
     height: 100%;
     width: 0%;
-    background: #2457a6;
+    background: #1976d2;
+    transition: width 0.2s;
+}
+
+.monitor {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 14px;
+}
+
+#violationDisplay {
+    font-weight: bold;
 }
 
 .question {
-    border: 1px solid #dce3ed;
-    border-radius: 12px;
-    padding: 18px;
-    margin: 15px 0;
     background: white;
+    padding: 20px;
+    margin-bottom: 18px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+}
+
+.question h3 {
+    margin-top: 0;
+    line-height: 1.5;
+}
+
+.option {
+    display: block;
+    padding: 10px;
+    margin: 7px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.option:hover {
+    background: #f1f5f9;
+}
+
+.option input {
+    margin-right: 10px;
 }
 
 .level {
     font-size: 12px;
     font-weight: bold;
-    color: #53657d;
-    margin-bottom: 8px;
+    color: #777;
+    margin-bottom: 5px;
 }
 
-.option {
-    display: block;
-    padding: 11px;
-    margin: 8px 0;
-    border: 1px solid #d7deea;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: normal;
+.submit-area {
+    text-align: center;
+    margin: 30px 0;
 }
 
-.option:hover {
-    background: #f5f8fc;
+#submitBtn {
+    background: #2e7d32;
+    color: white;
+    font-size: 18px;
+    padding: 15px 35px;
 }
 
-.option input {
-    width: auto;
-    margin-right: 8px;
+#submitBtn:hover {
+    background: #1b5e20;
 }
 
-#violationBox {
-    background: #fff3cd;
-    border: 1px solid #f0cf6a;
-    padding: 12px;
-    border-radius: 10px;
-    margin: 10px 0;
+#resultScreen {
+    display: none;
 }
 
-.score {
-    font-size: 46px;
-    font-weight: bold;
-    color: #2457a6;
-}
-
-.result {
+.result-box {
     text-align: center;
 }
 
+.score {
+    font-size: 48px;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+.result-details {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.detail {
+    background: #f5f7fa;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.detail strong {
+    display: block;
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
 .review {
-    text-align: left;
+    margin-top: 30px;
 }
 
-small {
-    color: #5f6b7a;
+.review-question {
+    padding: 15px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    background: #f7f7f7;
 }
 
-.rules {
-    line-height: 1.7;
+.correct {
+    border-left: 5px solid #2e7d32;
+}
+
+.wrong {
+    border-left: 5px solid #d32f2f;
+}
+
+.unanswered {
+    border-left: 5px solid #777;
+}
+
+#warningBox {
+    display: none;
+    position: fixed;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    background: #d32f2f;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-weight: bold;
+    max-width: 90%;
+    text-align: center;
+}
+
+@media(max-width:700px) {
+    .container {
+        padding: 10px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .result-details {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div id="topbar" class="hidden">
-    <div>
-        <b>Grade 6 Science</b><br>
-        <small>Exploring Magnets - NCERT</small>
-    </div>
-
-    <div id="timer">30:00</div>
-</div>
+<div id="warningBox"></div>
 
 <div class="container">
 
 <!-- START SCREEN -->
-<section id="startScreen" class="card">
+<div id="startScreen" class="card">
 
-<h1>🧲 Grade 6 Science - Exploring Magnets</h1>
+    <h1>Grade 6 Science</h1>
 
-<p>
-<span class="badge">NCERT</span>
-<span class="badge">60 MCQs</span>
-<span class="badge">30 Minutes</span>
-<span class="badge">Easy + Moderate + Application</span>
-</p>
+    <div class="subtitle">
+        Exploring Magnets – NCERT Science
+    </div>
 
-<h2>Before You Start</h2>
+    <label for="studentName">Select Your Name</label>
 
-<ul class="rules">
-<li>Select your registered full name.</li>
-<li>Only one recorded attempt is allowed.</li>
-<li>Stay on the test page during the examination.</li>
-<li>Do not use books, notes, Google, AI tools or outside help.</li>
-<li>Do not copy, paste or share questions and answers.</li>
-<li>Keep fullscreen mode on.</li>
-<li>Leaving the test page may generate a violation warning.</li>
-<li>Repeated violations may automatically submit and flag the test.</li>
-</ul>
+    <select id="studentName">
+        <option value="">-- Select your name --</option>
+        <option>AIZAZ RASHEED</option>
+        <option>AMAL PAZ P</option>
+        <option>DAAN GEORGE</option>
+        <option>EDEN THOMAS</option>
+        <option>MOHAMMED LAHIN</option>
+        <option>HUZAIFA RASHEED</option>
+        <option>MOHAMMED MUJTABA</option>
+        <option>MOHAMMED NOUMAN SHAREEF</option>
+        <option>MOHAMMED RAHMAN UDDIN</option>
+        <option>MUHAMMAD HAMDAN IMRAN</option>
+        <option>MUHAMMAD TAYYAB</option>
+        <option>MUHAMMAD</option>
+        <option>MUHAMMAD FARZIN</option>
+        <option>MUHAMMAD MANNAN</option>
+        <option>MUHAMMAD SALHAN SAJJAD</option>
+        <option>NUMAIR HUSSIAN</option>
+        <option>SYED ASHAZ BURHAN</option>
+        <option>AHMAD FAIZAN</option>
+    </select>
 
-<label for="studentName">
-Registered Student Name
-</label>
+    <div class="agreement">
 
-<select id="studentName">
-<option value="">-- Select your name --</option>
+        <strong>Test Rules</strong>
 
-<option>AIZAZ RASHEED</option>
-<option>AMAL PAZ P</option>
-<option>DAAN GEORGE</option>
-<option>EDEN THOMAS</option>
-<option>MOHAMMED LAHIN</option>
-<option>HUZAIFA RASHEED</option>
-<option>MOHAMMED MUJTABA</option>
-<option>MOHAMMED NOUMAN SHAREEF</option>
-<option>MOHAMMED RAHMAN UDDIN</option>
-<option>MUHAMMAD HAMDAN IMRAN</option>
-<option>MUHAMMAD TAYYAB</option>
-<option>MUHAMMAD</option>
-<option>MUHAMMAD FARZIN</option>
-<option>MUHAMMAD MANNAN</option>
-<option>MUHAMMAD SALHAN SAJJAD</option>
-<option>NUMAIR HUSSIAN</option>
-<option>SYED ASHAZ BURHAN</option>
-<option>AHMAD FAIZAN</option>
+        <ul>
+            <li>Enter/select your real name.</li>
+            <li>This is an individual test.</li>
+            <li>Do not use Google, AI tools, books, notes, or other help.</li>
+            <li>Do not copy or paste.</li>
+            <li>Do not switch tabs or applications during the test.</li>
+            <li>Keep the test page open.</li>
+            <li>Fullscreen mode is recommended.</li>
+            <li>Your test activity may be monitored for test integrity.</li>
+            <li>Repeated violations may result in automatic submission.</li>
+            <li>Make sure your internet connection is stable.</li>
+        </ul>
 
-</select>
+        <label>
+            <input type="checkbox" id="agree">
+            <span>I have read and agree to the test rules.</span>
+        </label>
 
-<p>
-<label style="font-weight:normal;">
-<input type="checkbox" id="agree" style="width:auto;">
-I have read and agree to the test rules.
-</label>
-</p>
+    </div>
 
-<button id="startBtn" disabled>
-Start Test
-</button>
+    <button id="startBtn">
+        Start Test
+    </button>
 
-<p id="startMessage"></p>
-
-</section>
+</div>
 
 
 <!-- QUIZ SCREEN -->
+<div id="quizScreen">
 
-<section id="quizScreen" class="hidden">
+    <div class="topbar">
 
-<div id="violationBox">
-Integrity status:
-<b id="violationCount">0</b> violation(s)
+        <div class="timer">
+            Time Remaining:
+            <span id="timer">30:00</span>
+        </div>
+
+        <div class="progress-container">
+            <div id="progressBar"></div>
+        </div>
+
+        <div class="monitor">
+            Violations:
+            <span id="violationDisplay">0</span> / 3
+        </div>
+
+    </div>
+
+    <form id="quizForm"></form>
+
+    <div class="submit-area">
+        <button id="submitBtn" type="button">
+            Submit Test
+        </button>
+    </div>
+
 </div>
-
-<div class="progress">
-<div id="progressBar"></div>
-</div>
-
-<form id="quizForm"></form>
-
-<button id="submitBtn" class="danger">
-Submit Test
-</button>
-
-</section>
 
 
 <!-- RESULT SCREEN -->
+<div id="resultScreen" class="card">
 
-<section id="resultScreen" class="card result hidden">
+    <div class="result-box">
 
-<h1>Test Submitted</h1>
+        <h1>Test Submitted</h1>
 
-<div class="score" id="finalScore"></div>
+        <p id="resultMessage"></p>
 
-<h2 id="finalStatus"></h2>
+        <div class="score" id="scoreDisplay"></div>
 
-<p id="finalInfo"></p>
+        <div class="result-details">
 
-<div id="review" class="review"></div>
+            <div class="detail">
+                <strong id="correctDisplay">0</strong>
+                Correct
+            </div>
 
-</section>
+            <div class="detail">
+                <strong id="wrongDisplay">0</strong>
+                Wrong
+            </div>
+
+            <div class="detail">
+                <strong id="unansweredDisplay">0</strong>
+                Unanswered
+            </div>
+
+            <div class="detail">
+                <strong id="percentageDisplay">0%</strong>
+                Percentage
+            </div>
+
+        </div>
+
+        <div class="review">
+
+            <h2>Answer Review</h2>
+
+            <div id="reviewContainer"></div>
+
+        </div>
+
+    </div>
+
+</div>
 
 </div>
 
@@ -319,41 +455,35 @@ import {
     getDatabase,
     ref,
     push,
-    get,
-    query,
-    orderByChild,
-    equalTo
+    set
 }
 from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 
-/* FIREBASE */
+/* ================================
+   FIREBASE
+================================ */
 
 const firebaseConfig = {
 
-    apiKey: "AIzaSyCfI3zEpaiRA3OjgYiTuvnuA3GGyQGQNpU",
+    apiKey: "AIzaSyCfI3zEpaiRA3OjgYiTuvnuA3GGyQGNpU",
 
-    authDomain:
-    "sciencequiz2026-ccd77.firebaseapp.com",
+    authDomain: "sciencequiz2026-ccd77.firebaseapp.com",
 
     databaseURL:
     "https://sciencequiz2026-ccd77-default-rtdb.firebaseio.com",
 
-    projectId:
-    "sciencequiz2026-ccd77",
+    projectId: "sciencequiz2026-ccd77",
 
     storageBucket:
     "sciencequiz2026-ccd77.firebasestorage.app",
 
-    messagingSenderId:
-    "412753144312",
+    messagingSenderId: "412753144312",
 
     appId:
     "1:412753144312:web:fe66b332abcadfb0438e0d",
 
-    measurementId:
-    "G-YC0DM7M07F"
-
+    measurementId: "G-YC0DM7M07F"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -361,727 +491,637 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 
-/* QUIZ SETTINGS */
-
-const QUIZ_ID =
-"grade6_exploring_magnets";
-
-const QUIZ_TITLE =
-"Exploring Magnets - Class 6 Science (NCERT)";
-
-const CLASS_ID = "6";
-
-const MAX_VIOLATIONS = 3;
-
-
-/* QUESTIONS */
+/* ================================
+   QUESTIONS
+================================ */
 
 const questions = [
 
+/* EASY 1-20 */
+
 {
-level:"Easy",
-question:"Which material is attracted strongly by a magnet?",
-answer:"B",
-options:["Wood","Iron","Glass","Paper"]
+q:"Which of the following is attracted by a magnet?",
+o:["Wooden ruler","Iron nail","Plastic spoon","Paper"],
+a:1,
+level:"Easy"
 },
 
 {
-level:"Easy",
-question:"Which of these is usually non-magnetic?",
-answer:"C",
-options:["Iron nail","Steel pin","Plastic ruler","Iron clip"]
+q:"Which material is generally magnetic?",
+o:["Iron","Wood","Glass","Rubber"],
+a:0,
+level:"Easy"
 },
 
 {
-level:"Easy",
-question:"A magnet has two ends called its:",
-answer:"C",
-options:["Sides","Edges","Poles","Faces"]
+q:"A magnet has how many poles?",
+o:["One","Two","Three","Four"],
+a:1,
+level:"Easy"
 },
 
 {
-level:"Easy",
-question:"The two poles of a magnet are called:",
-answer:"A",
-options:["North and South","East and West","Up and Down","Left and Right"]
+q:"The two poles of a magnet are called:",
+o:["East and West","North and South","Up and Down","Left and Right"],
+a:1,
+level:"Easy"
 },
 
 {
-level:"Easy",
-question:"Which pole of a freely suspended magnet points approximately towards the north direction?",
-answer:"B",
-options:["South pole","North pole","Both poles","Neither pole"]
+q:"The end of a bar magnet that points towards the north direction is called the:",
+o:["South pole","North pole","Middle pole","Centre"],
+a:1,
+level:"Easy"
 },
 
 {
-level:"Easy",
-question:"What happens when two like poles of magnets are brought together?",
-answer:"D",
-options:["They attract","They melt","Nothing happens","They repel"]
+q:"Like poles of two magnets:",
+o:["Attract each other","Repel each other","Always disappear","Have no effect"],
+a:1,
+level:"Easy"
 },
 
 {
-level:"Easy",
-question:"What happens when unlike poles of magnets are brought together?",
-answer:"A",
-options:["They attract","They repel","They disappear","They become non-magnetic"]
+q:"Unlike poles of two magnets:",
+o:["Repel","Attract","Do nothing","Break"],
+a:1,
+level:"Easy"
 },
 
 {
-level:"Easy",
-question:"Which instrument helps us find directions?",
-answer:"A",
-options:["Compass","Thermometer","Balance","Measuring cylinder"]
+q:"Which of these is non-magnetic?",
+o:["Iron","Steel","Copper","Nickel"],
+a:2,
+level:"Easy"
 },
 
 {
-level:"Easy",
-question:"A compass needle is a small:",
-answer:"B",
-options:["Glass rod","Magnet","Plastic strip","Wooden stick"]
+q:"A freely suspended magnet comes to rest approximately in the:",
+o:["East-West direction","North-South direction","Up-Down direction","Random direction"],
+a:1,
+level:"Easy"
 },
 
 {
-level:"Easy",
-question:"Which object is attracted by a magnet?",
-answer:"D",
-options:["Rubber","Wood","Cotton","Iron"]
+q:"A compass is mainly used to find:",
+o:["Temperature","Mass","Direction","Time"],
+a:2,
+level:"Easy"
 },
 
 {
-level:"Easy",
-question:"Which of the following is a magnetic material?",
-answer:"A",
-options:["Steel","Paper","Plastic","Glass"]
+q:"The needle of a magnetic compass is:",
+o:["A magnet","A wooden strip","A plastic strip","A glass rod"],
+a:0,
+level:"Easy"
 },
 
 {
-level:"Easy",
-question:"A magnet can attract an iron object even when separated by a thin:",
-answer:"A",
-options:["Paper sheet","Stone wall","Rubber ball","Wooden box"]
+q:"Which object can be attracted by a magnet?",
+o:["Iron paper clip","Wooden pencil","Glass marble","Plastic ruler"],
+a:0,
+level:"Easy"
 },
 
 {
-level:"Easy",
-question:"The region around a magnet where its effect can be felt is called its:",
-answer:"B",
-options:["Magnetic field","Electric field","Heat zone","Light field"]
+q:"The magnetic force is strongest near the:",
+o:["Centre","Poles","Middle only","Surface everywhere equally"],
+a:1,
+level:"Easy"
 },
 
 {
-level:"Easy",
-question:"A freely suspended bar magnet comes to rest approximately in the:",
-answer:"C",
-options:["East-west direction","Up-down direction","North-south direction","Random direction"]
+q:"A magnet can attract an iron object even when:",
+o:["The object is very far away","There is a small non-magnetic material between them","The object is made of wood","There is no magnet"],
+a:1,
+level:"Easy"
 },
 
 {
-level:"Easy",
-question:"Which pair contains only magnetic materials?",
-answer:"D",
-options:["Wood and plastic","Glass and paper","Rubber and copper","Iron and steel"]
+q:"Which one is a natural magnet?",
+o:["Lodestone","Plastic","Copper wire","Glass"],
+a:0,
+level:"Easy"
 },
 
 {
-level:"Easy",
-question:"The magnetic force of a bar magnet is generally strongest near its:",
-answer:"B",
-options:["Centre","Poles","Middle only","Entire surface equally"]
+q:"A magnet attracts:",
+o:["All metals","Only magnetic materials","All non-metals","Everything"],
+a:1,
+level:"Easy"
 },
 
 {
-level:"Easy",
-question:"If a bar magnet is broken into two pieces, each piece will have:",
-answer:"A",
-options:["A north and a south pole","Only a north pole","Only a south pole","No poles"]
+q:"Which pair represents the poles of a magnet?",
+o:["North and South","East and West","Left and Right","Top and Bottom"],
+a:0,
+level:"Easy"
 },
 
 {
-level:"Easy",
-question:"Which can be used to make a simple compass needle?",
-answer:"C",
-options:["A magnetised needle","A wooden pencil","A plastic straw","A rubber band"]
+q:"What happens when the north pole of one magnet is brought near the north pole of another?",
+o:["They attract","They repel","They melt","Nothing happens"],
+a:1,
+level:"Easy"
 },
 
 {
-level:"Easy",
-question:"Magnets are useful for finding directions because a freely suspended magnet tends to point:",
-answer:"D",
-options:["Only east","Only west","Only south","Approximately north-south"]
+q:"What happens when the north pole of one magnet is brought near the south pole of another?",
+o:["They repel","They attract","They disappear","They become non-magnetic"],
+a:1,
+level:"Easy"
 },
 
 {
-level:"Easy",
-question:"Which statement about a bar magnet is correct?",
-answer:"A",
-options:["It has two opposite poles","It has only one pole","It has no poles","It has four poles"]
+q:"Which instrument contains a small magnetic needle?",
+o:["Thermometer","Compass","Ruler","Balance"],
+a:1,
+level:"Easy"
 },
 
-/* MODERATE */
+
+/* MODERATE 21-40 */
 
 {
-level:"Moderate",
-question:"A magnet is brought near an iron nail. Which force causes the nail to move toward the magnet?",
-answer:"A",
-options:["Magnetic force","Gravitational force","Frictional force","Buoyant force"]
-},
-
-{
-level:"Moderate",
-question:"Why can a compass be used for navigation?",
-answer:"C",
-options:["Its needle is plastic","Its needle always points east","Its magnetic needle aligns approximately north-south","It measures distance"]
+q:"A magnet is brought near four objects: iron nail, wooden stick, steel pin and plastic button. Which objects are likely to be attracted?",
+o:["Iron nail and steel pin","Wooden stick and plastic button","Only wooden stick","All four"],
+a:0,
+level:"Moderate"
 },
 
 {
-level:"Moderate",
-question:"A student places a magnet near a steel paper clip and a wooden stick. What is most likely observed?",
-answer:"A",
-options:["The paper clip is attracted but the wooden stick is not","Both are attracted","Only the wooden stick is attracted","Neither is affected"]
+q:"If a bar magnet is freely suspended by a thread, it settles approximately in which direction?",
+o:["North-South","East-West","North-East only","South-West only"],
+a:0,
+level:"Moderate"
 },
 
 {
-level:"Moderate",
-question:"Which statement about the poles of a bar magnet is correct?",
-answer:"D",
-options:["There is only one pole","Poles exist only at the centre","Both poles are on the same end","A bar magnet has two opposite poles"]
+q:"A student brings the north pole of a magnet close to the north pole of another magnet. What will happen?",
+o:["The magnets attract","The magnets repel","The magnets lose magnetism","The poles change"],
+a:1,
+level:"Moderate"
 },
 
 {
-level:"Moderate",
-question:"Why does a freely suspended magnet settle in a particular direction?",
-answer:"B",
-options:["It is attracted to the table","Earth behaves like a giant magnet","The thread pushes it","Air currents always point north"]
+q:"Why is a compass useful for finding directions?",
+o:["Its needle is magnetic and aligns approximately North-South","It contains a clock","It measures distance","It produces light"],
+a:0,
+level:"Moderate"
 },
 
 {
-level:"Moderate",
-question:"A north pole is brought close to the north pole of another magnet. The magnets will:",
-answer:"C",
-options:["Attract strongly","Stick permanently","Repel each other","Lose magnetism"]
+q:"A bar magnet is cut into two pieces. What is expected?",
+o:["One piece has only north pole","One piece has only south pole","Each piece behaves like a smaller magnet with two poles","Both pieces lose all magnetism"],
+a:2,
+level:"Moderate"
 },
 
 {
-level:"Moderate",
-question:"Which experiment best helps distinguish a magnetic object from a non-magnetic object?",
-answer:"A",
-options:["Bring a magnet near the object","Measure its length","Place it in water","Look at its colour"]
+q:"Which statement about the poles of a magnet is correct?",
+o:["Only the north pole attracts iron","Only the south pole attracts iron","Both poles can attract magnetic materials","The middle attracts most strongly"],
+a:2,
+level:"Moderate"
 },
 
 {
-level:"Moderate",
-question:"Why should a compass be kept away from a strong magnet?",
-answer:"D",
-options:["The compass becomes heavier","The magnet makes it warmer","The needle becomes invisible","The nearby magnet can disturb the needle"]
+q:"A steel pin is placed near a magnet and becomes temporarily magnetised. This is an example of:",
+o:["Magnetic induction","Evaporation","Filtration","Reflection"],
+a:0,
+level:"Moderate"
 },
 
 {
-level:"Moderate",
-question:"Which observation shows magnetic force can act without direct contact?",
-answer:"B",
-options:["A magnet attracts an iron pin before touching it","A magnet changes colour","A magnet becomes wet","A magnet makes a sound"]
+q:"Which method can be used to identify the poles of an unmarked bar magnet?",
+o:["Use a known magnet and observe attraction or repulsion","Measure its length","Place it in water","Heat it strongly"],
+a:0,
+level:"Moderate"
 },
 
 {
-level:"Moderate",
-question:"A bar magnet is moved around an iron pin. The pin is attracted most strongly when it is close to:",
-answer:"C",
-options:["The centre","Any point equally","A pole","The handle"]
+q:"If one end of a freely suspended magnet points approximately north, the opposite end points approximately:",
+o:["North","South","East","West"],
+a:1,
+level:"Moderate"
 },
 
 {
-level:"Moderate",
-question:"Which is the best reason for marking the poles of a magnet?",
-answer:"A",
-options:["To identify the north and south ends","To make it heavier","To increase its length","To change its colour"]
+q:"Why should a compass be kept away from a strong magnet while finding directions?",
+o:["The magnet can disturb the compass needle","The compass will become heavier","The compass will stop measuring time","The compass will produce heat"],
+a:0,
+level:"Moderate"
 },
 
 {
-level:"Moderate",
-question:"Two magnets have unlabeled poles. Which observation can help identify unlike poles?",
-answer:"D",
-options:["They always repel","They always attract","They become weaker","Unlike poles attract each other"]
+q:"Which of the following is the best example of a magnetic material?",
+o:["Iron nail","Wooden block","Rubber eraser","Glass bead"],
+a:0,
+level:"Moderate"
 },
 
 {
-level:"Moderate",
-question:"A magnetised iron object:",
-answer:"B",
-options:["Can show magnetic properties","Can never attract iron","Becomes plastic","Loses its mass"]
+q:"Two magnets repel each other. What can be concluded?",
+o:["Like poles are facing each other","Unlike poles are facing each other","Neither magnet has poles","Both magnets are non-magnetic"],
+a:0,
+level:"Moderate"
 },
 
 {
-level:"Moderate",
-question:"A compass needle is disturbed beside a bar magnet. What does this demonstrate?",
-answer:"C",
-options:["Magnets have no force","A compass is not magnetic","A magnet can exert force on another magnet","Earth stops rotating"]
+q:"A magnet attracts an iron pin through a sheet of paper. What does this show?",
+o:["Magnetic force can act through some non-magnetic materials","Paper becomes magnetic permanently","Iron becomes plastic","Magnets work only without obstacles"],
+a:0,
+level:"Moderate"
 },
 
 {
-level:"Moderate",
-question:"Why does a compass needle rotate freely?",
-answer:"A",
-options:["So it can align with Earth's magnetic influence","So it can measure temperature","So it can collect iron dust","So it can point to the nearest metal"]
+q:"Which observation gives evidence that a magnet has two poles?",
+o:["It attracts paper","Its two ends show different interactions with another magnet","It has a particular colour","It has a fixed shape"],
+a:1,
+level:"Moderate"
 },
 
 {
-level:"Moderate",
-question:"Which pair is correctly matched?",
-answer:"D",
-options:["Rubber - magnetic","Glass - magnetic","Wood - magnetic","Iron - magnetic"]
+q:"A compass needle is disturbed when placed beside a bar magnet. Why?",
+o:["The magnetic field of the bar magnet affects the compass needle","The compass contains water","The compass becomes heavier","The bar magnet produces sound"],
+a:0,
+level:"Moderate"
 },
 
 {
-level:"Moderate",
-question:"Which result indicates that an object is non-magnetic?",
-answer:"B",
-options:["It is attracted to the magnet","It shows no noticeable attraction","It moves toward the magnet","It sticks to the magnet"]
+q:"Which statement is correct about magnetic poles?",
+o:["They can exist separately in an ordinary bar magnet","Every magnet has two poles","Only large magnets have poles","Poles are found only in natural magnets"],
+a:1,
+level:"Moderate"
 },
 
 {
-level:"Moderate",
-question:"If the north pole of one magnet attracts an unknown pole of another magnet, the unknown pole is most likely:",
-answer:"C",
-options:["North","Neither","South","Both"]
+q:"A magnet attracts an object. Which conclusion is safest?",
+o:["The object must be iron","The object may be made of a magnetic material","The object must be wood","The object is definitely plastic"],
+a:1,
+level:"Moderate"
 },
 
 {
-level:"Moderate",
-question:"Why are magnetic poles described as north and south?",
-answer:"A",
-options:["A freely suspended magnet has ends that tend to point north and south","All magnets are coloured blue and red","Magnets have four poles","Poles are underground"]
+q:"Why is iron powder useful for showing the effect of a magnet?",
+o:["It responds to the magnetic field and shows its pattern","It produces electricity","It changes colour permanently","It becomes liquid"],
+a:0,
+level:"Moderate"
 },
 
 {
-level:"Moderate",
-question:"A bar magnet is cut into two pieces. What should happen?",
-answer:"D",
-options:["One piece has only north","One piece has only south","Both lose their poles","Each piece behaves as a smaller magnet with two poles"]
-},
-
-/* APPLICATION */
-
-{
-level:"Application",
-question:"A box contains iron pins mixed with paper pieces. How can the iron pins be separated?",
-answer:"B",
-options:["Use a magnet","Add water","Shake the box","Use a ruler"]
+q:"If the south pole of a magnet is brought near the south pole of another magnet, they will:",
+o:["Attract","Repel","Become one magnet","Stop having poles"],
+a:1,
+level:"Moderate"
 },
 
 {
-level:"Application",
-question:"How can you test whether a metal spoon is attracted to a magnet?",
-answer:"A",
-options:["Bring a magnet close and observe","Heat the spoon","Break the spoon","Put it in ink"]
+q:"Which of the following is NOT a typical property of a magnet?",
+o:["It has two poles","Like poles repel","Unlike poles attract","It attracts every material"],
+a:3,
+level:"Moderate"
+},
+
+
+/* APPLICATION 41-60 */
+
+{
+q:"A student has four identical-looking objects: an iron nail, a copper wire, a wooden stick and a steel pin. The student wants to identify the magnetic objects. What is the best first step?",
+o:["Bring a magnet near each object","Put all objects in water","Measure their lengths","Heat them"],
+a:0,
+level:"Application"
 },
 
 {
-level:"Application",
-question:"A compass needle turns when a bar magnet is placed beside it. Why?",
-answer:"C",
-options:["The compass stopped working","The Earth stopped acting","The nearby magnet influenced the needle","The compass became heavier"]
+q:"A compass is showing a direction different from the expected direction when placed next to a large speaker containing magnets. What should the student do?",
+o:["Move the compass away from the speaker","Shake the compass strongly","Put it inside the speaker","Heat the compass"],
+a:0,
+level:"Application"
 },
 
 {
-level:"Application",
-question:"Two identical bar magnets have their north poles facing each other. What happens?",
-answer:"D",
-options:["They move together","They become one magnet","They stop being magnetic","They move apart"]
+q:"A student wants to separate iron pins from a mixture of iron pins and small pieces of paper. Which method is most suitable?",
+o:["Use a magnet","Use a thermometer","Use a balance","Use a ruler"],
+a:0,
+level:"Application"
 },
 
 {
-level:"Application",
-question:"How can you identify the north pole of an unlabeled magnet?",
-answer:"A",
-options:["Suspend it freely and observe which end points approximately north","Touch it to wood","Put it in water","Measure its mass"]
+q:"A bar magnet is suspended by a thread. After several movements it settles in the same general direction each time. What can the student infer?",
+o:["The magnet tends to align approximately North-South","The magnet has no poles","The magnet is non-magnetic","The thread is magnetic"],
+a:0,
+level:"Application"
 },
 
 {
-level:"Application",
-question:"A teacher gives an iron nail, plastic cap, steel clip and paper. Which are attracted by a magnet?",
-answer:"B",
-options:["Plastic cap and paper","Iron nail and steel clip","Paper and steel clip","Plastic cap and iron nail"]
+q:"A student marks one end of a magnet as N. The other end should be marked:",
+o:["N","S","E","W"],
+a:1,
+level:"Application"
 },
 
 {
-level:"Application",
-question:"A magnetic pin is hidden under a sheet of paper. A magnet above the paper moves the pin. What does this show?",
-answer:"C",
-options:["Paper is magnetic","The pin is paper","Magnetic force can act through paper","Gravity has stopped"]
+q:"Two magnets are placed so that they strongly push away from each other. Which arrangement is most likely?",
+o:["North facing South","North facing North","North facing the middle","South facing the middle"],
+a:1,
+level:"Application"
 },
 
 {
-level:"Application",
-question:"A compass gives an unusual reading near a large magnet. What should the student do?",
-answer:"D",
-options:["Add another magnet","Move closer","Cover the compass","Move the compass away from the magnet"]
+q:"A student breaks a bar magnet into two pieces and tests both pieces. What should the student expect?",
+o:["Each piece can have both a north and a south pole","One piece will have only north","One piece will have only south","Neither piece can attract iron"],
+a:0,
+level:"Application"
 },
 
 {
-level:"Application",
-question:"Unlike poles of two magnets are placed facing each other. What happens?",
-answer:"A",
-options:["The magnets attract","The magnets repel","The magnets disappear","The magnets lose their poles"]
+q:"A magnet is covered completely by a thin sheet of paper. An iron pin is brought close to it and moves toward the magnet. What does this demonstrate?",
+o:["Magnetic force can act through paper","Paper destroys magnetism","Iron cannot be attracted by magnets","The pin is non-magnetic"],
+a:0,
+level:"Application"
 },
 
 {
-level:"Application",
-question:"An iron nail moves toward a magnet but a wooden pencil does not. What conclusion is best?",
-answer:"B",
-options:["Both are magnetic","The nail is magnetic while the pencil is non-magnetic","The pencil is magnetic","The magnet only attracts long objects"]
+q:"A student wants to find the stronger pole region of a bar magnet. Which test is appropriate?",
+o:["Compare the attraction of iron pins near different parts of the magnet","Measure the magnet's colour","Put the magnet in water","Measure its temperature"],
+a:0,
+level:"Application"
 },
 
 {
-level:"Application",
-question:"A student breaks a magnet and expects one half to have only a north pole. What should the teacher explain?",
-answer:"C",
-options:["Only large magnets have poles","Breaking removes magnetism completely","Each piece can still have both north and south poles","North poles disappear"]
+q:"A student places two magnets close together and observes attraction. To determine whether unlike poles are facing, what additional test would be useful?",
+o:["Reverse one magnet and observe the interaction","Measure the magnets' weight","Put them in water","Paint both magnets"],
+a:0,
+level:"Application"
 },
 
 {
-level:"Application",
-question:"How can a student compare the magnetic strength at different parts of a bar magnet?",
-answer:"A",
-options:["Place iron pins near the poles and centre and compare","Test only the middle","Test only the handle","Use a wooden table"]
+q:"A magnetic compass is placed on a desk containing a steel ruler and a nearby bar magnet. The compass direction is unreliable. What is the best explanation?",
+o:["Nearby magnetic materials or magnets can affect the compass","The compass cannot show direction","Steel always produces light","The desk is too large"],
+a:0,
+level:"Application"
 },
 
 {
-level:"Application",
-question:"A compass needle may be affected by nearby steel objects because:",
-answer:"D",
-options:["Steel produces sunlight","Steel makes the compass heavier","The compass measures weight","Steel can influence the magnetic environment nearby"]
+q:"A student needs to identify an unmarked pole of a magnet using a known north pole. The unknown end repels the known north pole. What is the unknown end?",
+o:["North pole","South pole","Middle","It has no pole"],
+a:0,
+level:"Application"
 },
 
 {
-level:"Application",
-question:"An unknown object looks metallic. Which test gives useful evidence about whether it is magnetic?",
-answer:"B",
-options:["Check only its shine","Test its attraction to a magnet","Check only its weight","Check whether it floats"]
+q:"A student has two magnets but does not know their pole labels. When one end of Magnet A is brought near one end of Magnet B, they repel. What can be said about those two ends?",
+o:["They are like poles","They are unlike poles","Neither is magnetic","Both are middle parts"],
+a:0,
+level:"Application"
 },
 
 {
-level:"Application",
-question:"Which practice gives a more reliable compass reading?",
-answer:"C",
-options:["Place a magnet beside it","Hold a magnet above it","Take the reading away from magnets and metal interference","Place another compass on it"]
+q:"A student wants to find directions without a compass. Which activity using a magnet could help?",
+o:["Suspend a bar magnet freely and observe its settled direction","Put the magnet on a ruler","Place it in a glass of water","Rub it on paper"],
+a:0,
+level:"Application"
 },
 
 {
-level:"Application",
-question:"The north pole of one magnet repels an unknown pole. What can be concluded?",
-answer:"D",
-options:["The unknown pole is south","The object is non-magnetic","It has no pole","The unknown pole is north"]
+q:"A mixture contains iron filings and sand. Which property makes it possible to separate the iron filings using a magnet?",
+o:["Iron filings are attracted by the magnet","Sand is attracted more strongly","Both materials are magnetic","The magnet dissolves sand"],
+a:0,
+level:"Application"
 },
 
 {
-level:"Application",
-question:"The south pole of one magnet attracts an unknown pole. Which conclusion is supported?",
-answer:"A",
-options:["The unknown pole is north","The unknown pole is south","The object has no pole","The magnet has four poles"]
+q:"A student notices that an iron pin is attracted near both ends of a bar magnet. What does this show?",
+o:["Both poles of the magnet can attract magnetic materials","Only the north pole works","Only the south pole works","The magnet has no poles"],
+a:0,
+level:"Application"
 },
 
 {
-level:"Application",
-question:"A child wants to pick up a fallen iron pin from a narrow gap. Which property of a magnet is useful?",
-answer:"B",
-options:["It dissolves iron","It can attract magnetic materials without direct contact","It pushes every material","It makes wood magnetic"]
+q:"A student places a compass next to a bar magnet and gets a strange reading. What should the student do before using the compass?",
+o:["Move the bar magnet away","Place another magnet closer","Shake the compass","Cover the compass with paper"],
+a:0,
+level:"Application"
 },
 
 {
-level:"Application",
-question:"A magnetised needle floats on a small piece of material in water. Why is water useful?",
-answer:"C",
-options:["It magnetises the needle","It makes the needle heavier","It allows the needle to turn with little friction","It changes north into south"]
+q:"A student has to demonstrate attraction and repulsion to the class. Which setup best demonstrates both?",
+o:["Use two magnets and test both like-pole and unlike-pole arrangements","Use a magnet and a wooden block only","Use paper and water","Use a ruler and pencil"],
+a:0,
+level:"Application"
 },
 
 {
-level:"Application",
-question:"What is the best way to sort classroom objects into magnetic and non-magnetic groups?",
-answer:"A",
-options:["Test each object with a magnet and record observations","Classify them by colour","Assume every metal is magnetic","Classify them by size"]
+q:"A student finds that an object is not attracted by a magnet. What is the most reasonable conclusion?",
+o:["The object is not attracted strongly enough to the magnet; it may be non-magnetic","The object must be plastic","The magnet is definitely broken","The object must be wood"],
+a:0,
+level:"Application"
+},
+
+{
+q:"A student is designing a simple investigation to compare how strongly different parts of a bar magnet attract iron pins. Which measurement would be useful?",
+o:["Number of pins attracted at each position","Colour of the magnet","Length of the classroom","Temperature of the table"],
+a:0,
+level:"Application"
 }
 
 ];
 
-console.log("Questions loaded:", questions.length);
+
+/* ================================
+   DOM ELEMENTS
+================================ */
+
+const startScreen =
+document.getElementById("startScreen");
+
+const quizScreen =
+document.getElementById("quizScreen");
+
+const resultScreen =
+document.getElementById("resultScreen");
+
+const studentName =
+document.getElementById("studentName");
+
+const agree =
+document.getElementById("agree");
+
+const startBtn =
+document.getElementById("startBtn");
+
+const quizForm =
+document.getElementById("quizForm");
+
+const submitBtn =
+document.getElementById("submitBtn");
+
+const timerDisplay =
+document.getElementById("timer");
+
+const progressBar =
+document.getElementById("progressBar");
+
+const violationDisplay =
+document.getElementById("violationDisplay");
+
+const warningBox =
+document.getElementById("warningBox");
 
 
-/* VARIABLES */
+/* ================================
+   VARIABLES
+================================ */
 
-let student = "";
-let startTime = null;
-let timerInterval = null;
+let quizStarted = false;
+
 let submitted = false;
+
+let timeLeft = 30 * 60;
+
+let timerInterval = null;
+
 let violations = 0;
-let lastViolationTime = 0;
-let violationDetails = [];
+
+const MAX_VIOLATIONS = 3;
 
 
-/* ELEMENTS */
+/* ================================
+   BUILD QUESTIONS
+================================ */
 
-const studentName = document.getElementById("studentName");
-const agree = document.getElementById("agree");
-const startBtn = document.getElementById("startBtn");
-const startMessage = document.getElementById("startMessage");
+function buildQuiz() {
 
+    quizForm.innerHTML = "";
 
-/* ENABLE START BUTTON */
-
-function updateStartButton() {
-
-    startBtn.disabled =
-        !(studentName.value && agree.checked);
-
-}
-
-studentName.addEventListener("change", updateStartButton);
-agree.addEventListener("change", updateStartButton);
-
-
-/* CHECK PREVIOUS ATTEMPT */
-
-async function hasPreviousAttempt(name) {
-
-    const resultsRef =
-        query(
-            ref(db, "quizResults"),
-            orderByChild("quizId"),
-            equalTo(QUIZ_ID)
-        );
-
-    const snapshot = await get(resultsRef);
-
-    if (!snapshot.exists()) {
-        return false;
-    }
-
-    const records = snapshot.val();
-
-    return Object.values(records).some(
-        record =>
-        String(record.name || "").toUpperCase()
-        === name.toUpperCase()
-    );
-
-}
-
-
-/* START BUTTON */
-
-startBtn.addEventListener("click", async function() {
-
-    student = studentName.value;
-
-    if (!student || !agree.checked) {
-        return;
-    }
-
-    startBtn.disabled = true;
-    startMessage.textContent =
-        "Checking previous attempt...";
-
-    try {
-
-        const alreadyAttempted =
-            await hasPreviousAttempt(student);
-
-        if (alreadyAttempted) {
-
-            startMessage.textContent =
-                "This student already has a recorded attempt for this quiz. Please contact the teacher.";
-
-            return;
-        }
-
-    } catch (error) {
-
-        console.error(error);
-
-        startMessage.textContent =
-            "Database check failed. Please try again.";
-
-        startBtn.disabled = false;
-
-        return;
-    }
-
-    startQuiz();
-
-});
-
-
-/* START QUIZ */
-
-function startQuiz() {
-
-    document.getElementById("startScreen")
-        .classList.add("hidden");
-
-    document.getElementById("quizScreen")
-        .classList.remove("hidden");
-
-    document.getElementById("topbar")
-        .classList.remove("hidden");
-
-    startTime = Date.now();
-
-    renderQuestions();
-
-    startTimer();
-
-    setupMonitoring();
-
-    requestFullScreen();
-
-}
-
-
-/* RENDER QUESTIONS */
-
-function renderQuestions() {
-
-    const form =
-        document.getElementById("quizForm");
-
-    form.innerHTML = "";
-
-    questions.forEach(function(q, index) {
+    questions.forEach((item, index) => {
 
         const questionDiv =
-            document.createElement("div");
+        document.createElement("div");
 
         questionDiv.className = "question";
 
-        const level =
-            document.createElement("div");
+        let html = "";
 
-        level.className = "level";
+        html += `
+            <div class="level">
+                ${item.level}
+            </div>
 
-        level.textContent =
-            (index + 1) + ". " + q.level;
+            <h3>
+                ${index + 1}. ${item.q}
+            </h3>
+        `;
 
-        questionDiv.appendChild(level);
+        item.o.forEach((option, optionIndex) => {
 
-
-        const title =
-            document.createElement("h3");
-
-        title.textContent = q.question;
-
-        questionDiv.appendChild(title);
-
-
-        q.options.forEach(function(option, optionIndex) {
-
-            const label =
-                document.createElement("label");
-
-            label.className = "option";
-
-            const radio =
-                document.createElement("input");
-
-            radio.type = "radio";
-
-            radio.name = "question" + index;
-
-            radio.value =
-                String.fromCharCode(65 + optionIndex);
-
-            label.appendChild(radio);
-
-            label.appendChild(
-                document.createTextNode(
-                    " " +
-                    String.fromCharCode(65 + optionIndex) +
-                    ". " +
-                    option
-                )
-            );
-
-            questionDiv.appendChild(label);
+            html += `
+                <label class="option">
+                    <input
+                        type="radio"
+                        name="q${index}"
+                        value="${optionIndex}">
+                    ${String.fromCharCode(65 + optionIndex)}.
+                    ${option}
+                </label>
+            `;
 
         });
 
-        form.appendChild(questionDiv);
+        questionDiv.innerHTML = html;
+
+        quizForm.appendChild(questionDiv);
 
     });
 
+    quizForm.addEventListener("change", updateProgress);
+
+}
+
+buildQuiz();
+
+
+/* ================================
+   PROGRESS
+================================ */
+
+function updateProgress() {
+
+    let answered = 0;
+
+    questions.forEach((q, index) => {
+
+        const selected =
+        document.querySelector(
+            `input[name="q${index}"]:checked`
+        );
+
+        if (selected) {
+            answered++;
+        }
+
+    });
+
+    const percent =
+    (answered / questions.length) * 100;
+
+    progressBar.style.width =
+    percent + "%";
 }
 
 
-/* PROGRESS */
-
-document.addEventListener("change", function(event) {
-
-    if (event.target.matches('input[type="radio"]')) {
-
-        const answered =
-            document.querySelectorAll(
-                'input[type="radio"]:checked'
-            ).length;
-
-        const percentage =
-            (answered / questions.length) * 100;
-
-        document.getElementById("progressBar")
-            .style.width = percentage + "%";
-
-    }
-
-});
-
-
-/* TIMER */
+/* ================================
+   TIMER
+================================ */
 
 function startTimer() {
 
     timerInterval =
-        setInterval(function() {
+    setInterval(() => {
 
-            const elapsed =
-                Math.floor(
-                    (Date.now() - startTime) / 1000
-                );
+        timeLeft--;
 
-            const remaining =
-                Math.max(0, 1800 - elapsed);
+        if (timeLeft < 0) {
+            timeLeft = 0;
+        }
 
-            const minutes =
-                String(
-                    Math.floor(remaining / 60)
-                ).padStart(2, "0");
+        const minutes =
+        Math.floor(timeLeft / 60);
 
-            const seconds =
-                String(
-                    remaining % 60
-                ).padStart(2, "0");
+        const seconds =
+        timeLeft % 60;
 
-            const timer =
-                document.getElementById("timer");
+        timerDisplay.textContent =
+        String(minutes).padStart(2,"0")
+        + ":"
+        + String(seconds).padStart(2,"0");
 
-            timer.textContent =
-                minutes + ":" + seconds;
+        if (timeLeft <= 60) {
+            timerDisplay.style.color = "#d32f2f";
+        }
 
-            if (remaining <= 300) {
-                timer.classList.add("timer-warning");
-            }
+        if (timeLeft <= 0) {
 
-            if (remaining === 0) {
+            clearInterval(timerInterval);
 
-                submitTest("Time expired");
+            alert(
+                "Time is over. Your test will be submitted automatically."
+            );
 
-            }
+            submitQuiz(true);
 
-        }, 500);
+        }
+
+    },1000);
 
 }
 
 
-/* FULLSCREEN */
+/* ================================
+   FULLSCREEN
+================================ */
 
-async function requestFullScreen() {
+async function enterFullscreen() {
 
     try {
 
@@ -1091,10 +1131,10 @@ async function requestFullScreen() {
 
         }
 
-    } catch (error) {
+    } catch(error) {
 
         console.log(
-            "Fullscreen request was not available."
+            "Fullscreen was not available."
         );
 
     }
@@ -1102,207 +1142,122 @@ async function requestFullScreen() {
 }
 
 
-/* VIOLATION */
+/* ================================
+   START TEST
+================================ */
 
-function recordViolation(type) {
+startBtn.addEventListener("click", async function() {
 
-    if (submitted) {
+    const student =
+    studentName.value.trim();
+
+    if (!student) {
+
+        alert(
+            "Please select your name."
+        );
+
         return;
+
     }
 
-    const now = Date.now();
+    if (!agree.checked) {
 
-    if (now - lastViolationTime < 2500) {
+        alert(
+            "Please tick the agreement box before starting."
+        );
+
         return;
+
     }
 
-    lastViolationTime = now;
+    quizStarted = true;
+
+    startScreen.style.display =
+    "none";
+
+    quizScreen.style.display =
+    "block";
+
+    window.scrollTo(0,0);
+
+    startTimer();
+
+    await enterFullscreen();
+
+});
+
+
+/* ================================
+   VIOLATION WARNING
+================================ */
+
+function showViolation(message) {
+
+    if (!quizStarted || submitted) {
+        return;
+    }
 
     violations++;
 
-    violationDetails.push({
-        type: type,
-        time: new Date().toISOString()
-    });
+    violationDisplay.textContent =
+    violations;
 
-    document.getElementById("violationCount")
-        .textContent = violations;
+    warningBox.textContent =
+    "⚠️ " + message +
+    " Violation " +
+    violations +
+    " of " +
+    MAX_VIOLATIONS;
+
+    warningBox.style.display =
+    "block";
+
+    setTimeout(() => {
+
+        warningBox.style.display =
+        "none";
+
+    },3500);
 
 
     if (violations >= MAX_VIOLATIONS) {
 
-        alert(
-            "Repeated test-integrity violations detected. The test will now be submitted and flagged for teacher review."
-        );
+        setTimeout(() => {
 
-        submitTest(
-            "Repeated integrity violations"
-        );
+            if (!submitted) {
 
-    } else {
+                alert(
+                    "Repeated test violations detected. Your test will be submitted for teacher review."
+                );
 
-        alert(
-            "Warning: " +
-            type +
-            " detected.\n\nViolation " +
-            violations +
-            " of " +
-            MAX_VIOLATIONS
-        );
+                submitQuiz(false,true);
+
+            }
+
+        },500);
 
     }
 
 }
 
 
-/* MONITORING */
+/* ================================
+   TAB SWITCH
+================================ */
 
-function setupMonitoring() {
-
-    document.addEventListener(
-        "visibilitychange",
-        function() {
-
-            if (document.hidden) {
-
-                recordViolation(
-                    "Left test page / switched tab"
-                );
-
-            }
-
-        }
-    );
-
-
-    window.addEventListener(
-        "blur",
-        function() {
-
-            recordViolation(
-                "Browser window lost focus"
-            );
-
-        }
-    );
-
-
-    document.addEventListener(
-        "fullscreenchange",
-        function() {
-
-            if (!document.fullscreenElement) {
-
-                recordViolation(
-                    "Exited fullscreen"
-                );
-
-            }
-
-        }
-    );
-
-
-    document.addEventListener(
-        "contextmenu",
-        function(event) {
-
-            event.preventDefault();
-
-            recordViolation(
-                "Right-click attempted"
-            );
-
-        }
-    );
-
-
-    ["copy", "cut", "paste"].forEach(
-        function(eventName) {
-
-            document.addEventListener(
-                eventName,
-                function(event) {
-
-                    event.preventDefault();
-
-                    recordViolation(
-                        eventName +
-                        " attempted"
-                    );
-
-                }
-            );
-
-        }
-    );
-
-
-    document.addEventListener(
-        "keydown",
-        function(event) {
-
-            const key =
-                event.key.toLowerCase();
-
-            if (
-                (event.ctrlKey || event.metaKey) &&
-                ["c","v","x","u","s","p"].includes(key)
-            ) {
-
-                event.preventDefault();
-
-                recordViolation(
-                    "Restricted keyboard shortcut attempted"
-                );
-
-            }
-
-            if (event.key === "F12") {
-
-                event.preventDefault();
-
-                recordViolation(
-                    "Developer-tools shortcut attempted"
-                );
-
-            }
-
-        }
-    );
-
-
-    window.addEventListener(
-        "beforeunload",
-        function(event) {
-
-            if (!submitted) {
-
-                event.preventDefault();
-
-                event.returnValue = "";
-
-            }
-
-        }
-    );
-
-}
-
-
-/* SUBMIT BUTTON */
-
-document.getElementById("submitBtn")
-.addEventListener("click", function() {
+document.addEventListener(
+"visibilitychange",
+function() {
 
     if (
-        confirm(
-            "Are you sure you want to submit your test?"
-        )
+        document.hidden &&
+        quizStarted &&
+        !submitted
     ) {
 
-        submitTest(
-            "Student submitted"
+        showViolation(
+            "You left the test screen."
         );
 
     }
@@ -1310,9 +1265,189 @@ document.getElementById("submitBtn")
 });
 
 
-/* SUBMIT TEST */
+/* ================================
+   WINDOW BLUR
+================================ */
 
-async function submitTest(reason) {
+window.addEventListener(
+"blur",
+function() {
+
+    if (
+        quizStarted &&
+        !submitted
+    ) {
+
+        showViolation(
+            "The test window lost focus."
+        );
+
+    }
+
+});
+
+
+/* ================================
+   FULLSCREEN EXIT
+================================ */
+
+document.addEventListener(
+"fullscreenchange",
+function() {
+
+    if (
+        quizStarted &&
+        !submitted &&
+        !document.fullscreenElement
+    ) {
+
+        showViolation(
+            "Fullscreen mode was exited."
+        );
+
+    }
+
+});
+
+
+/* ================================
+   DISABLE RIGHT CLICK
+================================ */
+
+document.addEventListener(
+"contextmenu",
+function(event) {
+
+    if (quizStarted && !submitted) {
+
+        event.preventDefault();
+
+    }
+
+});
+
+
+/* ================================
+   DISABLE COPY / CUT / PASTE
+================================ */
+
+["copy","cut","paste"].forEach(
+eventName => {
+
+    document.addEventListener(
+        eventName,
+        function(event) {
+
+            if (
+                quizStarted &&
+                !submitted
+            ) {
+
+                event.preventDefault();
+
+                showViolation(
+                    "Copy, cut, and paste are not allowed."
+                );
+
+            }
+
+        }
+    );
+
+});
+
+
+/* ================================
+   KEYBOARD RESTRICTIONS
+================================ */
+
+document.addEventListener(
+"keydown",
+function(event) {
+
+    if (!quizStarted || submitted) {
+        return;
+    }
+
+    const key =
+    event.key.toLowerCase();
+
+    const blocked =
+        key === "f12" ||
+        (event.ctrlKey &&
+        ["c","v","x","u","s","p"].includes(key)) ||
+        (event.metaKey &&
+        ["c","v","x","u","s","p"].includes(key));
+
+    if (blocked) {
+
+        event.preventDefault();
+
+        showViolation(
+            "This keyboard shortcut is not allowed."
+        );
+
+    }
+
+});
+
+
+/* ================================
+   BEFORE LEAVING
+================================ */
+
+window.addEventListener(
+"beforeunload",
+function(event) {
+
+    if (
+        quizStarted &&
+        !submitted
+    ) {
+
+        event.preventDefault();
+
+        event.returnValue = "";
+
+    }
+
+});
+
+
+/* ================================
+   SUBMIT BUTTON
+================================ */
+
+submitBtn.addEventListener(
+"click",
+function() {
+
+    if (!quizStarted || submitted) {
+        return;
+    }
+
+    const confirmed =
+    confirm(
+        "Are you sure you want to submit your test?"
+    );
+
+    if (confirmed) {
+
+        submitQuiz(false,false);
+
+    }
+
+});
+
+
+/* ================================
+   SUBMIT QUIZ
+================================ */
+
+async function submitQuiz(
+    automatic = false,
+    malpractice = false
+) {
 
     if (submitted) {
         return;
@@ -1320,104 +1455,163 @@ async function submitTest(reason) {
 
     submitted = true;
 
-    clearInterval(timerInterval);
+    quizStarted = false;
 
+    if (timerInterval) {
 
-    const answers =
-        questions.map(function(q, index) {
+        clearInterval(timerInterval);
 
-            const selected =
-                document.querySelector(
-                    'input[name="question' +
-                    index +
-                    '"]:checked'
-                );
-
-            return selected
-                ? selected.value
-                : "";
-
-        });
+    }
 
 
     let correct = 0;
+
+    let wrong = 0;
+
     let unanswered = 0;
 
 
-    questions.forEach(function(q, index) {
+    const reviewData = [];
 
-        if (!answers[index]) {
+
+    questions.forEach(
+    (question,index) => {
+
+        const selected =
+        document.querySelector(
+            `input[name="q${index}"]:checked`
+        );
+
+        let selectedAnswer = null;
+
+        if (selected) {
+
+            selectedAnswer =
+            Number(selected.value);
+
+        }
+
+
+        if (selectedAnswer === null) {
 
             unanswered++;
 
-        } else if (
-            answers[index] === q.answer
+            reviewData.push({
+                number:index + 1,
+                question:question.q,
+                selected:null,
+                correct:question.a,
+                result:"unanswered"
+            });
+
+        }
+
+        else if (
+            selectedAnswer === question.a
         ) {
 
             correct++;
+
+            reviewData.push({
+                number:index + 1,
+                question:question.q,
+                selected:selectedAnswer,
+                correct:question.a,
+                result:"correct"
+            });
+
+        }
+
+        else {
+
+            wrong++;
+
+            reviewData.push({
+                number:index + 1,
+                question:question.q,
+                selected:selectedAnswer,
+                correct:question.a,
+                result:"wrong"
+            });
 
         }
 
     });
 
 
-    const wrong =
-        questions.length -
-        correct -
-        unanswered;
-
+    const total =
+    questions.length;
 
     const percentage =
-        Math.round(
-            correct / questions.length * 100
-        );
+    Math.round(
+        (correct / total) * 100
+    );
 
 
-    let grade;
+    let grade = "";
 
     if (percentage >= 90) {
         grade = "A+";
-    } else if (percentage >= 80) {
+    }
+    else if (percentage >= 80) {
         grade = "A";
-    } else if (percentage >= 70) {
+    }
+    else if (percentage >= 70) {
         grade = "B";
-    } else if (percentage >= 60) {
+    }
+    else if (percentage >= 60) {
         grade = "C";
-    } else if (percentage >= 50) {
+    }
+    else if (percentage >= 50) {
         grade = "D";
-    } else {
+    }
+    else {
         grade = "Needs Improvement";
     }
 
 
-    let status = "Normal";
+    let status =
+    "Normal";
 
-    if (violations >= MAX_VIOLATIONS) {
+    if (
+        malpractice ||
+        violations >= MAX_VIOLATIONS
+    ) {
 
-        status = "Flagged";
-
-    } else if (violations > 0) {
-
-        status = "Possible Malpractice";
+        status =
+        "Flagged";
 
     }
+    else if (violations > 0) {
+
+        status =
+        "Possible Malpractice";
+
+    }
+
+
+    const student =
+    studentName.value.trim();
 
 
     const result = {
 
         name: student,
 
-        classId: CLASS_ID,
+        classId: "6",
 
-        quizId: QUIZ_ID,
+        quizId:
+        "grade6_exploring_magnets",
 
-        quizTitle: QUIZ_TITLE,
+        quizTitle:
+        "Exploring Magnets - Class 6 Science",
 
-        chapter: "Exploring Magnets",
+        chapter:
+        "Exploring Magnets",
 
         score: correct,
 
-        total: questions.length,
+        total: total,
 
         percentage: percentage,
 
@@ -1431,140 +1625,235 @@ async function submitTest(reason) {
 
         violations: violations,
 
-        violationDetails: violationDetails,
+        status: status,
 
-        malpracticeStatus: status,
+        automaticSubmission:
+        automatic,
 
-        submissionReason: reason,
-
-        startedAt:
-            new Date(startTime).toISOString(),
-
-        submittedAt:
-            new Date().toISOString(),
+        submittedForReview:
+        malpractice,
 
         date:
-            new Date().toLocaleString(),
+        new Date().toLocaleString(),
 
         timestamp:
-            Date.now()
+        Date.now()
 
     };
 
 
+    /* ============================
+       FIREBASE WRITE ONLY
+       NO DATABASE READ
+    ============================ */
+
     try {
 
-        await push(
-            ref(db, "quizResults"),
+        const resultRef =
+        push(
+            ref(db,"quizResults")
+        );
+
+        await set(
+            resultRef,
             result
         );
 
-    } catch (error) {
+        console.log(
+            "Result successfully saved."
+        );
 
-        console.error(error);
+    }
+
+    catch(error) {
+
+        console.error(
+            "Firebase save error:",
+            error
+        );
 
         alert(
-            "The result could not be saved. Please contact the teacher."
+            "Your test has been completed, but the result could not be saved to the database. Please inform your teacher."
         );
 
     }
 
 
-    showResult(result, answers);
+    showResult(
+        correct,
+        wrong,
+        unanswered,
+        percentage,
+        grade,
+        status,
+        reviewData
+    );
 
 }
 
 
-/* SHOW RESULT */
+/* ================================
+   SHOW RESULT
+================================ */
 
-function showResult(result, answers) {
+function showResult(
+    correct,
+    wrong,
+    unanswered,
+    percentage,
+    grade,
+    status,
+    reviewData
+) {
 
-    document.getElementById("topbar")
-        .classList.add("hidden");
+    quizScreen.style.display =
+    "none";
 
-    document.getElementById("quizScreen")
-        .classList.add("hidden");
-
-    document.getElementById("resultScreen")
-        .classList.remove("hidden");
-
-
-    document.getElementById("finalScore")
-        .textContent =
-        result.score +
-        " / " +
-        result.total +
-        " (" +
-        result.percentage +
-        "%)";
+    resultScreen.style.display =
+    "block";
 
 
-    document.getElementById("finalStatus")
-        .textContent =
-        result.grade +
-        " - " +
-        result.malpracticeStatus;
+    document.getElementById(
+        "resultMessage"
+    ).textContent =
+    studentName.value +
+    " — Grade 6 Science";
 
 
-    document.getElementById("finalInfo")
-        .textContent =
-        "Correct: " +
-        result.correct +
-        " | Wrong: " +
-        result.wrong +
-        " | Unanswered: " +
-        result.unanswered +
-        " | Violations: " +
-        result.violations;
+    document.getElementById(
+        "scoreDisplay"
+    ).textContent =
+    correct +
+    " / " +
+    questions.length;
 
 
-    const review =
-        document.getElementById("review");
+    document.getElementById(
+        "correctDisplay"
+    ).textContent =
+    correct;
 
-    review.innerHTML = "";
+
+    document.getElementById(
+        "wrongDisplay"
+    ).textContent =
+    wrong;
 
 
-    questions.forEach(function(q, index) {
+    document.getElementById(
+        "unansweredDisplay"
+    ).textContent =
+    unanswered;
+
+
+    document.getElementById(
+        "percentageDisplay"
+    ).textContent =
+    percentage + "%";
+
+
+    const reviewContainer =
+    document.getElementById(
+        "reviewContainer"
+    );
+
+    reviewContainer.innerHTML = "";
+
+
+    reviewData.forEach(
+    item => {
 
         const div =
-            document.createElement("div");
+        document.createElement("div");
 
-        div.className = "question";
+
+        div.className =
+        "review-question " +
+        item.result;
+
+
+        let selectedText =
+        "Not answered";
+
+        if (
+            item.selected !== null
+        ) {
+
+            selectedText =
+            String.fromCharCode(
+                65 + item.selected
+            ) +
+            ". " +
+            questions[
+                item.number - 1
+            ].o[item.selected];
+
+        }
+
 
         const correctText =
-            q.answer +
-            ". " +
-            q.options[
-                q.answer.charCodeAt(0) - 65
-            ];
+        String.fromCharCode(
+            65 + item.correct
+        ) +
+        ". " +
+        questions[
+            item.number - 1
+        ].o[item.correct];
 
 
-        div.innerHTML =
-            "<b>" +
-            (index + 1) +
-            ". " +
-            q.question +
-            "</b><br><br>" +
+        let resultText = "";
 
-            "Your answer: " +
-            (answers[index] || "Not answered") +
-            "<br>" +
+        if (item.result === "correct") {
 
-            "Correct answer: " +
-            correctText;
+            resultText =
+            "✅ Correct";
+
+        }
+        else if (
+            item.result === "wrong"
+        ) {
+
+            resultText =
+            "❌ Wrong";
+
+        }
+        else {
+
+            resultText =
+            "⚪ Unanswered";
+
+        }
 
 
-        review.appendChild(div);
+        div.innerHTML = `
+
+            <strong>
+                ${item.number}. ${item.question}
+            </strong>
+
+            <p>
+                Your answer:
+                ${selectedText}
+            </p>
+
+            <p>
+                Correct answer:
+                ${correctText}
+            </p>
+
+            <strong>
+                ${resultText}
+            </strong>
+
+        `;
+
+
+        reviewContainer.appendChild(div);
 
     });
 
 
-    if (document.fullscreenElement) {
-
-        document.exitFullscreen()
-        .catch(function(){});
-
-    }
+    window.scrollTo(0,0);
 
 }
 
