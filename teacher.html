@@ -6,11 +6,13 @@
 
 <title>Science Quiz - Teacher Dashboard</title>
 
+<!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 
 <style>
+
 * {
     box-sizing: border-box;
 }
@@ -18,462 +20,427 @@
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(135deg,#eef2ff,#f8fafc);
-    color: #1e293b;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    min-height: 100vh;
+    color: #222;
 }
 
-/* LOGIN */
-
-.login-screen {
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.container {
+    max-width: 1450px;
+    margin: auto;
     padding: 20px;
 }
 
-.login-box {
-    width: 100%;
-    max-width: 420px;
+/* ================= LOGIN ================= */
+
+.login-card {
+    max-width: 450px;
+    margin: 70px auto;
     background: white;
     padding: 35px;
-    border-radius: 22px;
-    box-shadow: 0 15px 45px rgba(0,0,0,.12);
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
 }
 
-.login-box h1 {
+.login-card h1 {
     text-align: center;
-    color: #4f46e5;
-    margin-top: 0;
+    color: #5146a5;
+    margin-bottom: 10px;
 }
 
-.login-box p {
+.login-card p {
     text-align: center;
-    color: #64748b;
+    color: #666;
+    margin-bottom: 25px;
+}
+
+.login-card label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
 }
 
 input,
 select {
     width: 100%;
     padding: 13px;
-    margin: 7px 0 15px;
-    border: 1px solid #cbd5e1;
+    margin-top: 7px;
+    margin-bottom: 15px;
+    border: 2px solid #ddd;
     border-radius: 10px;
     font-size: 15px;
     background: white;
 }
 
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #5146a5;
+}
+
 .login-btn {
     width: 100%;
-    background: #4f46e5;
-    color: white;
     padding: 14px;
+    background: #5146a5;
+    color: white;
+    font-size: 17px;
     border: none;
     border-radius: 10px;
-    font-weight: bold;
     cursor: pointer;
+    font-weight: bold;
 }
 
 .login-btn:hover {
-    background: #4338ca;
+    background: #40358d;
 }
 
 .error {
-    color: #dc2626;
+    color: #d32f2f;
     text-align: center;
     margin-top: 15px;
+    font-weight: bold;
 }
 
-/* DASHBOARD */
+/* ================= DASHBOARD ================= */
 
-.dashboard {
+#dashboard {
     display: none;
-    max-width: 1600px;
-    margin: auto;
-    padding: 20px;
 }
 
 .header {
-    background: linear-gradient(135deg,#4f46e5,#7c3aed);
-    color: white;
+    background: white;
     padding: 25px;
-    border-radius: 20px;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.20);
+    margin-bottom: 20px;
+}
+
+.header-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 10px 30px rgba(79,70,229,.25);
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
 .header h1 {
-    margin: 0 0 7px;
-}
-
-.header p {
     margin: 0;
-    opacity: .9;
+    color: #5146a5;
+    font-size: 28px;
 }
 
-.live {
+.updated {
     margin-top: 10px;
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    font-size: 13px;
+    color: #388e3c;
+    font-weight: bold;
 }
 
-.live-dot {
-    width: 10px;
-    height: 10px;
-    background: #22c55e;
-    border-radius: 50%;
-    animation: pulse 1.3s infinite;
-}
-
-@keyframes pulse {
-    0% { opacity:1; }
-    50% { opacity:.3; }
-    100% { opacity:1; }
-}
-
-.header-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-button {
+.logout-btn {
+    background: #e53935;
+    color: white;
+    padding: 12px 20px;
     border: none;
     border-radius: 10px;
-    padding: 11px 16px;
     font-weight: bold;
     cursor: pointer;
 }
 
-.refresh-btn {
-    background: white;
-    color: #4f46e5;
-}
-
-.logout-btn {
-    background: #ef4444;
-    color: white;
-}
-
-/* FILTERS */
+/* ================= FILTERS ================= */
 
 .filters {
     background: white;
-    margin-top: 20px;
-    padding: 20px;
+    padding: 22px;
     border-radius: 18px;
-    box-shadow: 0 5px 20px rgba(0,0,0,.06);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.18);
+    margin-bottom: 20px;
 }
 
 .filters h2 {
     margin-top: 0;
+    color: #5146a5;
 }
 
 .filter-grid {
     display: grid;
-    grid-template-columns: repeat(4,1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 15px;
 }
 
-.filter-item label {
+.filter-box label {
     display: block;
-    font-size: 13px;
     font-weight: bold;
-    color: #475569;
+    margin-bottom: 6px;
 }
 
-/* STATS */
+/* ================= STATS ================= */
 
 .stats {
-    margin-top: 20px;
     display: grid;
-    grid-template-columns: repeat(5,1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 15px;
+    margin-bottom: 20px;
 }
 
-.stat-card {
+.stat {
     background: white;
-    padding: 20px;
-    border-radius: 18px;
-    box-shadow: 0 5px 20px rgba(0,0,0,.06);
+    padding: 22px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.18);
 }
 
-.stat-title {
-    font-size: 13px;
+.stat-number {
+    font-size: 32px;
     font-weight: bold;
-    color: #64748b;
+    color: #5146a5;
 }
 
-.stat-value {
-    font-size: 30px;
+.stat-label {
+    color: #666;
+    margin-top: 7px;
     font-weight: bold;
-    margin-top: 8px;
-    color: #4f46e5;
 }
 
-/* CHAPTER */
+/* ================= RESULTS ================= */
 
-.chapter-heading {
+.results-card {
     background: white;
-    margin-top: 20px;
-    padding: 20px;
+    padding: 22px;
     border-radius: 18px;
-    box-shadow: 0 5px 20px rgba(0,0,0,.06);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.20);
+    overflow: hidden;
 }
 
-.chapter-heading h2 {
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
+}
+
+.results-header h2 {
+    color: #5146a5;
     margin: 0;
-    color: #4f46e5;
 }
 
-.chapter-heading p {
-    color: #64748b;
+.refresh-btn {
+    background: #2196f3;
+    color: white;
+    padding: 11px 18px;
+    border: none;
+    border-radius: 9px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-/* TABLE */
-
-.table-container {
-    margin-top: 20px;
-    background: white;
-    border-radius: 18px;
+.table-wrapper {
     overflow-x: auto;
-    box-shadow: 0 5px 20px rgba(0,0,0,.06);
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 1250px;
+    min-width: 1350px;
 }
 
-th {
-    background: #4f46e5;
+thead th {
+    background: #5146a5;
     color: white;
-    padding: 13px 10px;
-    font-size: 12px;
-}
-
-td {
-    padding: 12px 10px;
-    text-align: center;
-    border-bottom: 1px solid #e2e8f0;
-    font-size: 13px;
-}
-
-tbody tr:hover {
-    background: #f8fafc;
-}
-
-.student-name {
-    font-weight: bold;
+    padding: 12px;
     text-align: left;
-}
-
-.rank {
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.score {
-    font-weight: bold;
-    font-size: 16px;
-}
-
-.progress {
-    height: 8px;
-    background: #e2e8f0;
-    border-radius: 20px;
-    overflow: hidden;
-    margin-top: 5px;
-}
-
-.progress-bar {
-    height: 100%;
-    background: #4f46e5;
-    border-radius: 20px;
-}
-
-.grade {
-    background: #eef2ff;
-    color: #4338ca;
-    padding: 6px 10px;
-    border-radius: 20px;
-    font-weight: bold;
-}
-
-.status {
-    padding: 6px 10px;
-    border-radius: 20px;
-    font-weight: bold;
     white-space: nowrap;
 }
 
-.status-normal {
-    background: #dcfce7;
-    color: #166534;
+tbody td {
+    padding: 11px;
+    border-bottom: 1px solid #eee;
+    white-space: nowrap;
 }
 
-.status-review {
-    background: #fef3c7;
-    color: #92400e;
+tbody tr:hover {
+    background: #f7f5ff;
+}
+
+/* ================= STATUS ================= */
+
+.status-normal {
+    display: inline-block;
+    background: #d8f5dc;
+    color: #1b5e20;
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.status-warning {
+    display: inline-block;
+    background: #fff3cd;
+    color: #856404;
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-weight: bold;
 }
 
 .status-flagged {
-    background: #fee2e2;
-    color: #991b1b;
-}
-
-.violation-normal {
-    color: #16a34a;
-    font-weight: bold;
-}
-
-.violation-warning {
-    color: #d97706;
-    font-weight: bold;
-}
-
-.violation-danger {
-    color: #dc2626;
+    display: inline-block;
+    background: #ffcdd2;
+    color: #b71c1c;
+    padding: 5px 9px;
+    border-radius: 20px;
     font-weight: bold;
 }
 
 .delete-btn {
-    background: #fee2e2;
-    color: #dc2626;
-    padding: 7px 10px;
+    background: #e53935;
+    color: white;
+    border: none;
+    padding: 7px 11px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
 }
 
-.empty {
+.delete-btn:hover {
+    background: #c62828;
+}
+
+.no-results {
     text-align: center;
     padding: 40px;
-    color: #64748b;
+    color: #777;
+    font-size: 18px;
 }
 
-.last-updated {
-    text-align: right;
-    color: #64748b;
-    font-size: 12px;
-    margin-top: 10px;
+.firebase-error {
+    background: #ffebee;
+    color: #b71c1c;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    display: none;
 }
 
-@media(max-width:1000px) {
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 1000px) {
 
     .filter-grid {
-        grid-template-columns: repeat(2,1fr);
+        grid-template-columns: 1fr 1fr;
     }
 
     .stats {
-        grid-template-columns: repeat(2,1fr);
+        grid-template-columns: 1fr 1fr;
     }
 
-    .header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-    }
 }
 
-@media(max-width:600px) {
+@media (max-width: 600px) {
 
-    .dashboard {
+    .container {
         padding: 10px;
     }
 
-    .filter-grid,
+    .filter-grid {
+        grid-template-columns: 1fr;
+    }
+
     .stats {
         grid-template-columns: 1fr;
     }
+
+    .header h1 {
+        font-size: 22px;
+    }
+
+    .login-card {
+        margin: 30px auto;
+        padding: 25px;
+    }
+
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- ================= LOGIN ================= -->
+<div class="container">
 
-<div class="login-screen" id="loginScreen">
+<!-- =====================================================
+     LOGIN
+===================================================== -->
 
-    <div class="login-box">
+<div class="login-card" id="loginCard">
 
-        <h1>👨‍🏫 Teacher Dashboard</h1>
+    <h1>👨‍🏫 Teacher Dashboard</h1>
 
-        <p>Science Quiz Live Results</p>
+    <p>Science Quiz Results Management</p>
 
-        <label>Email</label>
+    <label>Email</label>
 
-        <input
-            type="email"
-            id="email"
-            placeholder="Teacher email"
-        >
+    <input
+        type="email"
+        id="email"
+        placeholder="Enter teacher email"
+    >
 
-        <label>Password</label>
+    <label>Password</label>
 
-        <input
-            type="password"
-            id="password"
-            placeholder="Password"
-        >
+    <input
+        type="password"
+        id="password"
+        placeholder="Enter password"
+    >
 
-        <button
-            class="login-btn"
-            onclick="login()"
-        >
-            🔐 Login
-        </button>
+    <button
+        class="login-btn"
+        id="loginBtn"
+    >
+        🔐 Login
+    </button>
 
-        <div
-            class="error"
-            id="loginError"
-        ></div>
-
-    </div>
+    <div
+        class="error"
+        id="loginError"
+    ></div>
 
 </div>
 
 
-<!-- ================= DASHBOARD ================= -->
+<!-- =====================================================
+     DASHBOARD
+===================================================== -->
 
-<div class="dashboard" id="dashboard">
+<div id="dashboard">
+
+    <!-- HEADER -->
 
     <div class="header">
 
-        <div>
+        <div class="header-top">
 
-            <h1>📊 Science Quiz Live Dashboard</h1>
+            <div>
 
-            <p>
-                Chapter-wise student performance
-            </p>
+                <h1>
+                    📊 Science Quiz Teacher Dashboard
+                </h1>
 
-            <div class="live">
-
-                <span class="live-dot"></span>
-
-                LIVE RESULTS
+                <div
+                    class="updated"
+                    id="lastUpdated"
+                >
+                    🟡 Connecting to Firebase...
+                </div>
 
             </div>
 
-        </div>
-
-        <div class="header-buttons">
-
-            <button
-                class="refresh-btn"
-                onclick="refreshResults()"
-            >
-                🔄 Refresh
-            </button>
-
             <button
                 class="logout-btn"
-                onclick="logout()"
+                id="logoutBtn"
             >
-                Logout
+                🚪 Logout
             </button>
 
         </div>
@@ -481,25 +448,37 @@ tbody tr:hover {
     </div>
 
 
-    <!-- ================= FILTERS ================= -->
+    <!-- FIREBASE ERROR -->
+
+    <div
+        class="firebase-error"
+        id="firebaseError"
+    ></div>
+
+
+    <!-- =================================================
+         FILTERS
+    ================================================== -->
 
     <div class="filters">
 
-        <h2>🔎 Filter Results</h2>
+        <h2>🔎 Filter Student Results</h2>
 
         <div class="filter-grid">
 
-            <div class="filter-item">
 
-                <label>Class</label>
+            <!-- CLASS -->
 
-                <select
-                    id="classFilter"
-                    onchange="applyFilters()"
-                >
+            <div class="filter-box">
+
+                <label>
+                    🎓 Class
+                </label>
+
+                <select id="classFilter">
 
                     <option value="all">
-                        All Classes
+                        🎓 All Classes
                     </option>
 
                     <option value="6">
@@ -527,17 +506,34 @@ tbody tr:hover {
             </div>
 
 
-            <div class="filter-item">
+            <!-- CHAPTER -->
 
-                <label>Chapter / Lesson</label>
+            <div class="filter-box">
 
-                <select
-                    id="chapterFilter"
-                    onchange="applyFilters()"
-                >
+                <label>
+                    📚 Chapter
+                </label>
+
+                <select id="chapterFilter">
 
                     <option value="all">
                         📚 All Chapters
+                    </option>
+
+                    <option value="Exploring Magnets">
+                        🧲 Exploring Magnets
+                    </option>
+
+                    <option value="Adolescence: A Stage of Growth and Change">
+                        🌱 Adolescence: A Stage of Growth and Change
+                    </option>
+
+                    <option value="Metals and Non-metals">
+                        ⚗️ Metals and Non-metals
+                    </option>
+
+                    <option value="Particulate Nature of Matter">
+                        🔬 Particulate Nature of Matter
                     </option>
 
                 </select>
@@ -545,29 +541,30 @@ tbody tr:hover {
             </div>
 
 
-            <div class="filter-item">
+            <!-- STATUS -->
 
-                <label>Status</label>
+            <div class="filter-box">
 
-                <select
-                    id="statusFilter"
-                    onchange="applyFilters()"
-                >
+                <label>
+                    ⚠️ Status
+                </label>
+
+                <select id="statusFilter">
 
                     <option value="all">
                         All Status
                     </option>
 
                     <option value="Normal">
-                        Normal
+                        🟢 Normal
                     </option>
 
                     <option value="Possible Malpractice">
-                        Possible Malpractice
+                        🟡 Possible Malpractice
                     </option>
 
                     <option value="Flagged">
-                        Flagged
+                        🔴 Flagged
                     </option>
 
                 </select>
@@ -575,15 +572,18 @@ tbody tr:hover {
             </div>
 
 
-            <div class="filter-item">
+            <!-- SEARCH -->
 
-                <label>Search Student</label>
+            <div class="filter-box">
+
+                <label>
+                    👨‍🎓 Student Search
+                </label>
 
                 <input
                     type="text"
                     id="studentSearch"
-                    placeholder="Student name..."
-                    oninput="applyFilters()"
+                    placeholder="Search student..."
                 >
 
             </div>
@@ -593,184 +593,178 @@ tbody tr:hover {
     </div>
 
 
-    <!-- ================= STATS ================= -->
+    <!-- =================================================
+         STATISTICS
+    ================================================== -->
 
     <div class="stats">
 
-        <div class="stat-card">
-
-            <div class="stat-title">
-                📝 TOTAL ATTEMPTS
-            </div>
+        <div class="stat">
 
             <div
-                class="stat-value"
+                class="stat-number"
                 id="totalAttempts"
             >
                 0
             </div>
 
+            <div class="stat-label">
+                Total Attempts
+            </div>
+
         </div>
 
 
-        <div class="stat-card">
-
-            <div class="stat-title">
-                📈 AVERAGE
-            </div>
+        <div class="stat">
 
             <div
-                class="stat-value"
+                class="stat-number"
                 id="averageScore"
             >
                 0%
             </div>
 
+            <div class="stat-label">
+                Average Score
+            </div>
+
         </div>
 
 
-        <div class="stat-card">
-
-            <div class="stat-title">
-                🏆 HIGHEST
-            </div>
+        <div class="stat">
 
             <div
-                class="stat-value"
+                class="stat-number"
                 id="highestScore"
             >
                 0%
             </div>
 
-        </div>
-
-
-        <div class="stat-card">
-
-            <div class="stat-title">
-                📉 LOWEST
-            </div>
-
-            <div
-                class="stat-value"
-                id="lowestScore"
-            >
-                0%
+            <div class="stat-label">
+                Highest Score
             </div>
 
         </div>
 
 
-        <div class="stat-card">
-
-            <div class="stat-title">
-                🚩 FLAGGED
-            </div>
+        <div class="stat">
 
             <div
-                class="stat-value"
+                class="stat-number"
                 id="flaggedAttempts"
             >
                 0
             </div>
 
+            <div class="stat-label">
+                Flagged Attempts
+            </div>
+
         </div>
 
     </div>
 
 
-    <!-- ================= TITLE ================= -->
+    <!-- =================================================
+         RESULTS
+    ================================================== -->
 
-    <div class="chapter-heading">
+    <div class="results-card">
 
-        <h2 id="resultTitle">
-            📚 All Chapter Results
-        </h2>
+        <div class="results-header">
 
-        <p id="resultSubtitle">
-            Live student performance
-        </p>
+            <h2>
+                📋 Student Results
+            </h2>
 
-    </div>
+            <button
+                class="refresh-btn"
+                id="refreshBtn"
+            >
+                🔄 Refresh
+            </button>
+
+        </div>
 
 
-    <!-- ================= TABLE ================= -->
+        <div class="table-wrapper">
 
-    <div class="table-container">
+            <table>
 
-        <table>
+                <thead>
 
-            <thead>
+                    <tr>
 
-                <tr>
+                        <th>Rank</th>
 
-                    <th>Rank</th>
+                        <th>Student</th>
 
-                    <th>Student</th>
+                        <th>Class</th>
 
-                    <th>Class</th>
+                        <th>Chapter</th>
 
-                    <th>Chapter</th>
+                        <th>Quiz</th>
 
-                    <th>Score</th>
+                        <th>Score</th>
 
-                    <th>Percentage</th>
+                        <th>Percentage</th>
 
-                    <th>Grade</th>
+                        <th>Grade</th>
 
-                    <th>Correct</th>
+                        <th>Correct</th>
 
-                    <th>Wrong</th>
+                        <th>Wrong</th>
 
-                    <th>Unanswered</th>
+                        <th>Unanswered</th>
 
-                    <th>Violations</th>
+                        <th>Violations</th>
 
-                    <th>Status</th>
+                        <th>Status</th>
 
-                    <th>Submitted</th>
+                        <th>Submitted</th>
 
-                    <th>Delete</th>
+                        <th>Delete</th>
 
-                </tr>
+                    </tr>
 
-            </thead>
+                </thead>
 
-            <tbody id="resultsBody"></tbody>
+                <tbody id="resultsBody">
 
-        </table>
+                </tbody>
+
+            </table>
+
+        </div>
+
 
         <div
-            class="empty"
-            id="emptyMessage"
+            class="no-results"
+            id="noResults"
             style="display:none;"
         >
-            No results found for the selected filters.
+            📭 No results found for the selected filters.
         </div>
 
     </div>
 
-
-    <div
-        class="last-updated"
-        id="lastUpdated"
-    >
-        Waiting for results...
-    </div>
+</div>
 
 </div>
 
 
 <script>
 
-/* =====================================================
-   FIREBASE CONFIG
-===================================================== */
+/* =========================================================
+   FIREBASE CONFIGURATION
+
+   THIS IS THE CORRECT WORKING CONFIGURATION
+========================================================= */
 
 const firebaseConfig = {
 
     apiKey:
-        "AIzaSyCfI3zEpaiRA3OjgYiTuvnuA3GGyQGQNpU",
+        "AIzaSyCfI3zEpaiRA3OjgYiTuvnuA3GGyQGNpU",
 
     authDomain:
         "sciencequiz2026-ccd77.firebaseapp.com",
@@ -792,345 +786,334 @@ const firebaseConfig = {
 
     measurementId:
         "G-YC0DM7M07F"
+
 };
 
 
-/* =====================================================
-   INITIALIZE
-===================================================== */
+/* =========================================================
+   INITIALIZE FIREBASE
+========================================================= */
 
 firebase.initializeApp(firebaseConfig);
 
-const auth = firebase.auth();
+const auth =
+    firebase.auth();
 
-const database = firebase.database();
+const database =
+    firebase.database();
+
+
+/* =========================================================
+   VARIABLES
+========================================================= */
 
 let allResults = {};
 
-let liveListenerStarted = false;
+let resultsListenerStarted = false;
 
 
-/* =====================================================
+/* =========================================================
+   DOM ELEMENTS
+========================================================= */
+
+const loginCard =
+    document.getElementById("loginCard");
+
+const dashboard =
+    document.getElementById("dashboard");
+
+const email =
+    document.getElementById("email");
+
+const password =
+    document.getElementById("password");
+
+const loginBtn =
+    document.getElementById("loginBtn");
+
+const logoutBtn =
+    document.getElementById("logoutBtn");
+
+const loginError =
+    document.getElementById("loginError");
+
+const classFilter =
+    document.getElementById("classFilter");
+
+const chapterFilter =
+    document.getElementById("chapterFilter");
+
+const statusFilter =
+    document.getElementById("statusFilter");
+
+const studentSearch =
+    document.getElementById("studentSearch");
+
+const resultsBody =
+    document.getElementById("resultsBody");
+
+const noResults =
+    document.getElementById("noResults");
+
+const firebaseError =
+    document.getElementById("firebaseError");
+
+
+/* =========================================================
    LOGIN
-===================================================== */
+========================================================= */
 
-function login() {
+loginBtn.addEventListener(
+    "click",
+    function() {
 
-    const email =
-        document.getElementById("email")
-            .value
-            .trim();
+        const emailValue =
+            email.value.trim();
 
-    const password =
-        document.getElementById("password")
-            .value;
-
-    const error =
-        document.getElementById("loginError");
-
-    error.textContent = "";
-
-    if (!email || !password) {
-
-        error.textContent =
-            "Please enter your email and password.";
-
-        return;
-
-    }
-
-
-    auth.signInWithEmailAndPassword(
-        email,
-        password
-    )
-
-    .then(function() {
-
-        showDashboard();
-
-    })
-
-    .catch(function(err) {
-
-        console.error(err);
-
-        let message =
-            "Login failed. Please check your email and password.";
+        const passwordValue =
+            password.value;
 
         if (
-            err.code === "auth/invalid-email"
+            !emailValue ||
+            !passwordValue
         ) {
 
-            message =
-                "Invalid email address.";
+            loginError.textContent =
+                "Please enter email and password.";
+
+            return;
 
         }
 
-        else if (
-            err.code === "auth/user-not-found"
-        ) {
 
-            message =
-                "Teacher account not found.";
-
-        }
-
-        else if (
-            err.code === "auth/wrong-password"
-        ) {
-
-            message =
-                "Incorrect password.";
-
-        }
-
-        else if (
-            err.code === "auth/invalid-credential"
-        ) {
-
-            message =
-                "Incorrect email or password.";
-
-        }
-
-        else if (
-            err.code === "auth/user-disabled"
-        ) {
-
-            message =
-                "Teacher account has been disabled.";
-
-        }
-
-        else if (
-            err.code === "auth/network-request-failed"
-        ) {
-
-            message =
-                "Network error. Check your internet connection.";
-
-        }
-
-        error.textContent = message;
-
-    });
-
-}
+        loginError.textContent =
+            "Logging in...";
 
 
-/* =====================================================
-   AUTH STATE
-===================================================== */
+        auth.signInWithEmailAndPassword(
+            emailValue,
+            passwordValue
+        )
 
-auth.onAuthStateChanged(function(user) {
+        .then(function() {
 
-    if (user) {
+            loginError.textContent = "";
 
-        showDashboard();
+            loginCard.style.display =
+                "none";
+
+            dashboard.style.display =
+                "block";
+
+            startResultsListener();
+
+        })
+
+        .catch(function(error) {
+
+            console.error(
+                "Login error:",
+                error
+            );
+
+            loginError.textContent =
+                "Login failed: " +
+                error.message;
+
+        });
 
     }
-
-});
-
-
-/* =====================================================
-   SHOW DASHBOARD
-===================================================== */
-
-function showDashboard() {
-
-    document.getElementById("loginScreen")
-        .style.display = "none";
-
-    document.getElementById("dashboard")
-        .style.display = "block";
-
-    startLiveResults();
-
-}
+);
 
 
-/* =====================================================
-   LIVE RESULTS
-===================================================== */
+/* =========================================================
+   ENTER KEY LOGIN
+========================================================= */
 
-function startLiveResults() {
+password.addEventListener(
+    "keydown",
+    function(e) {
 
-    if (liveListenerStarted) {
-        return;
+        if(e.key === "Enter") {
+
+            loginBtn.click();
+
+        }
+
     }
+);
 
-    liveListenerStarted = true;
 
+/* =========================================================
+   LOGOUT
+========================================================= */
 
-    database.ref("quizResults").on(
-        "value",
-        function(snapshot) {
+logoutBtn.addEventListener(
+    "click",
+    function() {
 
-            allResults =
-                snapshot.val() || {};
+        auth.signOut()
 
-            /*
-             * Automatically detect every chapter
-             * that exists in Firebase.
-             */
-            updateChapterDropdown();
+        .then(function() {
 
-            applyFilters();
+            dashboard.style.display =
+                "none";
 
-            document.getElementById("lastUpdated")
-                .textContent =
-                "🟢 Last updated: " +
-                new Date().toLocaleTimeString();
+            loginCard.style.display =
+                "block";
 
-        },
-        function(error) {
+            email.value = "";
+
+            password.value = "";
+
+            allResults = {};
+
+            resultsListenerStarted = false;
+
+        })
+
+        .catch(function(error) {
 
             console.error(error);
 
-            document.getElementById("lastUpdated")
-                .textContent =
-                "❌ Unable to load results.";
+        });
 
-        }
-    );
-
-}
+    }
+);
 
 
-/* =====================================================
-   AUTOMATIC CHAPTER DETECTION
-===================================================== */
+/* =========================================================
+   FIREBASE RESULTS LISTENER
+========================================================= */
 
-function updateChapterDropdown() {
+function startResultsListener() {
 
-    const select =
-        document.getElementById("chapterFilter");
+    if(resultsListenerStarted) {
 
-    const currentValue =
-        select.value;
+        applyFilters();
 
-    const chapters = new Set();
+        return;
+
+    }
 
 
-    /*
-     * Read chapter names from Firebase results.
-     */
-    Object.values(allResults)
-        .forEach(function(result) {
+    resultsListenerStarted = true;
 
-            if (
-                result &&
-                result.chapter &&
-                String(result.chapter).trim() !== ""
-            ) {
 
-                chapters.add(
-                    String(result.chapter).trim()
+    document.getElementById(
+        "lastUpdated"
+    ).textContent =
+        "🟡 Loading results...";
+
+
+    database
+        .ref("quizResults")
+        .on(
+            "value",
+
+            function(snapshot) {
+
+                allResults =
+                    snapshot.val() || {};
+
+
+                console.log(
+                    "Firebase quizResults:",
+                    allResults
                 );
 
+
+                firebaseError.style.display =
+                    "none";
+
+
+                applyFilters();
+
+
+                document.getElementById(
+                    "lastUpdated"
+                ).textContent =
+                    "🟢 Live - Last updated: " +
+                    new Date()
+                        .toLocaleTimeString();
+
+            },
+
+            function(error) {
+
+                console.error(
+                    "Firebase database error:",
+                    error
+                );
+
+
+                firebaseError.style.display =
+                    "block";
+
+
+                firebaseError.textContent =
+                    "🔴 Firebase database error: " +
+                    error.message;
+
+
+                document.getElementById(
+                    "lastUpdated"
+                ).textContent =
+                    "🔴 Firebase connection error";
+
             }
-
-        });
-
-
-    /*
-     * Known chapters are included even
-     * if there are currently no results.
-     */
-    chapters.add("Exploring Magnets");
-
-    chapters.add(
-        "Adolescence: A Stage of Growth and Change"
-    );
-
-
-    /*
-     * Rebuild dropdown.
-     */
-    select.innerHTML =
-        `<option value="all">
-            📚 All Chapters
-        </option>`;
-
-
-    Array.from(chapters)
-        .sort(function(a,b) {
-
-            return a.localeCompare(b);
-
-        })
-        .forEach(function(chapter) {
-
-            const option =
-                document.createElement("option");
-
-            option.value = chapter;
-
-            option.textContent =
-                "📖 " + chapter;
-
-            select.appendChild(option);
-
-        });
-
-
-    /*
-     * Keep previous selection.
-     */
-    const exists =
-        Array.from(select.options)
-            .some(function(option) {
-
-                return option.value === currentValue;
-
-            });
-
-
-    if (exists) {
-
-        select.value =
-            currentValue;
-
-    }
-
-    else {
-
-        select.value =
-            "all";
-
-    }
+        );
 
 }
 
 
-/* =====================================================
-   FILTER RESULTS
-===================================================== */
+/* =========================================================
+   FILTER EVENTS
+========================================================= */
+
+classFilter.addEventListener(
+    "change",
+    applyFilters
+);
+
+chapterFilter.addEventListener(
+    "change",
+    applyFilters
+);
+
+statusFilter.addEventListener(
+    "change",
+    applyFilters
+);
+
+studentSearch.addEventListener(
+    "input",
+    applyFilters
+);
+
+
+/* =========================================================
+   APPLY FILTERS
+========================================================= */
 
 function applyFilters() {
 
-    const classValue =
-        document.getElementById("classFilter")
-            .value;
+    const selectedClass =
+        classFilter.value;
 
-    const chapterValue =
-        document.getElementById("chapterFilter")
-            .value;
+    const selectedChapter =
+        chapterFilter.value;
 
-    const statusValue =
-        document.getElementById("statusFilter")
-            .value;
+    const selectedStatus =
+        statusFilter.value;
 
-    const searchValue =
-        document.getElementById("studentSearch")
-            .value
+    const searchText =
+        studentSearch.value
             .trim()
             .toLowerCase();
 
 
-    let results = [];
+    const filteredResults = [];
 
 
     Object.keys(allResults)
@@ -1139,19 +1122,21 @@ function applyFilters() {
             const result =
                 allResults[key];
 
-            if (!result) {
+
+            if(!result) {
+
                 return;
+
             }
 
 
-            /*
-             * CLASS
-             */
+            /* CLASS */
 
-            if (
-                classValue !== "all" &&
-                String(result.classId || "") !==
-                classValue
+            if(
+                selectedClass !== "all" &&
+                String(
+                    result.classId || ""
+                ) !== selectedClass
             ) {
 
                 return;
@@ -1159,14 +1144,16 @@ function applyFilters() {
             }
 
 
-            /*
-             * CHAPTER
-             */
+            /* CHAPTER */
 
-            if (
-                chapterValue !== "all" &&
-                String(result.chapter || "")
-                    .trim() !== chapterValue
+            if(
+                selectedChapter !== "all" &&
+                normalizeChapter(
+                    result.chapter
+                ) !==
+                normalizeChapter(
+                    selectedChapter
+                )
             ) {
 
                 return;
@@ -1174,14 +1161,13 @@ function applyFilters() {
             }
 
 
-            /*
-             * STATUS
-             */
+            /* STATUS */
 
-            if (
-                statusValue !== "all" &&
-                String(result.status || "") !==
-                statusValue
+            if(
+                selectedStatus !== "all" &&
+                String(
+                    result.status || "Normal"
+                ) !== selectedStatus
             ) {
 
                 return;
@@ -1189,497 +1175,406 @@ function applyFilters() {
             }
 
 
-            /*
-             * SEARCH
-             */
+            /* STUDENT SEARCH */
 
-            if (
-                searchValue &&
-                !String(result.name || "")
-                    .toLowerCase()
-                    .includes(searchValue)
-            ) {
+            if(searchText) {
 
-                return;
+                const name =
+                    String(
+                        result.name || ""
+                    ).toLowerCase();
+
+
+                if(
+                    !name.includes(searchText)
+                ) {
+
+                    return;
+
+                }
 
             }
 
 
-            results.push({
+            filteredResults.push({
 
                 key: key,
 
-                ...result
+                result: result
 
             });
 
         });
 
 
-    /*
-     * Highest score first.
-     */
+    /* SORT BY PERCENTAGE */
 
-    results.sort(function(a,b) {
+    filteredResults.sort(
+        function(a,b) {
 
-        return (
-            Number(b.percentage || 0) -
-            Number(a.percentage || 0)
-        );
+            return Number(
+                b.result.percentage || 0
+            )
+            -
+            Number(
+                a.result.percentage || 0
+            );
 
-    });
+        }
+    );
 
 
-    displayStats(results);
-
-    displayResults(results);
-
-    updateHeading(
-        chapterValue,
-        classValue
+    renderResults(
+        filteredResults
     );
 
 }
 
 
-/* =====================================================
-   STATISTICS
-===================================================== */
+/* =========================================================
+   NORMALIZE CHAPTER
+========================================================= */
 
-function displayStats(results) {
+function normalizeChapter(value) {
+
+    return String(value || "")
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g," ");
+
+}
+
+
+/* =========================================================
+   RENDER RESULTS
+========================================================= */
+
+function renderResults(results) {
+
+    resultsBody.innerHTML = "";
+
 
     const total =
         results.length;
 
-    let average = 0;
 
-    let highest = 0;
-
-    let lowest = 0;
-
-    let flagged = 0;
+    document.getElementById(
+        "totalAttempts"
+    ).textContent =
+        total;
 
 
-    if (total > 0) {
+    if(total === 0) {
 
-        const percentages =
-            results.map(function(result) {
+        noResults.style.display =
+            "block";
 
-                return Number(
-                    result.percentage || 0
-                );
+    } else {
 
-            });
-
-
-        const sum =
-            percentages.reduce(
-                function(a,b) {
-                    return a + b;
-                },
-                0
-            );
-
-
-        average =
-            sum / total;
-
-        highest =
-            Math.max.apply(
-                null,
-                percentages
-            );
-
-        lowest =
-            Math.min.apply(
-                null,
-                percentages
-            );
+        noResults.style.display =
+            "none";
 
     }
 
 
-    flagged =
-        results.filter(function(result) {
+    let totalPercentage = 0;
 
-            return String(
-                result.status || ""
-            )
-            .toLowerCase()
-            .includes("flag");
+    let highestPercentage = 0;
 
-        }).length;
+    let flagged = 0;
 
 
-    document.getElementById("totalAttempts")
-        .textContent =
-        total;
+    results.forEach(
+        function(item,index) {
+
+            const r =
+                item.result;
 
 
-    document.getElementById("averageScore")
-        .textContent =
-        average.toFixed(1) + "%";
+            const percentage =
+                Number(
+                    r.percentage || 0
+                );
 
 
-    document.getElementById("highestScore")
-        .textContent =
-        highest.toFixed(1) + "%";
+            totalPercentage +=
+                percentage;
 
 
-    document.getElementById("lowestScore")
-        .textContent =
-        lowest.toFixed(1) + "%";
+            if(
+                percentage >
+                highestPercentage
+            ) {
+
+                highestPercentage =
+                    percentage;
+
+            }
 
 
-    document.getElementById("flaggedAttempts")
-        .textContent =
+            if(
+                r.status === "Flagged" ||
+                Number(
+                    r.violations || 0
+                ) >= 3
+            ) {
+
+                flagged++;
+
+            }
+
+
+            /* STATUS */
+
+            let statusClass =
+                "status-normal";
+
+            let statusText =
+                "🟢 Normal";
+
+
+            if(
+                r.status === "Flagged"
+            ) {
+
+                statusClass =
+                    "status-flagged";
+
+                statusText =
+                    "🔴 Flagged";
+
+            }
+
+            else if(
+                r.status ===
+                "Possible Malpractice"
+            ) {
+
+                statusClass =
+                    "status-warning";
+
+                statusText =
+                    "🟡 Possible Malpractice";
+
+            }
+
+
+            /* ROW */
+
+            const row =
+                document.createElement("tr");
+
+
+            row.innerHTML = `
+
+                <td>
+                    <strong>
+                        ${index + 1}
+                    </strong>
+                </td>
+
+                <td>
+                    👨‍🎓
+                    ${escapeHTML(
+                        r.name ||
+                        "Unknown"
+                    )}
+                </td>
+
+                <td>
+                    Grade
+                    ${escapeHTML(
+                        String(
+                            r.classId || "-"
+                        )
+                    )}
+                </td>
+
+                <td>
+                    📖
+                    ${escapeHTML(
+                        r.chapter ||
+                        "Not specified"
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        r.quizTitle ||
+                        r.quizId ||
+                        "-"
+                    )}
+                </td>
+
+                <td>
+                    <strong>
+                        ${r.score ?? 0}
+                        /
+                        ${r.total ?? 0}
+                    </strong>
+                </td>
+
+                <td>
+                    <strong>
+                        ${percentage}%
+                    </strong>
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        r.grade || "-"
+                    )}
+                </td>
+
+                <td>
+                    ${r.correct ?? 0}
+                </td>
+
+                <td>
+                    ${r.wrong ?? 0}
+                </td>
+
+                <td>
+                    ${r.unanswered ?? 0}
+                </td>
+
+                <td>
+                    ${r.violations ?? 0}
+                </td>
+
+                <td>
+                    <span
+                        class="${statusClass}"
+                    >
+                        ${statusText}
+                    </span>
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        r.date || "-"
+                    )}
+                </td>
+
+                <td>
+
+                    <button
+                        class="delete-btn"
+                        onclick="deleteResult('${item.key}')"
+                    >
+                        🗑️ Delete
+                    </button>
+
+                </td>
+
+            `;
+
+
+            resultsBody.appendChild(
+                row
+            );
+
+        }
+    );
+
+
+    /* ================= STATS ================= */
+
+    const average =
+        total > 0
+        ? Math.round(
+            totalPercentage / total
+        )
+        : 0;
+
+
+    document.getElementById(
+        "averageScore"
+    ).textContent =
+        average + "%";
+
+
+    document.getElementById(
+        "highestScore"
+    ).textContent =
+        highestPercentage + "%";
+
+
+    document.getElementById(
+        "flaggedAttempts"
+    ).textContent =
         flagged;
 
 }
 
 
-/* =====================================================
-   DISPLAY RESULTS
-===================================================== */
-
-function displayResults(results) {
-
-    const body =
-        document.getElementById("resultsBody");
-
-    const empty =
-        document.getElementById("emptyMessage");
-
-
-    body.innerHTML = "";
-
-
-    if (results.length === 0) {
-
-        empty.style.display =
-            "block";
-
-        return;
-
-    }
-
-
-    empty.style.display =
-        "none";
-
-
-    results.forEach(function(result,index) {
-
-        const row =
-            document.createElement("tr");
-
-
-        const score =
-            Number(result.score || 0);
-
-        const total =
-            Number(result.total || 0);
-
-        const percentage =
-            Number(result.percentage || 0);
-
-        const violations =
-            Number(result.violations || 0);
-
-
-        let rank =
-            index + 1;
-
-        let rankDisplay =
-            rank;
-
-
-        if (rank === 1) {
-            rankDisplay = "🥇";
-        }
-
-        else if (rank === 2) {
-            rankDisplay = "🥈";
-        }
-
-        else if (rank === 3) {
-            rankDisplay = "🥉";
-        }
-
-
-        let status =
-            result.status || "Normal";
-
-        let statusClass =
-            "status-normal";
-
-
-        if (status === "Flagged") {
-
-            statusClass =
-                "status-flagged";
-
-        }
-
-        else if (
-            status === "Possible Malpractice"
-        ) {
-
-            statusClass =
-                "status-review";
-
-        }
-
-
-        let violationClass =
-            "violation-normal";
-
-
-        if (violations === 1) {
-
-            violationClass =
-                "violation-warning";
-
-        }
-
-        else if (violations >= 2) {
-
-            violationClass =
-                "violation-danger";
-
-        }
-
-
-        let submitted =
-            "—";
-
-
-        if (result.date) {
-
-            submitted =
-                result.date;
-
-        }
-
-        else if (result.timestamp) {
-
-            try {
-
-                submitted =
-                    new Date(
-                        result.timestamp
-                    ).toLocaleString();
-
-            }
-
-            catch(e) {}
-
-        }
-
-
-        row.innerHTML = `
-
-            <td class="rank">
-                ${rankDisplay}
-            </td>
-
-            <td class="student-name">
-                ${escapeHtml(
-                    result.name || "Unknown"
-                )}
-            </td>
-
-            <td>
-                Grade ${escapeHtml(
-                    result.classId || "—"
-                )}
-            </td>
-
-            <td>
-                ${escapeHtml(
-                    result.chapter || "—"
-                )}
-            </td>
-
-            <td class="score">
-                ${score}/${total}
-            </td>
-
-            <td>
-
-                <strong>
-                    ${percentage.toFixed(1)}%
-                </strong>
-
-                <div class="progress">
-
-                    <div
-                        class="progress-bar"
-                        style="width:${Math.min(
-                            percentage,
-                            100
-                        )}%"
-                    ></div>
-
-                </div>
-
-            </td>
-
-            <td>
-
-                <span class="grade">
-                    ${escapeHtml(
-                        result.grade || "—"
-                    )}
-                </span>
-
-            </td>
-
-            <td>
-                ${Number(
-                    result.correct || 0
-                )}
-            </td>
-
-            <td>
-                ${Number(
-                    result.wrong || 0
-                )}
-            </td>
-
-            <td>
-                ${Number(
-                    result.unanswered || 0
-                )}
-            </td>
-
-            <td>
-
-                <span class="${violationClass}">
-                    ${violations}
-                </span>
-
-            </td>
-
-            <td>
-
-                <span
-                    class="status ${statusClass}"
-                >
-                    ${escapeHtml(status)}
-                </span>
-
-            </td>
-
-            <td>
-                ${escapeHtml(submitted)}
-            </td>
-
-            <td>
-
-                <button
-                    class="delete-btn"
-                    onclick="deleteResult('${result.key}')"
-                >
-                    🗑 Delete
-                </button>
-
-            </td>
-
-        `;
-
-
-        body.appendChild(row);
-
-    });
-
-}
-
-
-/* =====================================================
-   HEADING
-===================================================== */
-
-function updateHeading(
-    chapter,
-    classId
-) {
-
-    let title =
-        "📚 All Chapter Results";
-
-
-    if (chapter !== "all") {
-
-        title =
-            "📖 " + chapter;
-
-    }
-
-
-    if (classId !== "all") {
-
-        title +=
-            " — Grade " + classId;
-
-    }
-
-
-    document.getElementById("resultTitle")
-        .textContent =
-        title;
-
-
-    document.getElementById("resultSubtitle")
-        .textContent =
-        "Live student performance for the selected filters";
-
-}
-
-
-/* =====================================================
-   DELETE
-===================================================== */
+/* =========================================================
+   DELETE RESULT
+========================================================= */
 
 function deleteResult(key) {
 
     const result =
         allResults[key];
 
-    if (!result) {
+
+    if(!result) {
+
+        alert(
+            "Result not found."
+        );
+
         return;
+
     }
 
 
     const confirmed =
         confirm(
-            "Delete the result for " +
-            (result.name || "this student") +
-            "?\n\nThis cannot be undone."
+
+            "Are you sure you want to delete this result?\n\n" +
+
+            "Student: " +
+            (result.name || "Unknown") +
+
+            "\nChapter: " +
+            (result.chapter || "Unknown") +
+
+            "\nScore: " +
+            (result.score || 0) +
+            "/" +
+            (result.total || 0)
+
         );
 
 
-    if (!confirmed) {
+    if(!confirmed) {
+
         return;
+
     }
 
 
     database
-        .ref("quizResults/" + key)
+        .ref(
+            "quizResults/" + key
+        )
         .remove()
 
         .then(function() {
 
-            console.log(
-                "Result deleted."
+            alert(
+                "✅ Result deleted successfully."
             );
 
         })
 
         .catch(function(error) {
 
+            console.error(error);
+
             alert(
-                "Unable to delete result:\n" +
+                "❌ Could not delete result:\n" +
                 error.message
             );
 
@@ -1688,83 +1583,96 @@ function deleteResult(key) {
 }
 
 
-/* =====================================================
+/* =========================================================
    REFRESH
-===================================================== */
+========================================================= */
 
-function refreshResults() {
-
-    applyFilters();
-
-    document.getElementById("lastUpdated")
-        .textContent =
-        "🔄 Refreshed: " +
-        new Date().toLocaleTimeString();
-
-}
-
-
-/* =====================================================
-   LOGOUT
-===================================================== */
-
-function logout() {
-
-    auth.signOut()
-        .then(function() {
-
-            document.getElementById("dashboard")
-                .style.display = "none";
-
-            document.getElementById("loginScreen")
-                .style.display = "flex";
-
-            document.getElementById("password")
-                .value = "";
-
-        });
-
-}
-
-
-/* =====================================================
-   SECURITY: HTML ESCAPE
-===================================================== */
-
-function escapeHtml(value) {
-
-    return String(value)
-
-        .replace(/&/g,"&amp;")
-
-        .replace(/</g,"&lt;")
-
-        .replace(/>/g,"&gt;")
-
-        .replace(/"/g,"&quot;")
-
-        .replace(/'/g,"&#039;");
-
-}
-
-
-/* =====================================================
-   ENTER KEY
-===================================================== */
-
-document.getElementById("password")
+document
+    .getElementById("refreshBtn")
     .addEventListener(
-        "keydown",
-        function(event) {
+        "click",
+        function() {
 
-            if (event.key === "Enter") {
+            applyFilters();
 
-                login();
-
-            }
+            document.getElementById(
+                "lastUpdated"
+            ).textContent =
+                "🟢 Refreshed: " +
+                new Date()
+                    .toLocaleTimeString();
 
         }
     );
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =========================================================
+   AUTH STATE
+========================================================= */
+
+auth.onAuthStateChanged(
+    function(user) {
+
+        if(user) {
+
+            loginCard.style.display =
+                "none";
+
+            dashboard.style.display =
+                "block";
+
+            startResultsListener();
+
+        }
+
+        else {
+
+            loginCard.style.display =
+                "block";
+
+            dashboard.style.display =
+                "none";
+
+        }
+
+    }
+);
 
 </script>
 
