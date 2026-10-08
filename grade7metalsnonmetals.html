@@ -1,0 +1,1834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Class 7 Science - Metals and Non-metals Quiz</title>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:linear-gradient(135deg,#e0f2fe,#f8fafc,#ede9fe);
+    color:#172033;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.card{
+    background:white;
+    border-radius:20px;
+    padding:28px;
+    margin:20px auto;
+    box-shadow:0 10px 30px rgba(0,0,0,.10);
+}
+
+.header{
+    text-align:center;
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+    color:white;
+    border-radius:20px;
+    padding:28px 20px;
+}
+
+.header h1{
+    margin:0 0 8px;
+    font-size:30px;
+}
+
+.header p{
+    margin:5px 0;
+}
+
+.instructions{
+    background:#eff6ff;
+    border-left:6px solid #2563eb;
+    padding:18px;
+    border-radius:12px;
+    line-height:1.7;
+}
+
+.warning{
+    background:#fff7ed;
+    border-left:6px solid #f97316;
+    padding:16px;
+    border-radius:12px;
+    margin-top:15px;
+}
+
+.student-box{
+    background:#f8fafc;
+    padding:20px;
+    border-radius:15px;
+    margin-top:20px;
+}
+
+label{
+    font-weight:bold;
+    display:block;
+    margin-bottom:8px;
+}
+
+select{
+    width:100%;
+    padding:14px;
+    border:2px solid #cbd5e1;
+    border-radius:10px;
+    font-size:16px;
+    background:white;
+}
+
+.checkbox{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    margin:18px 0;
+    font-weight:normal;
+}
+
+.checkbox input{
+    width:20px;
+    height:20px;
+}
+
+button{
+    border:none;
+    border-radius:10px;
+    padding:13px 22px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.start-btn{
+    width:100%;
+    background:#16a34a;
+    color:white;
+    font-size:18px;
+}
+
+.start-btn:disabled{
+    background:#94a3b8;
+    cursor:not-allowed;
+}
+
+.hidden{
+    display:none!important;
+}
+
+.topbar{
+    position:sticky;
+    top:0;
+    z-index:100;
+    background:white;
+    padding:12px;
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,.10);
+    margin-bottom:18px;
+}
+
+.toprow{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
+.timer{
+    background:#dc2626;
+    color:white;
+    padding:10px 18px;
+    border-radius:10px;
+    font-weight:bold;
+    font-size:20px;
+}
+
+.progress-wrap{
+    background:#e2e8f0;
+    height:12px;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:10px;
+}
+
+.progress{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,#2563eb,#7c3aed);
+    transition:.3s;
+}
+
+.question-card{
+    background:white;
+    border-radius:18px;
+    padding:24px;
+    margin:18px 0;
+    box-shadow:0 7px 25px rgba(0,0,0,.08);
+}
+
+.level{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:12px;
+}
+
+.easy{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.moderate{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.application{
+    background:#ede9fe;
+    color:#5b21b6;
+}
+
+.question-number{
+    font-weight:bold;
+    color:#475569;
+}
+
+.question-text{
+    font-size:19px;
+    font-weight:bold;
+    line-height:1.5;
+    margin:10px 0 18px;
+}
+
+.option{
+    display:block;
+    border:2px solid #e2e8f0;
+    border-radius:12px;
+    padding:14px;
+    margin:10px 0;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.option:hover{
+    background:#f8fafc;
+    border-color:#93c5fd;
+}
+
+.option input{
+    margin-right:10px;
+}
+
+.option.selected{
+    background:#eff6ff;
+    border-color:#2563eb;
+}
+
+.submit-area{
+    text-align:center;
+    padding:25px;
+}
+
+.submit-btn{
+    background:#2563eb;
+    color:white;
+    font-size:18px;
+    padding:15px 35px;
+}
+
+.violation{
+    position:fixed;
+    top:20px;
+    left:50%;
+    transform:translateX(-50%);
+    z-index:9999;
+    background:#dc2626;
+    color:white;
+    padding:15px 25px;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,.3);
+    font-weight:bold;
+    display:none;
+}
+
+.result{
+    text-align:center;
+}
+
+.score-box{
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+    color:white;
+    padding:30px;
+    border-radius:20px;
+    margin:20px 0;
+}
+
+.score{
+    font-size:50px;
+    font-weight:bold;
+}
+
+.review{
+    text-align:left;
+    margin-top:20px;
+}
+
+.review-item{
+    padding:15px;
+    border-radius:12px;
+    margin:10px 0;
+}
+
+.correct-review{
+    background:#dcfce7;
+    border-left:5px solid #16a34a;
+}
+
+.wrong-review{
+    background:#fee2e2;
+    border-left:5px solid #dc2626;
+}
+
+.unanswered-review{
+    background:#fef3c7;
+    border-left:5px solid #f59e0b;
+}
+
+.small{
+    font-size:13px;
+    color:#64748b;
+}
+
+@media(max-width:700px){
+    .container{
+        padding:10px;
+    }
+
+    .card{
+        padding:18px;
+    }
+
+    .header h1{
+        font-size:24px;
+    }
+
+    .question-text{
+        font-size:17px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="violationBox" class="violation">
+    ⚠️ Test violation detected
+</div>
+
+<div class="container">
+
+<!-- START SCREEN -->
+<div id="startScreen">
+
+    <div class="header">
+        <h1>Class 7 Science Quiz</h1>
+        <h2>Metals and Non-metals</h2>
+        <p>NCERT | 60 Questions | 30 Minutes</p>
+    </div>
+
+    <div class="card">
+
+        <h2>📋 Test Instructions</h2>
+
+        <div class="instructions">
+            <ol>
+                <li>Select your <strong>registered name</strong> from the list.</li>
+                <li>Read all instructions and rules carefully.</li>
+                <li>This test contains <strong>60 questions</strong>.</li>
+                <li>There are <strong>20 Easy, 20 Moderate and 20 Application-based</strong> questions.</li>
+                <li>You have <strong>30 minutes</strong> to complete the test.</li>
+                <li>The timer starts immediately when you click <strong>Start Test</strong>.</li>
+                <li>Choose the best answer for every question.</li>
+                <li>You may move through the questions and change your answers before submitting.</li>
+                <li>Try to answer all questions before the time ends.</li>
+            </ol>
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ Test Rules</strong>
+            <ul>
+                <li>Stay on the quiz page throughout the test.</li>
+                <li>Do not switch tabs or browser windows.</li>
+                <li>Do not exit fullscreen mode.</li>
+                <li>Copy, paste and right-click are disabled.</li>
+                <li>Do not use browser search or other websites during the test.</li>
+                <li>Test activity may be monitored for academic integrity.</li>
+                <li>Repeated violations will be recorded.</li>
+                <li><strong>After 3 violations, the test will automatically submit and be flagged for review.</strong></li>
+                <li>Once submitted, the attempt cannot be restarted.</li>
+            </ul>
+        </div>
+
+        <div class="student-box">
+
+            <label for="studentName">Select Your Registered Name</label>
+
+            <select id="studentName">
+                <option value="">-- Select your name --</option>
+                <option>ABDUL RAHMAN MOINUDDEEN KHAN</option>
+                <option>ARSALAN AJMEER SHAH</option>
+                <option>ASHFAN ASHIK</option>
+                <option>AYAN</option>
+                <option>AYMAN AHMED</option>
+                <option>FAHAD IBRAHIM</option>
+                <option>IMAD KHAN</option>
+                <option>JACK KINGSTON J.S</option>
+                <option>MAHIR MUHAMMAD SHARIF</option>
+                <option>MOHAMMED ARHAAN</option>
+                <option>MOHAMMED REHAN NELLIKKA PARAMBIL</option>
+                <option>MOHAMMED SHAHEEN</option>
+                <option>MUHAMMAD REHAN</option>
+                <option>MUHAMMAD SHAHZAD</option>
+                <option>MUHAMMED DAIYAN FAIZ</option>
+                <option>MUHAMMED IRFAN N</option>
+                <option>MUHAMMED RAYYAN KAZHUNGUM THOTTATHIL</option>
+                <option>NIKITH JEREMY</option>
+                <option>MUHAMMED YAZDAN KM</option>
+                <option>MUHAMMED RIBIN</option>
+                <option>ZIYAN ALI</option>
+
+                <option>AYAN UL HAQ</option>
+                <option>ESSA MAJID</option>
+                <option>FAHAD ISHAQ</option>
+                <option>HAMMAD KHAN</option>
+                <option>IBRAHIM BIN AHMED</option>
+                <option>JOEL JOSEPH</option>
+                <option>MUHAMMAD BIN MUDDASSAR</option>
+                <option>MUHAMMAD HANI MANIPARAMBATH</option>
+                <option>MUHAMMAD OWAIS MAZHAR</option>
+                <option>MUHAMMED IHSAN</option>
+                <option>MUHAMMED MILHAN</option>
+                <option>MUHAMMED NIHAD</option>
+                <option>MUHAMMED RAYYAN.</option>
+                <option>MUHAMMED SAUD SHAIKH</option>
+                <option>MUHAMMED SHAYAAN</option>
+                <option>MUMAMMAD ISMAIL SALEEM</option>
+                <option>SAOUD MOSA</option>
+                <option>SIDDARTH NAIR</option>
+                <option>SYED MOHAMMED MARZAD</option>
+                <option>ZIYAN ABDULKHADER</option>
+            </select>
+
+            <label class="checkbox">
+                <input type="checkbox" id="agreement">
+                <span>
+                    I have read and understood the instructions. I agree to follow
+                    the test rules and complete the test honestly.
+                </span>
+            </label>
+
+            <button id="startBtn" class="start-btn" onclick="beginTest()">
+                🚀 Start Test
+            </button>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- QUIZ SCREEN -->
+<div id="quizScreen" class="hidden">
+
+    <div class="topbar">
+
+        <div class="toprow">
+
+            <div>
+                <strong>Class 7 Science</strong><br>
+                <span class="small">Metals and Non-metals</span>
+            </div>
+
+            <div>
+                <strong id="studentDisplay"></strong>
+            </div>
+
+            <div class="timer">
+                ⏱️ <span id="timer">30:00</span>
+            </div>
+
+        </div>
+
+        <div class="progress-wrap">
+            <div id="progress" class="progress"></div>
+        </div>
+
+        <div class="small" id="progressText">
+            0 of 60 answered
+        </div>
+
+    </div>
+
+    <div id="questionsContainer"></div>
+
+    <div class="card submit-area">
+
+        <p>
+            Make sure you have reviewed your answers before submitting.
+        </p>
+
+        <button class="submit-btn" onclick="submitQuiz(false)">
+            ✅ Submit Test
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- RESULT SCREEN -->
+<div id="resultScreen" class="hidden">
+
+    <div class="header">
+        <h1>Test Submitted</h1>
+        <p>Metals and Non-metals</p>
+    </div>
+
+    <div class="card result">
+
+        <h2 id="resultMessage"></h2>
+
+        <div class="score-box">
+            <div>Your Score</div>
+            <div class="score" id="finalScore">0/60</div>
+            <div id="percentage"></div>
+            <div id="grade"></div>
+        </div>
+
+        <p id="resultDetails"></p>
+
+        <div class="review">
+            <h2>Answer Review</h2>
+            <div id="reviewContainer"></div>
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   FIREBASE CONFIG
+========================================================= */
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCfI3zEpaiRA3OjgYiTuvnuA3GGyQGQNpU",
+    authDomain: "sciencequiz2026-ccd77.firebaseapp.com",
+    databaseURL: "https://sciencequiz2026-ccd77-default-rtdb.firebaseio.com",
+    projectId: "sciencequiz2026-ccd77",
+    storageBucket: "sciencequiz2026-ccd77.firebasestorage.app",
+    messagingSenderId: "412753144312",
+    appId: "1:412753144312:web:fe66b332abcadfb0438e0d",
+    measurementId: "G-YC0DM7M07F"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const database = firebase.database();
+
+
+/* =========================================================
+   QUIZ INFORMATION
+========================================================= */
+
+const quizId = "grade7_metals_nonmetals";
+
+const quizTitle = "Metals and Non-metals - Class 7 Science";
+
+const chapterName = "Metals and Non-metals";
+
+const totalQuestions = 60;
+
+const totalTime = 30 * 60;
+
+
+/* =========================================================
+   QUESTIONS
+========================================================= */
+
+const questions = [
+
+/* =========================
+   EASY 1-20
+========================= */
+
+{
+q: "Which of the following is a metal?",
+o: ["Sulphur","Iron","Carbon","Oxygen"],
+a: 1,
+level:"easy"
+},
+
+{
+q: "Which property allows many metals to be beaten into thin sheets?",
+o: ["Ductility","Malleability","Sonority","Solubility"],
+a: 1,
+level:"easy"
+},
+
+{
+q: "Which property allows a metal to be drawn into wires?",
+o: ["Malleability","Ductility","Brittleness","Transparency"],
+a: 1,
+level:"easy"
+},
+
+{
+q: "Which of the following is generally a good conductor of electricity?",
+o: ["Copper","Sulphur","Phosphorus","Wood"],
+a: 0,
+level:"easy"
+},
+
+{
+q: "Which metal is liquid at room temperature?",
+o: ["Iron","Copper","Mercury","Aluminium"],
+a: 2,
+level:"easy"
+},
+
+{
+q: "Which of the following is a non-metal?",
+o: ["Copper","Iron","Sulphur","Aluminium"],
+a: 2,
+level:"easy"
+},
+
+{
+q: "The ability of a metal to produce a ringing sound when struck is called:",
+o: ["Ductility","Malleability","Sonority","Hardness"],
+a: 2,
+level:"easy"
+},
+
+{
+q: "Which metal is commonly used for electrical wires?",
+o: ["Copper","Sulphur","Phosphorus","Carbon"],
+a: 0,
+level:"easy"
+},
+
+{
+q: "Which of the following is generally lustrous?",
+o: ["Iron","Coal","Sulphur","Wood"],
+a: 0,
+level:"easy"
+},
+
+{
+q: "Which of the following is generally a poor conductor of electricity?",
+o: ["Copper","Aluminium","Sulphur","Iron"],
+a: 2,
+level:"easy"
+},
+
+{
+q: "Which of these is a common property of non-metals?",
+o: ["They are generally good conductors","They are generally poor conductors","They are always malleable","They are always sonorous"],
+a: 1,
+level:"easy"
+},
+
+{
+q: "Which metal is commonly used for making cooking utensils because it conducts heat well?",
+o: ["Aluminium","Sulphur","Phosphorus","Carbon"],
+a: 0,
+level:"easy"
+},
+
+{
+q: "Which of the following metals is used for making jewellery because of its lustre and low reactivity?",
+o: ["Gold","Iron","Sodium","Calcium"],
+a: 0,
+level:"easy"
+},
+
+{
+q: "Which material is a non-metal?",
+o: ["Copper","Iron","Aluminium","Sulphur"],
+a: 3,
+level:"easy"
+},
+
+{
+q: "What happens to many metals when their surfaces are freshly exposed?",
+o: ["They may show a shiny appearance","They always become transparent","They turn into gases","They become non-metals"],
+a: 0,
+level:"easy"
+},
+
+{
+q: "Which of the following is usually hard and strong compared with common non-metals?",
+o: ["Iron","Sulphur","Phosphorus","Coal"],
+a: 0,
+level:"easy"
+},
+
+{
+q: "Which of the following is used for making bells because it is sonorous?",
+o: ["A metal","Sulphur","Wood","Rubber"],
+a: 0,
+level:"easy"
+},
+
+{
+q: "Which metal is commonly used in overhead electrical cables?",
+o: ["Aluminium","Sulphur","Phosphorus","Carbon"],
+a: 0,
+level:"easy"
+},
+
+{
+q: "Which of these is not a typical property of metals?",
+o: ["Malleability","Ductility","Good electrical conductivity","Being generally brittle"],
+a: 3,
+level:"easy"
+},
+
+{
+q: "Which of these is not a typical property of non-metals?",
+o: ["Poor electrical conductivity","Brittleness in solid form","Lack of metallic lustre","Good electrical conductivity"],
+a: 3,
+level:"easy"
+},
+
+
+/* =========================
+   MODERATE 21-40
+========================= */
+
+{
+q: "A metal is hammered repeatedly and becomes a thin sheet. Which property is demonstrated?",
+o: ["Ductility","Malleability","Sonority","Conductivity"],
+a: 1,
+level:"moderate"
+},
+
+{
+q: "A metal can be pulled into a long thin wire without breaking. Which property explains this?",
+o: ["Ductility","Malleability","Brittleness","Lustre"],
+a: 0,
+level:"moderate"
+},
+
+{
+q: "Why are metals commonly used in electrical wiring?",
+o: ["They are usually good conductors of electricity","They are always soft","They are always liquid","They cannot be shaped"],
+a: 0,
+level:"moderate"
+},
+
+{
+q: "A school wants a material for a bell that produces a clear ringing sound. Which property is most important?",
+o: ["Sonority","Ductility","Malleability","Solubility"],
+a: 0,
+level:"moderate"
+},
+
+{
+q: "Which pair contains only metals?",
+o: ["Iron and copper","Sulphur and carbon","Oxygen and nitrogen","Phosphorus and sulphur"],
+a: 0,
+level:"moderate"
+},
+
+{
+q: "Which pair contains only non-metals?",
+o: ["Copper and iron","Aluminium and zinc","Sulphur and phosphorus","Gold and silver"],
+a: 2,
+level:"moderate"
+},
+
+{
+q: "Why is copper suitable for making electrical wires?",
+o: ["It is ductile and conducts electricity well","It is brittle and dull","It is a poor conductor","It cannot be drawn into wires"],
+a: 0,
+level:"moderate"
+},
+
+{
+q: "Which observation most strongly suggests that a sample is metallic?",
+o: ["It is lustrous and conducts electricity","It is powdery and dull","It breaks easily and is a poor conductor","It has no shine and cannot be shaped"],
+a: 0,
+level:"moderate"
+},
+
+{
+q: "Which statement about metals and non-metals is correct?",
+o: ["All metals are solids at room temperature","All non-metals are gases","Most metals conduct heat and electricity well","All non-metals are soft"],
+a: 2,
+level:"moderate"
+},
+
+{
+q: "Which property explains why aluminium can be made into foil?",
+o: ["Ductility","Malleability","Sonority","Magnetic property"],
+a: 1,
+level:"moderate"
+},
+
+{
+q: "Which property explains why copper can be made into long electrical wires?",
+o: ["Malleability","Ductility","Sonority","Brittleness"],
+a: 1,
+level:"moderate"
+},
+
+{
+q: "A student compares iron, copper and sulphur. Which result would be expected?",
+o: ["Iron and copper generally conduct electricity better than sulphur","Sulphur conducts better than copper","All three conduct equally well","Iron and sulphur are both liquid metals"],
+a: 0,
+level:"moderate"
+},
+
+{
+q: "Why are cooking vessels commonly made from metals rather than sulphur?",
+o: ["Metals generally conduct heat well and can be shaped","Sulphur is a better conductor of heat","Sulphur is more malleable than metals","Metals cannot withstand heat"],
+a: 0,
+level:"moderate"
+},
+
+{
+q: "Which property makes a metal useful for making sheets for cans?",
+o: ["Malleability","Ductility","Sonority","Poor conductivity"],
+a: 0,
+level:"moderate"
+},
+
+{
+q: "Which statement about mercury is unusual compared with most metals?",
+o: ["It is a liquid at room temperature","It is a poor conductor","It is a non-metal","It cannot flow"],
+a: 0,
+level:"moderate"
+},
+
+{
+q: "A material is shiny, can be hammered into sheets and conducts electricity. It is most likely:",
+o: ["A metal","A non-metal","A plastic","A ceramic"],
+a: 0,
+level:"moderate"
+},
+
+{
+q: "Why can a metal be used to make a wire but a typical solid non-metal cannot?",
+o: ["Many metals are ductile","Non-metals are always magnetic","Metals are always transparent","Non-metals always melt in air"],
+a: 0,
+level:"moderate"
+},
+
+{
+q: "Which property is shared by many metals and makes them suitable for cooking utensils?",
+o: ["Good thermal conductivity","Poor electrical conductivity","Brittleness","Lack of lustre"],
+a: 0,
+level:"moderate"
+},
+
+{
+q: "Which combination of properties is most typical of metals?",
+o: ["Lustrous, malleable and ductile","Dull, brittle and poor conductors","Soft, powdery and non-sonorous","Transparent, flexible and non-conducting"],
+a: 0,
+level:"moderate"
+},
+
+{
+q: "Which combination is most typical of many solid non-metals?",
+o: ["Malleable and sonorous","Ductile and lustrous","Brittle and poor conductors","Highly conductive and ductile"],
+a: 2,
+level:"moderate"
+},
+
+
+/* =========================
+   APPLICATION 41-60
+========================= */
+
+{
+q: "A manufacturer needs a material that can be rolled into very thin sheets for packaging. Which property should the material have?",
+o: ["Malleability","Sonority","Brittleness","Poor conductivity"],
+a: 0,
+level:"application"
+},
+
+{
+q: "An electrician needs a material that can be drawn into long wires and carries electric current efficiently. Which choice is most suitable?",
+o: ["Copper","Sulphur","Coal","Phosphorus"],
+a: 0,
+level:"application"
+},
+
+{
+q: "A student strikes four samples. Sample X produces a clear ringing sound, while the others do not. Which conclusion is most reasonable?",
+o: ["Sample X may be metallic because of sonority","Sample X must be a gas","Sample X must be a non-metal","Sample X cannot conduct electricity"],
+a: 0,
+level:"application"
+},
+
+{
+q: "A kitchen utensil needs to transfer heat efficiently from a hot surface to the food. Which material would be a suitable choice?",
+o: ["Aluminium","Sulphur","Wood","Rubber"],
+a: 0,
+level:"application"
+},
+
+{
+q: "A student observes that a sample is shiny, can be hammered into a sheet and conducts electricity. How should the sample most likely be classified?",
+o: ["Metal","Non-metal","Insulator","Gas"],
+a: 0,
+level:"application"
+},
+
+{
+q: "A material breaks into pieces when hammered instead of forming a sheet. Which property is it lacking?",
+o: ["Malleability","Sonority","Electrical resistance","Transparency"],
+a: 0,
+level:"application"
+},
+
+{
+q: "A wire-making company wants a material that can be stretched into a long thin wire. Which property should engineers look for?",
+o: ["Ductility","Malleability","Brittleness","Dullness"],
+a: 0,
+level:"application"
+},
+
+{
+q: "A school wants to make a decorative nameplate from a material that has a bright metallic appearance. Which property is especially useful?",
+o: ["Lustre","Brittleness","Poor conductivity","Solubility"],
+a: 0,
+level:"application"
+},
+
+{
+q: "A student has two unknown samples. Sample A is shiny and conducts electricity; Sample B is dull and does not conduct electricity well. Which is the better classification?",
+o: ["A is likely a metal and B is likely a non-metal","A is a non-metal and B is a metal","Both must be metals","Both must be non-metals"],
+a: 0,
+level:"application"
+},
+
+{
+q: "A company wants to manufacture a metal sheet without the material cracking during hammering. Which property is essential?",
+o: ["Malleability","Sonority","Dullness","Brittleness"],
+a: 0,
+level:"application"
+},
+
+{
+q: "A student needs to choose a material for an electrical connector. Which observation would be the strongest reason to select copper?",
+o: ["Copper conducts electricity well","Copper is a poor conductor","Copper is brittle","Copper cannot be shaped"],
+a: 0,
+level:"application"
+},
+
+{
+q: "A bell-maker chooses between a metal and a piece of sulphur. Which property makes the metal the more suitable choice?",
+o: ["Sonority","Poor conductivity","Brittleness","Lack of lustre"],
+a: 0,
+level:"application"
+},
+
+{
+q: "A manufacturer needs a material for a thin cooking foil. Which combination is most desirable?",
+o: ["Malleability and suitable heat conduction","Brittleness and poor heat conduction","Dullness and brittleness","Poor conductivity and inability to form sheets"],
+a: 0,
+level:"application"
+},
+
+{
+q: "A student says, 'Every substance that is shiny must be a metal.' Which response is scientifically better?",
+o: ["Shininess alone is not enough; several properties should be considered","The statement is always true","Only gases can be shiny","All non-metals are shiny"],
+a: 0,
+level:"application"
+},
+
+{
+q: "A material is a poor conductor, brittle in solid form and lacks metallic lustre. Which classification is most likely?",
+o: ["Non-metal","Metal","Alloy only","Liquid metal"],
+a: 0,
+level:"application"
+},
+
+{
+q: "A designer wants to make a long, thin metal wire and a thin metal sheet from the same material. Which pair of properties is needed?",
+o: ["Ductility and malleability","Sonority and brittleness","Dullness and brittleness","Poor conductivity and hardness"],
+a: 0,
+level:"application"
+},
+
+{
+q: "A student tests a sample and finds that it is a good conductor of heat and electricity and can be shaped into sheets. What broad conclusion is most reasonable?",
+o: ["It is likely a metal","It must be a gas","It is certainly a non-metal","It cannot be a solid"],
+a: 0,
+level:"application"
+},
+
+{
+q: "A school is replacing a plastic electrical wire with another material. Which property should the replacement material have for carrying current effectively?",
+o: ["Good electrical conductivity","Poor electrical conductivity","Brittleness","Lack of lustre"],
+a: 0,
+level:"application"
+},
+
+{
+q: "A student compares a copper wire with a sulphur piece. Which observation best explains why copper is preferred for wiring?",
+o: ["Copper conducts electricity and can be drawn into wires","Sulphur is more ductile than copper","Sulphur is a better conductor","Copper cannot be shaped"],
+a: 0,
+level:"application"
+},
+
+{
+q: "A manufacturer wants a material that can be shaped into sheets and wires and also conducts electricity. Which type of material is the best general choice?",
+o: ["Metal","Typical solid non-metal","Wood","Rubber"],
+a: 0,
+level:"application"
+}
+
+];
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let currentStudent = "";
+
+let answers = new Array(totalQuestions).fill(null);
+
+let violations = 0;
+
+const maxViolations = 3;
+
+let timeRemaining = totalTime;
+
+let timerInterval = null;
+
+let submitted = false;
+
+
+/* =========================================================
+   BEGIN TEST
+========================================================= */
+
+function beginTest(){
+
+    const name = document.getElementById("studentName").value;
+
+    const agreed = document.getElementById("agreement").checked;
+
+    if(!name){
+
+        alert("Please select your registered name.");
+
+        return;
+    }
+
+    if(!agreed){
+
+        alert("Please read and agree to the test rules before starting.");
+
+        return;
+    }
+
+    currentStudent = name;
+
+    document.getElementById("studentDisplay").textContent =
+        currentStudent;
+
+    document.getElementById("startScreen").classList.add("hidden");
+
+    document.getElementById("quizScreen").classList.remove("hidden");
+
+    renderQuestions();
+
+    startTimer();
+
+    enableMonitoring();
+
+    requestFullscreen();
+
+    window.scrollTo(0,0);
+}
+
+
+/* =========================================================
+   RENDER QUESTIONS
+========================================================= */
+
+function renderQuestions(){
+
+    const container =
+        document.getElementById("questionsContainer");
+
+    container.innerHTML = "";
+
+    questions.forEach(function(item,index){
+
+        const card = document.createElement("div");
+
+        card.className = "question-card";
+
+        let levelText = "";
+
+        if(item.level === "easy"){
+            levelText = "🟢 EASY";
+        }
+
+        if(item.level === "moderate"){
+            levelText = "🟡 MODERATE";
+        }
+
+        if(item.level === "application"){
+            levelText = "🔴 APPLICATION";
+        }
+
+        let optionsHTML = "";
+
+        item.o.forEach(function(option,indexOption){
+
+            const letter =
+                String.fromCharCode(65 + indexOption);
+
+            optionsHTML += `
+                <label class="option" id="option-${index}-${indexOption}">
+                    <input
+                        type="radio"
+                        name="q${index}"
+                        value="${indexOption}"
+                        onchange="selectAnswer(${index},${indexOption})"
+                    >
+                    <strong>${letter}.</strong> ${escapeHTML(option)}
+                </label>
+            `;
+        });
+
+        card.innerHTML = `
+            <div class="level ${item.level}">
+                ${levelText}
+            </div>
+
+            <div class="question-number">
+                Question ${index+1} of ${totalQuestions}
+            </div>
+
+            <div class="question-text">
+                ${escapeHTML(item.q)}
+            </div>
+
+            <div>
+                ${optionsHTML}
+            </div>
+        `;
+
+        container.appendChild(card);
+
+    });
+
+    updateProgress();
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(text){
+
+    return text
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+
+/* =========================================================
+   ANSWER SELECTION
+========================================================= */
+
+function selectAnswer(questionIndex,optionIndex){
+
+    answers[questionIndex] = optionIndex;
+
+    for(let i=0;i<4;i++){
+
+        const element =
+            document.getElementById(
+                "option-" + questionIndex + "-" + i
+            );
+
+        if(element){
+            element.classList.remove("selected");
+        }
+    }
+
+    const selected =
+        document.getElementById(
+            "option-" + questionIndex + "-" + optionIndex
+        );
+
+    if(selected){
+        selected.classList.add("selected");
+    }
+
+    updateProgress();
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
+
+function updateProgress(){
+
+    const answered =
+        answers.filter(function(a){
+            return a !== null;
+        }).length;
+
+    const percent =
+        (answered / totalQuestions) * 100;
+
+    document.getElementById("progress").style.width =
+        percent + "%";
+
+    document.getElementById("progressText").textContent =
+        answered + " of " + totalQuestions + " answered";
+}
+
+
+/* =========================================================
+   TIMER
+========================================================= */
+
+function startTimer(){
+
+    updateTimer();
+
+    timerInterval = setInterval(function(){
+
+        if(submitted){
+            clearInterval(timerInterval);
+            return;
+        }
+
+        timeRemaining--;
+
+        updateTimer();
+
+        if(timeRemaining <= 0){
+
+            clearInterval(timerInterval);
+
+            alert(
+                "⏰ Time is over. Your test will now be submitted automatically."
+            );
+
+            submitQuiz(true);
+        }
+
+    },1000);
+}
+
+
+function updateTimer(){
+
+    const minutes =
+        Math.floor(timeRemaining / 60);
+
+    const seconds =
+        timeRemaining % 60;
+
+    document.getElementById("timer").textContent =
+        String(minutes).padStart(2,"0") +
+        ":" +
+        String(seconds).padStart(2,"0");
+}
+
+
+/* =========================================================
+   FULLSCREEN
+========================================================= */
+
+function requestFullscreen(){
+
+    const element = document.documentElement;
+
+    if(element.requestFullscreen){
+
+        element.requestFullscreen().catch(function(){});
+
+    }else if(element.webkitRequestFullscreen){
+
+        element.webkitRequestFullscreen();
+
+    }
+}
+
+
+/* =========================================================
+   VIOLATION MONITORING
+========================================================= */
+
+function enableMonitoring(){
+
+    document.addEventListener(
+        "visibilitychange",
+        visibilityHandler
+    );
+
+    window.addEventListener(
+        "blur",
+        blurHandler
+    );
+
+    document.addEventListener(
+        "fullscreenchange",
+        fullscreenHandler
+    );
+
+    document.addEventListener(
+        "contextmenu",
+        preventContextMenu
+    );
+
+    document.addEventListener(
+        "copy",
+        preventClipboard
+    );
+
+    document.addEventListener(
+        "cut",
+        preventClipboard
+    );
+
+    document.addEventListener(
+        "paste",
+        preventClipboard
+    );
+
+    document.addEventListener(
+        "keydown",
+        keyboardHandler
+    );
+}
+
+
+function visibilityHandler(){
+
+    if(document.hidden && !submitted){
+
+        registerViolation(
+            "You switched away from the test."
+        );
+
+    }
+}
+
+
+function blurHandler(){
+
+    if(!submitted){
+
+        registerViolation(
+            "The test window lost focus."
+        );
+
+    }
+}
+
+
+function fullscreenHandler(){
+
+    if(
+        !document.fullscreenElement &&
+        !submitted
+    ){
+
+        registerViolation(
+            "You exited fullscreen mode."
+        );
+
+    }
+}
+
+
+function preventContextMenu(event){
+
+    if(!submitted){
+
+        event.preventDefault();
+
+        registerViolation(
+            "Right-click is disabled during the test."
+        );
+
+    }
+}
+
+
+function preventClipboard(event){
+
+    if(!submitted){
+
+        event.preventDefault();
+
+        registerViolation(
+            "Copy and paste are disabled during the test."
+        );
+
+    }
+}
+
+
+function keyboardHandler(event){
+
+    if(submitted){
+        return;
+    }
+
+    const key = event.key.toLowerCase();
+
+    const blocked =
+        event.ctrlKey &&
+        ["c","v","x","u","s","p"].includes(key);
+
+    const blockedMac =
+        event.metaKey &&
+        ["c","v","x","u","s","p"].includes(key);
+
+    const blockedFunction =
+        event.key === "F12";
+
+    if(
+        blocked ||
+        blockedMac ||
+        blockedFunction
+    ){
+
+        event.preventDefault();
+
+        registerViolation(
+            "A restricted keyboard shortcut was detected."
+        );
+    }
+}
+
+
+/* =========================================================
+   REGISTER VIOLATION
+========================================================= */
+
+let violationCooldown = false;
+
+function registerViolation(message){
+
+    if(submitted){
+        return;
+    }
+
+    if(violationCooldown){
+        return;
+    }
+
+    violationCooldown = true;
+
+    setTimeout(function(){
+        violationCooldown = false;
+    },2000);
+
+    violations++;
+
+    const box =
+        document.getElementById("violationBox");
+
+    box.textContent =
+        "⚠️ Violation " +
+        violations +
+        "/" +
+        maxViolations +
+        ": " +
+        message;
+
+    box.style.display = "block";
+
+    setTimeout(function(){
+
+        box.style.display = "none";
+
+    },3500);
+
+    if(violations >= maxViolations){
+
+        setTimeout(function(){
+
+            alert(
+                "⚠️ Three violations were detected. Your test will be automatically submitted and flagged for review."
+            );
+
+            submitQuiz(true);
+
+        },500);
+
+    }
+}
+
+
+/* =========================================================
+   SUBMIT QUIZ
+========================================================= */
+
+function submitQuiz(automatic){
+
+    if(submitted){
+        return;
+    }
+
+    submitted = true;
+
+    if(timerInterval){
+        clearInterval(timerInterval);
+    }
+
+    let correct = 0;
+
+    let wrong = 0;
+
+    let unanswered = 0;
+
+    questions.forEach(function(question,index){
+
+        if(answers[index] === null){
+
+            unanswered++;
+
+        }else if(
+            answers[index] === question.a
+        ){
+
+            correct++;
+
+        }else{
+
+            wrong++;
+
+        }
+
+    });
+
+    const percentage =
+        Math.round(
+            (correct / totalQuestions) * 100
+        );
+
+    const grade =
+        getGrade(percentage);
+
+    let status = "Normal";
+
+    if(violations === 1 || violations === 2){
+
+        status = "Possible Malpractice";
+
+    }
+
+    if(violations >= 3){
+
+        status = "Flagged";
+
+    }
+
+    const resultData = {
+
+        name: currentStudent,
+
+        classId: "7",
+
+        quizId: quizId,
+
+        quizTitle: quizTitle,
+
+        chapter: chapterName,
+
+        score: correct,
+
+        total: totalQuestions,
+
+        percentage: percentage,
+
+        grade: grade,
+
+        correct: correct,
+
+        wrong: wrong,
+
+        unanswered: unanswered,
+
+        violations: violations,
+
+        status: status,
+
+        automaticSubmission: automatic,
+
+        submittedForReview: violations >= 3,
+
+        date: new Date().toLocaleDateString(),
+
+        timestamp: firebase.database.ServerValue.TIMESTAMP
+
+    };
+
+    database.ref("quizResults").push(resultData)
+
+    .then(function(){
+
+        showResult(
+            correct,
+            wrong,
+            unanswered,
+            percentage,
+            grade,
+            automatic
+        );
+
+    })
+
+    .catch(function(error){
+
+        console.error(error);
+
+        alert(
+            "Your result could not be saved. Please contact your teacher."
+        );
+
+        submitted = false;
+
+    });
+}
+
+
+/* =========================================================
+   GRADE
+========================================================= */
+
+function getGrade(percent){
+
+    if(percent >= 90){
+        return "A+";
+    }
+
+    if(percent >= 80){
+        return "A";
+    }
+
+    if(percent >= 70){
+        return "B+";
+    }
+
+    if(percent >= 60){
+        return "B";
+    }
+
+    if(percent >= 50){
+        return "C";
+    }
+
+    if(percent >= 40){
+        return "D";
+    }
+
+    return "Needs Improvement";
+}
+
+
+/* =========================================================
+   RESULT SCREEN
+========================================================= */
+
+function showResult(
+    correct,
+    wrong,
+    unanswered,
+    percentage,
+    grade,
+    automatic
+){
+
+    document.getElementById("quizScreen")
+        .classList.add("hidden");
+
+    document.getElementById("resultScreen")
+        .classList.remove("hidden");
+
+    document.getElementById("finalScore")
+        .textContent =
+        correct + "/" + totalQuestions;
+
+    document.getElementById("percentage")
+        .textContent =
+        percentage + "%";
+
+    document.getElementById("grade")
+        .textContent =
+        "Grade: " + grade;
+
+    document.getElementById("resultMessage")
+        .textContent =
+        automatic
+        ? "Your test was submitted automatically."
+        : "Your test has been submitted successfully.";
+
+    document.getElementById("resultDetails")
+        .textContent =
+        "Correct: " +
+        correct +
+        " | Wrong: " +
+        wrong +
+        " | Unanswered: " +
+        unanswered +
+        " | Violations: " +
+        violations;
+
+    buildReview();
+}
+
+
+/* =========================================================
+   ANSWER REVIEW
+========================================================= */
+
+function buildReview(){
+
+    const container =
+        document.getElementById("reviewContainer");
+
+    container.innerHTML = "";
+
+    questions.forEach(function(question,index){
+
+        const userAnswer =
+            answers[index];
+
+        const item =
+            document.createElement("div");
+
+        item.className = "review-item";
+
+        if(userAnswer === null){
+
+            item.classList.add(
+                "unanswered-review"
+            );
+
+            item.innerHTML =
+                "<strong>Question " +
+                (index+1) +
+                "</strong><br>" +
+                escapeHTML(question.q) +
+                "<br><br>" +
+                "Not answered.";
+
+        }else if(userAnswer === question.a){
+
+            item.classList.add(
+                "correct-review"
+            );
+
+            item.innerHTML =
+                "<strong>Question " +
+                (index+1) +
+                " ✓</strong><br>" +
+                escapeHTML(question.q) +
+                "<br><br>" +
+                "Your answer: " +
+                escapeHTML(
+                    question.o[userAnswer]
+                );
+
+        }else{
+
+            item.classList.add(
+                "wrong-review"
+            );
+
+            item.innerHTML =
+                "<strong>Question " +
+                (index+1) +
+                " ✗</strong><br>" +
+                escapeHTML(question.q) +
+                "<br><br>" +
+                "Your answer: " +
+                escapeHTML(
+                    question.o[userAnswer]
+                ) +
+                "<br>" +
+                "Correct answer: " +
+                escapeHTML(
+                    question.o[question.a]
+                );
+
+        }
+
+        container.appendChild(item);
+
+    });
+}
+
+
+/* =========================================================
+   PREVENT BACK / RELOAD ACCIDENTS
+========================================================= */
+
+window.addEventListener("beforeunload", function(event){
+
+    if(
+        !submitted &&
+        !document.getElementById("quizScreen")
+            .classList.contains("hidden")
+    ){
+
+        event.preventDefault();
+
+        event.returnValue = "";
+
+    }
+
+});
+
+
+/* =========================================================
+   INITIAL BUTTON STATE
+========================================================= */
+
+document.getElementById("startBtn").disabled = false;
+
+</script>
+
+</body>
+</html>
