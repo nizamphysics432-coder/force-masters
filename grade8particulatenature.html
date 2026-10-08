@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Particulate Nature of Matter - Class 8 Science</title>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:linear-gradient(135deg,#667eea,#764ba2);
+    min-height:100vh;
+    color:#222;
+}
+
+.container{
+    max-width:950px;
+    margin:auto;
+    padding:20px;
+}
+
+.card{
+    background:white;
+    border-radius:20px;
+    padding:30px;
+    box-shadow:0 10px 35px rgba(0,0,0,.25);
+}
+
+h1{
+    text-align:center;
+    color:#4b3f72;
+    margin-top:0;
+}
+
+.subtitle{
+    text-align:center;
+    color:#666;
+    margin-bottom:25px;
+}
+
+.info{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-bottom:25px;
+}
+
+.info-box{
+    background:#f1f3ff;
+    padding:15px;
+    border-radius:12px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.instructions{
+    background:#fff8e1;
+    border-left:5px solid #ffb300;
+    padding:18px;
+    border-radius:10px;
+    margin-bottom:20px;
+}
+
+.instructions li{
+    margin:8px 0;
+}
+
+select{
+    width:100%;
+    padding:14px;
+    border:2px solid #ddd;
+    border-radius:10px;
+    font-size:16px;
+    margin:10px 0 15px;
+}
+
+.agreement{
+    margin:15px 0;
+    padding:15px;
+    background:#f5f5f5;
+    border-radius:10px;
+}
+
+button{
+    border:none;
+    border-radius:10px;
+    padding:13px 20px;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+#start{
+    width:100%;
+    background:#4caf50;
+    color:white;
+    font-size:18px;
+}
+
+#start:disabled{
+    background:#aaa;
+    cursor:not-allowed;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+    margin-bottom:15px;
+    flex-wrap:wrap;
+}
+
+.timer{
+    background:#e53935;
+    color:white;
+    padding:12px 18px;
+    border-radius:10px;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.violation{
+    background:#fff3cd;
+    color:#856404;
+    padding:10px 15px;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+.progress-wrap{
+    background:#ddd;
+    height:12px;
+    border-radius:10px;
+    overflow:hidden;
+    margin-bottom:20px;
+}
+
+#bar{
+    height:100%;
+    width:0%;
+    background:#4caf50;
+    transition:.3s;
+}
+
+.question-card{
+    background:#f8f9ff;
+    padding:25px;
+    border-radius:15px;
+    margin-bottom:20px;
+}
+
+.question-number{
+    font-weight:bold;
+    color:#6750a4;
+    margin-bottom:12px;
+}
+
+.question{
+    font-size:20px;
+    font-weight:bold;
+    line-height:1.5;
+    margin-bottom:20px;
+}
+
+.option{
+    display:block;
+    background:white;
+    border:2px solid #ddd;
+    border-radius:10px;
+    padding:13px;
+    margin:10px 0;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.option:hover{
+    border-color:#6750a4;
+    background:#f4f0ff;
+}
+
+.option input{
+    margin-right:10px;
+}
+
+.navigation{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+#prev{
+    background:#757575;
+    color:white;
+}
+
+#next{
+    background:#6750a4;
+    color:white;
+}
+
+#submit{
+    background:#e53935;
+    color:white;
+}
+
+#quiz,#result{
+    display:none;
+}
+
+.score-box{
+    text-align:center;
+    padding:25px;
+    background:#f1f3ff;
+    border-radius:15px;
+    margin-bottom:20px;
+}
+
+.score{
+    font-size:48px;
+    font-weight:bold;
+    color:#6750a4;
+}
+
+.review-item{
+    padding:15px;
+    border-radius:10px;
+    margin:10px 0;
+    background:#f5f5f5;
+}
+
+.correct{
+    border-left:5px solid #4caf50;
+}
+
+.wrong{
+    border-left:5px solid #e53935;
+}
+
+.unanswered{
+    border-left:5px solid #ff9800;
+}
+
+.hidden{
+    display:none!important;
+}
+
+@media(max-width:650px){
+    .info{
+        grid-template-columns:1fr;
+    }
+
+    .card{
+        padding:20px;
+    }
+
+    .question{
+        font-size:18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- START SCREEN -->
+<div class="card" id="startScreen">
+
+<h1>🔬 Particulate Nature of Matter</h1>
+<div class="subtitle">Class 8 Science Quiz</div>
+
+<div class="info">
+    <div class="info-box">📝 60 Questions</div>
+    <div class="info-box">⏱️ 30 Minutes</div>
+    <div class="info-box">🎯 MCQ Quiz</div>
+</div>
+
+<div class="instructions">
+<h3>📋 Instructions</h3>
+<ul>
+<li>Select your registered name from the list.</li>
+<li>The quiz contains 60 multiple-choice questions.</li>
+<li>There are 20 Easy, 20 Moderate and 20 Application-Based questions.</li>
+<li>You have 30 minutes to complete the quiz.</li>
+<li>The quiz will automatically submit when the time expires.</li>
+<li>Stay on the quiz page during the test.</li>
+<li>Do not switch tabs or windows.</li>
+<li>Do not exit fullscreen mode.</li>
+<li>Copy, paste, right-click and certain keyboard shortcuts are disabled.</li>
+<li>Repeated violations may result in automatic submission and flagging.</li>
+<li>Make sure you submit your answers before leaving the quiz.</li>
+</ul>
+</div>
+
+<label><strong>👨‍🎓 Select Your Name</strong></label>
+
+<select id="studentName">
+<option value="">-- Select your name --</option>
+
+<option>Abaan Shyna jasim</option>
+<option>Abdallah Fahad Hussain</option>
+<option>Abdulla Talha fiaz</option>
+<option>Muhammed Asghar</option>
+<option>Abdurahman khan</option>
+<option>Akif Ahmed</option>
+<option>Ayaan islam</option>
+<option>ayman Ashfaq</option>
+<option>Denin joji</option>
+<option>Faizan Ajmeer shah</option>
+<option>Faizan Muhammed rafeek</option>
+<option>Gulam Muhammed Hasnain</option>
+<option>Imran</option>
+<option>Irfan muhammed</option>
+<option>Ismail Zabiullah khan</option>
+<option>jiss Vargheese</option>
+<option>Jubair Maqil</option>
+<option>kewin</option>
+<option>M. shafeeq ahmed</option>
+<option>Mohammed Jalaludhin</option>
+<option>Muhammed Razin</option>
+<option>Muhammed Iqbal</option>
+<option>Muhammed Abaan CA</option>
+<option>Muhammed Umer rahmat</option>
+<option>Muhammed faaz</option>
+<option>Muhammed shahid kv</option>
+<option>Muzzammil Nawaz khan</option>
+<option>Nadiah Abdulla</option>
+<option>Rayan suliman</option>
+<option>Shayan Ahmed</option>
+<option>Shefin Muhammed</option>
+<option>Syed Muhammed Hamdan</option>
+<option>Ameen Badusha</option>
+<option>Muhammed Rifin</option>
+<option>Jawad Ahmed</option>
+
+</select>
+
+<div class="agreement">
+<label>
+<input type="checkbox" id="agreement">
+I confirm that I am the student selected above and agree to follow the quiz rules.
+</label>
+</div>
+
+<button id="start">🚀 Start Test</button>
+
+</div>
+
+
+<!-- QUIZ -->
+<div class="card" id="quiz">
+
+<div class="topbar">
+<div>
+<strong id="studentDisplay"></strong>
+</div>
+
+<div class="violation">
+⚠️ Violations: <span id="violationCount">0</span>/3
+</div>
+
+<div class="timer">
+⏱️ <span id="timer">30:00</span>
+</div>
+</div>
+
+<div class="progress-wrap">
+<div id="bar"></div>
+</div>
+
+<div id="questionArea"></div>
+
+<div class="navigation">
+<button id="prev">⬅ Previous</button>
+<button id="next">Next ➡</button>
+<button id="submit">Submit Test</button>
+</div>
+
+</div>
+
+
+<!-- RESULT -->
+<div class="card" id="result">
+
+<h1>🎉 Quiz Completed</h1>
+
+<div class="score-box">
+<div>Your Score</div>
+<div class="score" id="score"></div>
+<div id="summary"></div>
+</div>
+
+<h2>📖 Answer Review</h2>
+
+<div id="review"></div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   FIREBASE CONFIG
+========================= */
+
+const firebaseConfig = {
+    apiKey: "AIzaSyCfI3zEpaiRA3OjgTuvnuA3GGyQGNpU",
+    authDomain: "sciencequiz2026-ccd77.firebaseapp.com",
+    databaseURL: "https://sciencequiz2026-ccd77-default-rtdb.firebaseio.com",
+    projectId: "sciencequiz2026-ccd77",
+    storageBucket: "sciencequiz2026-ccd77.firebasestorage.app",
+    messagingSenderId: "412753144312",
+    appId: "1:412753144312:web:fe66b332abcadfb0438e0d",
+    measurementId: "G-YC0DM7M07F"
+};
+
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+
+
+/* =========================
+   QUESTION BANK
+========================= */
+
+const questions = [
+
+/* ===== EASY 1-20 ===== */
+
+{
+q:"What is matter made up of?",
+o:["Tiny particles","Only water","Only air","Only solids"],
+a:0,
+level:"Easy"
+},
+
+{
+q:"In which state are particles packed most closely?",
+o:["Solid","Liquid","Gas","Plasma"],
+a:0,
+level:"Easy"
+},
+
+{
+q:"How do particles in a solid generally move?",
+o:["They vibrate about fixed positions","They move freely everywhere","They do not move at all","They disappear"],
+a:0,
+level:"Easy"
+},
+
+{
+q:"In which state are particles generally farthest apart?",
+o:["Gas","Solid","Liquid","Ice"],
+a:0,
+level:"Easy"
+},
+
+{
+q:"What is diffusion?",
+o:["Movement of particles from a region of higher concentration to lower concentration","Freezing of water","Melting of a solid","Formation of crystals"],
+a:0,
+level:"Easy"
+},
+
+{
+q:"Why can gases be compressed easily?",
+o:["There are large spaces between their particles","Their particles are very large","Their particles do not move","They have no particles"],
+a:0,
+level:"Easy"
+},
+
+{
+q:"What is the change of state from solid to liquid called?",
+o:["Melting","Freezing","Condensation","Evaporation"],
+a:0,
+level:"Easy"
+},
+
+{
+q:"What is the change from gas to liquid called?",
+o:["Condensation","Melting","Sublimation","Freezing"],
+a:0,
+level:"Easy"
+},
+
+{
+q:"What is the change from liquid to gas at the surface called?",
+o:["Evaporation","Freezing","Condensation","Deposition"],
+a:0,
+level:"Easy"
+},
+
+{
+q:"Which state has a definite shape and definite volume?",
+o:["Solid","Liquid","Gas","All gases"],
+a:0,
+level:"Easy"
+},
+
+{
+q:"Which state has a definite volume but no definite shape?",
+o:["Liquid","Solid","Gas","None"],
+a:0,
+level:"Easy"
+},
+
+{
+q:"Which state has neither definite shape nor definite volume?",
+o:["Gas","Solid","Liquid","Ice"],
+a:0,
+level:"Easy"
+},
+
+{
+q:"The smell of perfume spreading through a room is an example of:",
+o:["Diffusion","Freezing","Melting","Filtration"],
+a:0,
+level:"Easy"
+},
+
+{
+q:"What generally happens to particle movement when matter is heated?",
+o:["Particles move faster","Particles stop moving","Particles disappear","Particles become fixed"],
+a:0,
+level:"Easy"
+},
+
+{
+q:"What generally happens to particle movement when matter is cooled?",
+o:["Particles move more slowly","Particles move infinitely fast","Particles disappear","Particles become gases"],
+a:0,
+level:"Easy"
+},
+
+{
+q:"What is the direct change from solid to gas called?",
+o:["Sublimation","Condensation","Freezing","Melting"],
+a:0,
+level:"Easy"
+},
+
+{
+q:"What is the direct change from gas to solid called?",
+o:["Deposition","Melting","Evaporation","Boiling"],
+a:0,
+level:"Easy"
+},
+
+{
+q:"Why can liquids flow?",
+o:["Their particles can move past one another","Their particles are fixed permanently","They have no particles","They contain only gases"],
+a:0,
+level:"Easy"
+},
+
+{
+q:"How do gas particles generally move?",
+o:["Freely in all directions","Only up and down","Only in circles","They remain fixed"],
+a:0,
+level:"Easy"
+},
+
+{
+q:"Which statement is correct about matter?",
+o:["Matter is made of particles","Matter has no particles","Only solids contain particles","Only gases contain particles"],
+a:0,
+level:"Easy"
+},
+
+
+/* ===== MODERATE 21-40 ===== */
+
+{
+q:"A drop of ink spreads through still water. Which process is mainly responsible?",
+o:["Diffusion","Freezing","Condensation","Sedimentation"],
+a:0,
+level:"Moderate"
+},
+
+{
+q:"Diffusion usually occurs fastest in:",
+o:["Gases","Solids","Very cold solids","Crystals"],
+a:0,
+level:"Moderate"
+},
+
+{
+q:"When air is pushed into a syringe and the plunger is pressed, the air can be compressed because:",
+o:["There are spaces between gas particles","Gas particles disappear","Gas particles become liquids","The syringe creates new particles"],
+a:0,
+level:"Moderate"
+},
+
+{
+q:"Gas pressure is produced mainly because gas particles:",
+o:["Collide with the walls of the container","Become fixed","Stop moving","Change into solids"],
+a:0,
+level:"Moderate"
+},
+
+{
+q:"Why does evaporation produce a cooling effect?",
+o:["Higher-energy particles escape from the surface","Particles become heavier","The liquid gains heat from nowhere","Particles stop moving"],
+a:0,
+level:"Moderate"
+},
+
+{
+q:"A liquid takes the shape of its container because its particles:",
+o:["Can move past one another","Are permanently fixed","Have no attraction at all","Do not move"],
+a:0,
+level:"Moderate"
+},
+
+{
+q:"Increasing temperature generally makes diffusion faster because particles:",
+o:["Move faster","Become larger","Stop colliding","Become fixed"],
+a:0,
+level:"Moderate"
+},
+
+{
+q:"Which observation supports the idea that particles of matter are constantly moving?",
+o:["The smell of perfume spreads through a room","A stone remains on a table","A book has a fixed shape","A chair has a fixed position"],
+a:0,
+level:"Moderate"
+},
+
+{
+q:"When water freezes, the particles generally:",
+o:["Have less kinetic energy and become more restricted in movement","Move much faster","Disappear","Become gas particles"],
+a:0,
+level:"Moderate"
+},
+
+{
+q:"When ice melts, the particles:",
+o:["Gain freedom to move while remaining the same substance","Become a different element","Disappear completely","Become atoms of another substance"],
+a:0,
+level:"Moderate"
+},
+
+{
+q:"Why do gases mix easily?",
+o:["Their particles move freely and randomly","Their particles are fixed","Their particles have no mass","Their particles never collide"],
+a:0,
+level:"Moderate"
+},
+
+{
+q:"When a solid is heated, its particles generally:",
+o:["Vibrate more vigorously","Stop vibrating","Become motionless","Disappear"],
+a:0,
+level:"Moderate"
+},
+
+{
+q:"Why can a substance dissolve in a liquid?",
+o:["Particles of the substance can spread among particles of the liquid","The substance loses all particles","The liquid becomes empty","The particles are destroyed"],
+a:0,
+level:"Moderate"
+},
+
+{
+q:"A liquid has no fixed shape mainly because:",
+o:["Its particles can move around each other","Its particles are completely fixed","It has no volume","It contains no particles"],
+a:0,
+level:"Moderate"
+},
+
+{
+q:"A gas fills the entire container because its particles:",
+o:["Move freely in all directions","Are locked together","Have fixed positions","Cannot move"],
+a:0,
+level:"Moderate"
+},
+
+{
+q:"A crystal of potassium permanganate is placed in water. The purple colour gradually spreads because of:",
+o:["Diffusion","Freezing","Boiling","Condensation"],
+a:0,
+level:"Moderate"
+},
+
+{
+q:"When a sealed balloon is cooled, the movement of its gas particles generally:",
+o:["Decreases","Increases greatly","Stops completely","Changes into solid movement"],
+a:0,
+level:"Moderate"
+},
+
+{
+q:"Wet clothes dry faster on a windy day because:",
+o:["Moving air helps remove water vapour near the surface","Wind freezes the water","Water particles become solids","Wind destroys water particles"],
+a:0,
+level:"Moderate"
+},
+
+{
+q:"Which arrangement correctly shows increasing distance between particles?",
+o:["Solid → Liquid → Gas","Gas → Liquid → Solid","Liquid → Gas → Solid","Solid → Gas → Liquid"],
+a:0,
+level:"Moderate"
+},
+
+{
+q:"When sugar dissolves completely in water, the sugar particles:",
+o:["Spread throughout the water","Disappear permanently","Turn into water","Become gas particles"],
+a:0,
+level:"Moderate"
+},
+
+
+/* ===== APPLICATION 41-60 ===== */
+
+{
+q:"A student sprays perfume in one corner of a classroom. After some time, students far away can smell it. What does this demonstrate?",
+o:["Particles of perfume move through the air","Air has no particles","Perfume changes into a solid","Perfume has no mass"],
+a:0,
+level:"Application"
+},
+
+{
+q:"A balloon becomes inflated when air is blown into it. Which idea does this demonstrate?",
+o:["Gas occupies space","Gas has no particles","Gas has no mass","Air is a solid"],
+a:0,
+level:"Application"
+},
+
+{
+q:"A balloon is placed in warm sunlight and becomes slightly larger. Which explanation is most appropriate?",
+o:["The gas particles move faster and push outward more strongly","The particles disappear","The rubber becomes water","The gas changes into a solid"],
+a:0,
+level:"Application"
+},
+
+{
+q:"A student adds sugar to water and stirs it. After some time the sugar is no longer visible. What happened?",
+o:["Sugar particles spread among water particles","Sugar particles disappeared","Water particles changed into sugar","Sugar became a gas"],
+a:0,
+level:"Application"
+},
+
+{
+q:"A drop of food colouring is added separately to hot water and cold water. The colour spreads faster in hot water. Why?",
+o:["Particles in hot water move faster","Hot water contains no particles","Cold water has no spaces","Colour disappears in hot water"],
+a:0,
+level:"Application"
+},
+
+{
+q:"A student pushes the plunger of a closed syringe containing air. The air volume decreases. What does this show?",
+o:["There are spaces between gas particles","Gas particles cannot move","Air has no volume","Gas particles disappear"],
+a:0,
+level:"Application"
+},
+
+{
+q:"A puddle of water left in the sun gradually disappears. Which process is taking place?",
+o:["Evaporation","Condensation","Freezing","Deposition"],
+a:0,
+level:"Application"
+},
+
+{
+q:"Water droplets appear on the outside of a glass containing ice-cold water. Where does the water come from?",
+o:["Water vapour in the surrounding air","Water passing through the glass","Ice particles escaping through the glass","The glass producing water"],
+a:0,
+level:"Application"
+},
+
+{
+q:"A metal spoon is heated. Its particles vibrate more strongly. What happens to their kinetic energy?",
+o:["It increases","It becomes zero","It disappears","It remains exactly zero"],
+a:0,
+level:"Application"
+},
+
+{
+q:"Two equal amounts of water are placed in a shallow plate and a narrow glass. Which is likely to evaporate faster?",
+o:["Water in the shallow plate","Water in the narrow glass","Both always at exactly the same rate","Neither"],
+a:0,
+level:"Application"
+},
+
+{
+q:"A student stirs sugar into water. Why does stirring generally make the sugar dissolve faster?",
+o:["It brings fresh water into contact with sugar particles","It destroys sugar particles","It freezes the water","It removes all water particles"],
+a:0,
+level:"Application"
+},
+
+{
+q:"A balloon filled with air is placed in a refrigerator and becomes smaller. Which explanation best fits the particle model?",
+o:["The gas particles move more slowly and exert less outward pressure","The gas particles disappear","The balloon becomes solid","Air changes into water immediately"],
+a:0,
+level:"Application"
+},
+
+{
+q:"A student wants to test whether temperature affects diffusion. Which experiment is most suitable?",
+o:["Compare diffusion in equal amounts of hot and cold water under similar conditions","Use different amounts of water and different dyes","Only observe one glass","Use a solid stone"],
+a:0,
+level:"Application"
+},
+
+{
+q:"A glass of sugar solution is left undisturbed after stirring. The sugar remains distributed throughout the water. Which idea does this support?",
+o:["Particles continue to move randomly","Particles stop moving completely","Sugar becomes solid","Water has no particles"],
+a:0,
+level:"Application"
+},
+
+{
+q:"An ice cube melts on a table. What happens to the particles during melting?",
+o:["They gain energy and can move more freely","They disappear","They stop moving","They become particles of a new substance"],
+a:0,
+level:"Application"
+},
+
+{
+q:"An air freshener is placed near a classroom door. Students eventually smell it across the room. Which factor is mainly responsible?",
+o:["Random motion of particles causes diffusion","Air particles are fixed","The smell travels only through solid objects","The particles have no motion"],
+a:0,
+level:"Application"
+},
+
+{
+q:"Oil and water form separate layers after being mixed. Which statement is most appropriate?",
+o:["The particles of the two substances have different interactions and do not mix uniformly","Oil has no particles","Water has no particles","All liquids must always mix"],
+a:0,
+level:"Application"
+},
+
+{
+q:"A balloon is heated gently. It expands. What is the best particle-model explanation?",
+o:["The gas particles gain kinetic energy and move more vigorously","The gas particles disappear","The rubber creates air particles","The particles stop moving"],
+a:0,
+level:"Application"
+},
+
+{
+q:"A student investigates diffusion at different temperatures. Which variable should be changed?",
+o:["Temperature","The identity of the classroom","The student's name","The colour of the table"],
+a:0,
+level:"Application"
+},
+
+{
+q:"A closed bottle containing air is warmed. What happens to the average kinetic energy of its gas particles?",
+o:["It increases","It decreases to zero","It remains zero","The particles disappear"],
+a:0,
+level:"Application"
+}
+
+];
+
+
+/* =========================
+   VARIABLES
+========================= */
+
+let currentQuestion = 0;
+let answers = new Array(questions.length).fill(null);
+let timeLeft = 30 * 60;
+let timerInterval = null;
+let violations = 0;
+let quizStarted = false;
+let submitting = false;
+let automaticSubmission = false;
+
+
+/* =========================
+   DOM ELEMENTS
+========================= */
+
+const startScreen = document.getElementById("startScreen");
+const quiz = document.getElementById("quiz");
+const result = document.getElementById("result");
+
+const studentName = document.getElementById("studentName");
+const agreement = document.getElementById("agreement");
+const startButton = document.getElementById("start");
+
+const questionArea = document.getElementById("questionArea");
+const timerDisplay = document.getElementById("timer");
+const violationCount = document.getElementById("violationCount");
+const progressBar = document.getElementById("bar");
+
+const prevButton = document.getElementById("prev");
+const nextButton = document.getElementById("next");
+const submitButton = document.getElementById("submit");
+
+const scoreDisplay = document.getElementById("score");
+const summaryDisplay = document.getElementById("summary");
+const reviewDisplay = document.getElementById("review");
+
+
+/* =========================
+   START BUTTON
+========================= */
+
+startButton.disabled = false;
+
+startButton.addEventListener("click", function(){
+
+    if(!studentName.value){
+        alert("Please select your name.");
+        return;
+    }
+
+    if(!agreement.checked){
+        alert("Please agree to the quiz rules before starting.");
+        return;
+    }
+
+    quizStarted = true;
+
+    document.getElementById("studentDisplay").textContent =
+        "👨‍🎓 " + studentName.value;
+
+    startScreen.style.display = "none";
+    quiz.style.display = "block";
+
+    startTimer();
+    renderQuestion();
+
+    requestFullscreen();
+
+});
+
+
+/* =========================
+   FULLSCREEN
+========================= */
+
+function requestFullscreen(){
+
+    const elem = document.documentElement;
+
+    if(elem.requestFullscreen){
+        elem.requestFullscreen().catch(function(){});
+    }else if(elem.webkitRequestFullscreen){
+        elem.webkitRequestFullscreen();
+    }
+}
+
+
+/* =========================
+   TIMER
+========================= */
+
+function startTimer(){
+
+    timerInterval = setInterval(function(){
+
+        timeLeft--;
+
+        updateTimer();
+
+        if(timeLeft <= 0){
+
+            clearInterval(timerInterval);
+
+            automaticSubmission = true;
+
+            alert("⏰ Time is over. Your test will be submitted automatically.");
+
+            submitQuiz(true);
+        }
+
+    },1000);
+
+}
+
+
+function updateTimer(){
+
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+
+    timerDisplay.textContent =
+        String(minutes).padStart(2,"0") +
+        ":" +
+        String(seconds).padStart(2,"0");
+}
+
+
+/* =========================
+   RENDER QUESTION
+========================= */
+
+function renderQuestion(){
+
+    const q = questions[currentQuestion];
+
+    let html = "";
+
+    html += `
+        <div class="question-card">
+
+            <div class="question-number">
+                Question ${currentQuestion + 1} of ${questions.length}
+                &nbsp; | &nbsp; ${q.level}
+            </div>
+
+            <div class="question">
+                ${q.q}
+            </div>
+    `;
+
+    q.o.forEach(function(option,index){
+
+        const checked =
+            answers[currentQuestion] === index
+            ? "checked"
+            : "";
+
+        html += `
+            <label class="option">
+                <input
+                    type="radio"
+                    name="answer"
+                    value="${index}"
+                    ${checked}
+                >
+                ${String.fromCharCode(65 + index)}. ${option}
+            </label>
+        `;
+
+    });
+
+    html += `</div>`;
+
+    questionArea.innerHTML = html;
+
+    document
+        .querySelectorAll('input[name="answer"]')
+        .forEach(function(input){
+
+            input.addEventListener("change",function(){
+
+                answers[currentQuestion] =
+                    Number(this.value);
+
+            });
+
+        });
+
+    updateNavigation();
+
+    const progress =
+        ((currentQuestion + 1) / questions.length) * 100;
+
+    progressBar.style.width = progress + "%";
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function updateNavigation(){
+
+    prevButton.style.visibility =
+        currentQuestion === 0
+        ? "hidden"
+        : "visible";
+
+    nextButton.style.display =
+        currentQuestion === questions.length - 1
+        ? "none"
+        : "block";
+
+}
+
+
+prevButton.addEventListener("click",function(){
+
+    if(currentQuestion > 0){
+
+        currentQuestion--;
+
+        renderQuestion();
+
+    }
+
+});
+
+
+nextButton.addEventListener("click",function(){
+
+    if(currentQuestion < questions.length - 1){
+
+        currentQuestion++;
+
+        renderQuestion();
+
+    }
+
+});
+
+
+submitButton.addEventListener("click",function(){
+
+    const unanswered =
+        answers.filter(function(a){
+            return a === null;
+        }).length;
+
+    if(unanswered > 0){
+
+        const confirmSubmit =
+            confirm(
+                "You have " +
+                unanswered +
+                " unanswered question(s).\n\n" +
+                "Are you sure you want to submit?"
+            );
+
+        if(!confirmSubmit){
+            return;
+        }
+
+    }else{
+
+        const confirmSubmit =
+            confirm("Are you sure you want to submit the test?");
+
+        if(!confirmSubmit){
+            return;
+        }
+
+    }
+
+    submitQuiz(false);
+
+});
+
+
+/* =========================
+   VIOLATION SYSTEM
+========================= */
+
+function registerViolation(reason){
+
+    if(!quizStarted || submitting){
+        return;
+    }
+
+    violations++;
+
+    violationCount.textContent = violations;
+
+    alert(
+        "⚠️ Quiz Rule Violation\n\n" +
+        reason +
+        "\n\nViolation " +
+        violations +
+        " of 3."
+    );
+
+    if(violations >= 3){
+
+        automaticSubmission = true;
+
+        alert(
+            "🚨 Maximum violations reached.\n\n" +
+            "Your test will be submitted automatically and flagged for teacher review."
+        );
+
+        submitQuiz(true);
+
+    }
+
+}
+
+
+/* =========================
+   TAB SWITCH
+========================= */
+
+document.addEventListener("visibilitychange",function(){
+
+    if(
+        quizStarted &&
+        document.visibilityState === "hidden"
+    ){
+
+        registerViolation(
+            "You switched away from the quiz tab."
+        );
+
+    }
+
+});
+
+
+/* =========================
+   WINDOW BLUR
+========================= */
+
+window.addEventListener("blur",function(){
+
+    if(quizStarted){
+
+        registerViolation(
+            "The quiz window lost focus."
+        );
+
+    }
+
+});
+
+
+/* =========================
+   FULLSCREEN EXIT
+========================= */
+
+document.addEventListener("fullscreenchange",function(){
+
+    if(
+        quizStarted &&
+        !document.fullscreenElement
+    ){
+
+        registerViolation(
+            "You exited fullscreen mode."
+        );
+
+    }
+
+});
+
+
+/* =========================
+   RIGHT CLICK
+========================= */
+
+document.addEventListener("contextmenu",function(e){
+
+    if(quizStarted){
+
+        e.preventDefault();
+
+        registerViolation(
+            "Right-click is not allowed during the test."
+        );
+
+    }
+
+});
+
+
+/* =========================
+   COPY / PASTE / CUT
+========================= */
+
+["copy","paste","cut"].forEach(function(eventName){
+
+    document.addEventListener(eventName,function(e){
+
+        if(quizStarted){
+
+            e.preventDefault();
+
+            registerViolation(
+                "Copy, paste and cut are not allowed."
+            );
+
+        }
+
+    });
+
+});
+
+
+/* =========================
+   KEYBOARD SHORTCUTS
+========================= */
+
+document.addEventListener("keydown",function(e){
+
+    if(!quizStarted){
+        return;
+    }
+
+    const key = e.key.toLowerCase();
+
+    if(
+        e.key === "F12" ||
+        (e.ctrlKey && ["c","v","x","u","s","p"].includes(key)) ||
+        (e.metaKey && ["c","v","x","u","s","p"].includes(key))
+    ){
+
+        e.preventDefault();
+
+        registerViolation(
+            "This keyboard shortcut is not allowed."
+        );
+
+    }
+
+});
+
+
+/* =========================
+   SUBMIT QUIZ
+========================= */
+
+function submitQuiz(autoSubmit){
+
+    if(submitting){
+        return;
+    }
+
+    submitting = true;
+
+    clearInterval(timerInterval);
+
+    const total = questions.length;
+
+    let correct = 0;
+    let wrong = 0;
+    let unanswered = 0;
+
+    questions.forEach(function(q,index){
+
+        if(answers[index] === null){
+
+            unanswered++;
+
+        }else if(answers[index] === q.a){
+
+            correct++;
+
+        }else{
+
+            wrong++;
+
+        }
+
+    });
+
+    const percentage =
+        Math.round((correct / total) * 100);
+
+    let grade = "";
+
+    if(percentage >= 90){
+        grade = "A+";
+    }else if(percentage >= 80){
+        grade = "A";
+    }else if(percentage >= 70){
+        grade = "B";
+    }else if(percentage >= 60){
+        grade = "C";
+    }else if(percentage >= 50){
+        grade = "D";
+    }else{
+        grade = "F";
+    }
+
+    let status = "Normal";
+
+    if(violations >= 3){
+        status = "Flagged";
+    }else if(violations > 0){
+        status = "Possible Malpractice";
+    }
+
+    if(autoSubmit){
+        automaticSubmission = true;
+    }
+
+    const resultData = {
+
+        name: studentName.value,
+
+        classId: "8",
+
+        quizId: "grade8_particulate_nature",
+
+        quizTitle:
+            "Particulate Nature of Matter - Class 8 Science",
+
+        chapter:
+            "Particulate Nature of Matter",
+
+        score: correct,
+
+        total: total,
+
+        percentage: percentage,
+
+        grade: grade,
+
+        correct: correct,
+
+        wrong: wrong,
+
+        unanswered: unanswered,
+
+        violations: violations,
+
+        status: status,
+
+        automaticSubmission:
+            automaticSubmission,
+
+        submittedForReview:
+            violations > 0,
+
+        date:
+            new Date().toLocaleString(),
+
+        timestamp:
+            Date.now()
+
+    };
+
+    database
+        .ref("quizResults")
+        .push(resultData)
+        .then(function(){
+
+            showResult(
+                correct,
+                total,
+                percentage,
+                grade,
+                wrong,
+                unanswered
+            );
+
+        })
+        .catch(function(error){
+
+            console.error(error);
+
+            alert(
+                "⚠️ Result could not be saved to Firebase.\n\n" +
+                "Please take a screenshot of your score and contact your teacher."
+            );
+
+            showResult(
+                correct,
+                total,
+                percentage,
+                grade,
+                wrong,
+                unanswered
+            );
+
+        });
+
+}
+
+
+/* =========================
+   SHOW RESULT
+========================= */
+
+function showResult(
+    correct,
+    total,
+    percentage,
+    grade,
+    wrong,
+    unanswered
+){
+
+    quiz.style.display = "none";
+    result.style.display = "block";
+
+    scoreDisplay.textContent =
+        correct + " / " + total;
+
+    summaryDisplay.innerHTML = `
+        <p><strong>Percentage:</strong> ${percentage}%</p>
+        <p><strong>Grade:</strong> ${grade}</p>
+        <p><strong>Correct:</strong> ${correct}</p>
+        <p><strong>Wrong:</strong> ${wrong}</p>
+        <p><strong>Unanswered:</strong> ${unanswered}</p>
+        <p><strong>Violations:</strong> ${violations}</p>
+    `;
+
+    generateReview();
+
+}
+
+
+/* =========================
+   ANSWER REVIEW
+========================= */
+
+function generateReview(){
+
+    let html = "";
+
+    questions.forEach(function(q,index){
+
+        const studentAnswer =
+            answers[index];
+
+        let className = "";
+        let resultText = "";
+
+        if(studentAnswer === null){
+
+            className = "unanswered";
+
+            resultText =
+                "⚠️ Not answered";
+
+        }else if(studentAnswer === q.a){
+
+            className = "correct";
+
+            resultText =
+                "✅ Correct";
+
+        }else{
+
+            className = "wrong";
+
+            resultText =
+                "❌ Incorrect";
+
+        }
+
+        html += `
+            <div class="review-item ${className}">
+
+                <strong>
+                    Q${index + 1}. ${q.q}
+                </strong>
+
+                <p>${resultText}</p>
+
+                <p>
+                    <strong>Correct Answer:</strong>
+                    ${String.fromCharCode(65 + q.a)}.
+                    ${q.o[q.a]}
+                </p>
+
+        `;
+
+        if(studentAnswer !== null){
+
+            html += `
+                <p>
+                    <strong>Your Answer:</strong>
+                    ${String.fromCharCode(65 + studentAnswer)}.
+                    ${q.o[studentAnswer]}
+                </p>
+            `;
+
+        }
+
+        html += `</div>`;
+
+    });
+
+    reviewDisplay.innerHTML = html;
+
+}
+
+</script>
+
+</body>
+</html>
