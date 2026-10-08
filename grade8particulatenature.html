@@ -414,7 +414,7 @@ I confirm that I am the student selected above and agree to follow the quiz rule
 ========================= */
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCfI3zEpaiRA3OjgTuvnuA3GGyQGNpU",
+    apiKey: "AIzaSyCfI3zEpaiRA3OjgYiTuvnuA3GGyQGNpU",
     authDomain: "sciencequiz2026-ccd77.firebaseapp.com",
     databaseURL: "https://sciencequiz2026-ccd77-default-rtdb.firebaseio.com",
     projectId: "sciencequiz2026-ccd77",
@@ -425,6 +425,7 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+
 const database = firebase.database();
 
 
@@ -878,6 +879,9 @@ let quizStarted = false;
 let submitting = false;
 let automaticSubmission = false;
 
+/* Prevent one browser action from being counted twice */
+let lastViolationTime = 0;
+
 
 /* =========================
    DOM ELEMENTS
@@ -949,7 +953,8 @@ function requestFullscreen(){
 
     if(elem.requestFullscreen){
         elem.requestFullscreen().catch(function(){});
-    }else if(elem.webkitRequestFullscreen){
+    }
+    else if(elem.webkitRequestFullscreen){
         elem.webkitRequestFullscreen();
     }
 }
@@ -961,7 +966,13 @@ function requestFullscreen(){
 
 function startTimer(){
 
+    updateTimer();
+
     timerInterval = setInterval(function(){
+
+        if(submitting){
+            return;
+        }
 
         timeLeft--;
 
@@ -973,7 +984,9 @@ function startTimer(){
 
             automaticSubmission = true;
 
-            alert("⏰ Time is over. Your test will be submitted automatically.");
+            alert(
+                "⏰ Time is over. Your test will be submitted automatically."
+            );
 
             submitQuiz(true);
         }
@@ -1049,8 +1062,12 @@ function renderQuestion(){
 
             input.addEventListener("change",function(){
 
-                answers[currentQuestion] =
-                    Number(this.value);
+                if(!submitting){
+
+                    answers[currentQuestion] =
+                        Number(this.value);
+
+                }
 
             });
 
@@ -1080,11 +1097,14 @@ function updateNavigation(){
         currentQuestion === questions.length - 1
         ? "none"
         : "block";
-
 }
 
 
 prevButton.addEventListener("click",function(){
+
+    if(!quizStarted || submitting){
+        return;
+    }
 
     if(currentQuestion > 0){
 
@@ -1099,6 +1119,10 @@ prevButton.addEventListener("click",function(){
 
 nextButton.addEventListener("click",function(){
 
+    if(!quizStarted || submitting){
+        return;
+    }
+
     if(currentQuestion < questions.length - 1){
 
         currentQuestion++;
@@ -1110,7 +1134,15 @@ nextButton.addEventListener("click",function(){
 });
 
 
+/* =========================
+   SUBMIT BUTTON
+========================= */
+
 submitButton.addEventListener("click",function(){
+
+    if(submitting){
+        return;
+    }
 
     const unanswered =
         answers.filter(function(a){
@@ -1156,6 +1188,19 @@ function registerViolation(reason){
     if(!quizStarted || submitting){
         return;
     }
+
+    /*
+       Prevent duplicate counting when visibilitychange
+       and blur happen almost simultaneously.
+    */
+
+    const now = Date.now();
+
+    if(now - lastViolationTime < 1500){
+        return;
+    }
+
+    lastViolationTime = now;
 
     violations++;
 
@@ -1290,7 +1335,7 @@ document.addEventListener("contextmenu",function(e){
 
 document.addEventListener("keydown",function(e){
 
-    if(!quizStarted){
+    if(!quizStarted || submitting){
         return;
     }
 
@@ -1325,6 +1370,8 @@ function submitQuiz(autoSubmit){
 
     submitting = true;
 
+    quizStarted = false;
+
     clearInterval(timerInterval);
 
     const total = questions.length;
@@ -1339,11 +1386,13 @@ function submitQuiz(autoSubmit){
 
             unanswered++;
 
-        }else if(answers[index] === q.a){
+        }
+        else if(answers[index] === q.a){
 
             correct++;
 
-        }else{
+        }
+        else{
 
             wrong++;
 
@@ -1358,33 +1407,53 @@ function submitQuiz(autoSubmit){
 
     if(percentage >= 90){
         grade = "A+";
-    }else if(percentage >= 80){
+    }
+    else if(percentage >= 80){
         grade = "A";
-    }else if(percentage >= 70){
+    }
+    else if(percentage >= 70){
         grade = "B";
-    }else if(percentage >= 60){
+    }
+    else if(percentage >= 60){
         grade = "C";
-    }else if(percentage >= 50){
+    }
+    else if(percentage >= 50){
         grade = "D";
-    }else{
+    }
+    else{
         grade = "F";
     }
+
 
     let status = "Normal";
 
     if(violations >= 3){
+
         status = "Flagged";
-    }else if(violations > 0){
+
+    }
+    else if(violations > 0){
+
         status = "Possible Malpractice";
+
     }
 
+
     if(autoSubmit){
+
         automaticSubmission = true;
+
     }
+
+
+    /*
+       IMPORTANT:
+       This object matches the teacher dashboard.
+    */
 
     const resultData = {
 
-        name: studentName.value,
+        name: String(studentName.value).trim(),
 
         classId: "8",
 
@@ -1428,10 +1497,25 @@ function submitQuiz(autoSubmit){
 
     };
 
+
+    console.log("Saving quiz result:", resultData);
+
+
+    /*
+       Firebase write.
+       A unique push ID is automatically generated.
+    */
+
     database
         .ref("quizResults")
         .push(resultData)
-        .then(function(){
+
+        .then(function(snapshot){
+
+            console.log(
+                "SUCCESS: Result saved to Firebase.",
+                snapshot.key
+            );
 
             showResult(
                 correct,
@@ -1443,14 +1527,34 @@ function submitQuiz(autoSubmit){
             );
 
         })
+
         .catch(function(error){
 
-            console.error(error);
-
-            alert(
-                "⚠️ Result could not be saved to Firebase.\n\n" +
-                "Please take a screenshot of your score and contact your teacher."
+            console.error(
+                "FIREBASE SAVE ERROR:",
+                error
             );
+
+            /*
+               Give a more useful error message.
+            */
+
+            let message =
+                "⚠️ Result could not be saved to Firebase.\n\n";
+
+            if(error && error.code){
+
+                message +=
+                    "Firebase error: " +
+                    error.code +
+                    "\n\n";
+
+            }
+
+            message +=
+                "Please take a screenshot of your score and contact your teacher.";
+
+            alert(message);
 
             showResult(
                 correct,
@@ -1480,6 +1584,7 @@ function showResult(
 ){
 
     quiz.style.display = "none";
+
     result.style.display = "block";
 
     scoreDisplay.textContent =
@@ -1522,14 +1627,16 @@ function generateReview(){
             resultText =
                 "⚠️ Not answered";
 
-        }else if(studentAnswer === q.a){
+        }
+        else if(studentAnswer === q.a){
 
             className = "correct";
 
             resultText =
                 "✅ Correct";
 
-        }else{
+        }
+        else{
 
             className = "wrong";
 
@@ -1537,6 +1644,7 @@ function generateReview(){
                 "❌ Incorrect";
 
         }
+
 
         html += `
             <div class="review-item ${className}">
@@ -1552,8 +1660,8 @@ function generateReview(){
                     ${String.fromCharCode(65 + q.a)}.
                     ${q.o[q.a]}
                 </p>
-
         `;
+
 
         if(studentAnswer !== null){
 
@@ -1567,13 +1675,34 @@ function generateReview(){
 
         }
 
-        html += `</div>`;
+
+        html += `
+            </div>
+        `;
 
     });
+
 
     reviewDisplay.innerHTML = html;
 
 }
+
+
+/* =========================
+   PREVENT ACCIDENTAL PAGE EXIT
+========================= */
+
+window.addEventListener("beforeunload", function(e){
+
+    if(quizStarted && !submitting){
+
+        e.preventDefault();
+
+        e.returnValue = "";
+
+    }
+
+});
 
 </script>
 
